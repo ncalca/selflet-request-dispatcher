@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	version="2.5">
+
+	<listener>
+		<listener-class>it.polimi.elet.selflet.initializer.ContextInitializer</listener-class>
+	</listener>
+
+	<servlet>
+		<servlet-name>RequestDispatcher</servlet-name>
+		<servlet-class>it.polimi.elet.servlet.RequestDispatcherServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>RequestDispatcher</servlet-name>
+		<url-pattern>/dispatcher/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>AllocateNewVmServlet</servlet-name>
+		<servlet-class>it.polimi.elet.servlet.AllocateNewVmServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>AllocateNewVmServlet</servlet-name>
+		<url-pattern>/allocateNew/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>IPAssociationServlet</servlet-name>
+		<servlet-class>it.polimi.elet.servlet.IPAssociationServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>IPAssociationServlet</servlet-name>
+		<url-pattern>/associateIPs/*</url-pattern>
+	</servlet-mapping>
+	
+		<servlet>
+		<servlet-name>DeploySelfletsServlet</servlet-name>
+		<servlet-class>it.polimi.elet.servlet.DeploySelfletsServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>DeploySelfletsServlet</servlet-name>
+		<url-pattern>/resetAllInstances/*</url-pattern>
+	</servlet-mapping>
+	
+	<servlet id="jsp">
+		<servlet-name>jsp</servlet-name>
+		<servlet-class>org.apache.jasper.servlet.JspServlet</servlet-class>
+
+		<init-param>
+			<param-name>logVerbosityLevel</param-name>
+			<param-value>DEBUG</param-value>
+		</init-param>
+
+		<init-param>
+			<param-name>fork</param-name>
+			<param-value>false</param-value>
+		</init-param>
+
+		<init-param>
+			<param-name>keepgenerated</param-name>
+			<param-value>true</param-value>
+		</init-param>
+
+		<load-on-startup>0</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>jsp</servlet-name>
+		<url-pattern>*.jsp</url-pattern>
+		<url-pattern>*.jspf</url-pattern>
+		<url-pattern>*.jspx</url-pattern>
+		<url-pattern>*.xsp</url-pattern>
+		<url-pattern>*.JSP</url-pattern>
+		<url-pattern>*.JSPF</url-pattern>
+		<url-pattern>*.JSPX</url-pattern>
+		<url-pattern>*.XSP</url-pattern>
+	</servlet-mapping>
+
+
+</web-app>

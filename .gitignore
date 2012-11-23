@@ -1,0 +1,15 @@
+## eclipse ignores 
+.project
+.classpath
+.settings
+/bin
+/target
+*/.project
+*/.classpath
+*/.settings
+*/eclipse-build
+
+# SelfLet specific data
+logs
+log
+results
