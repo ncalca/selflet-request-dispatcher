@@ -1,3 +1,3 @@
 #!/bin/sh
 
-killall -q java
+killall -KILL java
