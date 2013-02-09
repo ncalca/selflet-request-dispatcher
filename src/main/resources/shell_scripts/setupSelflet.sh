@@ -16,7 +16,7 @@ GIT_REPO[5]="selflet-request-dispatcher"
 for index in `seq 1 5`
 do
         echo 'Checking out repository for '${GIT_REPO[index]}
-		mkdir ${GIT_REPO[index]} 2> /dev/null
+        rm -rf ${GIT_REPO[index]}
         git clone --depth=1 $GIT_REPO_BASE${GIT_REPO[index]}".git"
 done
 

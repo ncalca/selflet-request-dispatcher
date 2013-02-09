@@ -88,11 +88,11 @@ public class SelfletIstantiator implements ISelfletIstantiator {
 			return virtualMachineIPGenerator.getDispatcherIpAddress();
 		}
 		LOG.debug("Istantiating new broker and dispatcher");
-		//resetSelflets(virtualMachineIPGenerator.getAllIPAddresses());
+		resetSelflets(virtualMachineIPGenerator.getAllIPAddresses());
 		String ipAddress = virtualMachineIPGenerator.getNewIpAddress();
 		virtualMachineIPGenerator.setDispatcherIpAddress(ipAddress);
 		copyDataToVM(ipAddress);
-		//executeSetup(ipAddress);
+		executeSetup(ipAddress);
 		createCredentialFile(ipAddress);
 		startBrokerAndDispatcher(ipAddress);
 		return ipAddress;
@@ -107,19 +107,22 @@ public class SelfletIstantiator implements ISelfletIstantiator {
 
 	private void resetSelflet(String ipAddress) {
 		SSHConnection sshConnection = createNewSSHConnection(ipAddress);
-		sshConnection.executeWithoutOutput("cd " + REMOTE_FOLDER_FOR_SELFLET + " ; source " + KILLSELFLET_SH + " ; source " + SETUP_SELFLET_SH);
+		sshConnection.executeWithoutOutput("cd " + REMOTE_FOLDER_FOR_SELFLET + " ; source " + KILLSELFLET_SH
+				+ " ; source " + SETUP_SELFLET_SH);
 	}
 
 	private void createCredentialFile(String ipAddress) {
 		SSHConnection sshConnection = createNewSSHConnection(ipAddress);
 		AWSCredentials credentials = AmazonFrontend.getInstance().getAWSCredentials();
 		String arguments = credentials.getAWSAccessKeyId() + " " + credentials.getAWSSecretKey();
-		sshConnection.executeWithoutOutput("cd " + REMOTE_FOLDER_FOR_SELFLET + " ; source " + CREATE_AWS_CREDENTIALS_FILE + " " + arguments);
+		sshConnection.executeWithoutOutput("cd " + REMOTE_FOLDER_FOR_SELFLET + " ; source "
+				+ CREATE_AWS_CREDENTIALS_FILE + " " + arguments);
 	}
 
 	private void startBrokerAndDispatcher(String ipAddress) {
 		SSHConnection sshConnection = createNewSSHConnection(ipAddress);
-		sshConnection.executeWithoutOutput("cd " + REMOTE_FOLDER_FOR_SELFLET + " ; source " + START_BROKER_AND_DISPATCHER_SH);
+		sshConnection.executeWithoutOutput("cd " + REMOTE_FOLDER_FOR_SELFLET + " ; source "
+				+ START_BROKER_AND_DISPATCHER_SH);
 	}
 
 	public AllocatedSelflet istantiateNewSelflet(String template) {
@@ -138,8 +141,8 @@ public class SelfletIstantiator implements ISelfletIstantiator {
 
 		createRemoteFolder(ipAddress);
 
-		ImmutableSet<String> files = ImmutableSet.of(SETUP_SELFLET_SH, MAVEN_LIFECYCLE_SH, START_SELFLET_SH, KILLSELFLET_SH, START_BROKER_AND_DISPATCHER_SH,
-				CREATE_AWS_CREDENTIALS_FILE);
+		ImmutableSet<String> files = ImmutableSet.of(SETUP_SELFLET_SH, MAVEN_LIFECYCLE_SH, START_SELFLET_SH,
+				KILLSELFLET_SH, START_BROKER_AND_DISPATCHER_SH, CREATE_AWS_CREDENTIALS_FILE);
 
 		for (String fileName : files) {
 			copySetupFiles(fileName, ipAddress);
@@ -148,8 +151,8 @@ public class SelfletIstantiator implements ISelfletIstantiator {
 	}
 
 	private void istantiateNewSelflet(String ipAddress, ISelfLetID newSelfletID, String template) {
-		//copyDataToVM(ipAddress);
-		// executeSetup(ipAddress);
+		copyDataToVM(ipAddress);
+		executeSetup(ipAddress);
 		startSelflet(ipAddress, newSelfletID, template);
 	}
 
@@ -162,8 +165,8 @@ public class SelfletIstantiator implements ISelfletIstantiator {
 		LOG.debug("Starting selflet");
 		SSHConnection sshConnection = createNewSSHConnection(ipAddress);
 		String brokerAddress = virtualMachineIPGenerator.getDispatcherIpAddress();
-		sshConnection.executeWithoutOutput("cd " + REMOTE_FOLDER_FOR_SELFLET + " ; source " + START_SELFLET_SH + " " + newSelfletID.getID() + " "
-				+ brokerAddress + ":" + DispatcherConfiguration.redsPort + " " + template);
+		sshConnection.executeWithoutOutput("cd " + REMOTE_FOLDER_FOR_SELFLET + " ; source " + START_SELFLET_SH + " "
+				+ newSelfletID.getID() + " " + brokerAddress + ":" + DispatcherConfiguration.redsPort + " " + template);
 	}
 
 	private void executeSetup(String ipAddress) {

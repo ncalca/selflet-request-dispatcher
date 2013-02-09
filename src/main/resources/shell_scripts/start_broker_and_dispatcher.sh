@@ -4,9 +4,9 @@ PORT=42000
 
 source kill_selflet.sh
 
-cd RedsMiddleware
+cd reds-broker
 screen -d -m mvn exec:java -Dexec.args=$PORT
-cd ../SelfletRequestDispatcher 
+cd ../selflet-request-dispatcher 
 
 while ! nc -vz localhost $PORT; do sleep 3; done
 screen -d -m mvn jetty:run
