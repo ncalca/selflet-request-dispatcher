@@ -20,8 +20,6 @@ do
         git clone --depth=1 $GIT_REPO_BASE${GIT_REPO[index]}".git"
 done
 
-DIRECTORIES="REDS SelfLetCommon SelfLetPrototype RedsMiddleware SelfletRequestDispatcher"
-
 for DIRNAME in "${GIT_REPO[@]}"
 do
         echo "--> Building ${DIRNAME}"
