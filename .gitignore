@@ -12,4 +12,5 @@
 # SelfLet specific data
 logs
 log
-results
+results/*
+
