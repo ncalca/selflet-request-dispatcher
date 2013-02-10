@@ -13,11 +13,17 @@ GIT_REPO[3]="selflet"
 GIT_REPO[4]="reds-broker"
 GIT_REPO[5]="selflet-request-dispatcher"
 
-for index in `seq 1 5`
+for REPO in "${GIT_REPO[@]}"
 do
-        echo 'Checking out repository for '${GIT_REPO[index]}
-        rm -rf ${GIT_REPO[index]}
-        git clone --depth=1 $GIT_REPO_BASE${GIT_REPO[index]}".git"
+        echo 'Checking out repository for '$REPO
+        if [ -d $REPO ]
+        then
+        	cd $REPO
+        	git pull origin master | tee git_delta
+        	cd ..
+    	else
+        	git clone --depth=1 $GIT_REPO_BASE${REPO}".git"
+    	fi
 done
 
 for DIRNAME in "${GIT_REPO[@]}"
@@ -25,13 +31,12 @@ do
         echo "--> Building ${DIRNAME}"
         cp mavenLifeCyle.sh ${DIRNAME}
         cd $DIRNAME
-        # TODO: optimize for already up-to-date code (avoid recompiling)
-        #  CHANGED=`cat svn_delta | wc -l`
-        #if [ $CHANGED -gt 1 -o $BUILD_ALL == "-b" ]
-                #        then
-                source mavenLifeCyle.sh
-        #else
-                #         echo 'Project '${DIRNAME}' already up to date'
-        #fi
+        CHANGED=`cat git_delta | wc -l`
+        if [ $CHANGED -gt 1 -o $BUILD_ALL == "-b" ]
+        then
+        	source mavenLifeCyle.sh
+        else
+            echo 'Project '${DIRNAME}' already up to date'
+        fi
         cd ..
 done
