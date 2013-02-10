@@ -22,7 +22,8 @@ do
         	git pull origin master | tee git_delta
         	cd ..
     	else
-        	git clone --depth=1 $GIT_REPO_BASE${REPO}".git"
+        	git clone --depth=1 $GIT_REPO_BASE${REPO}".git" | tee git_delta
+        	mv git_delta ./$REPO
     	fi
 done
 
@@ -31,8 +32,8 @@ do
         echo "--> Building ${DIRNAME}"
         cp mavenLifeCyle.sh ${DIRNAME}
         cd $DIRNAME
-        CHANGED=`cat git_delta | wc -l`
-        if [ $CHANGED -gt 1 -o $BUILD_ALL == "-b" ]
+        CHANGED=`cat git_delta | grep up-to-date | wc -l`
+        if [ $CHANGED -eq 0 -o $BUILD_ALL == "-b" ]
         then
         	source mavenLifeCyle.sh
         else
