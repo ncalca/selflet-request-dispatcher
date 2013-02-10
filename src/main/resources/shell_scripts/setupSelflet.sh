@@ -18,8 +18,18 @@ do
         echo 'Checking out repository for '$REPO
         if [ -d $REPO ]
         then
+        	# folder exists
         	cd $REPO
+        	NOT_REPO=`git status -s | grep fatal: | wc -l`
+        	if [ $NOT_REPO -eq 0 ]
+        	then
+        		cd .. 
+        		rm -rf $REPO
+        		git clone --depth=1 $GIT_REPO_BASE${REPO}".git" | tee git_delta
+        		cd $REPO
+            else        		
         	git pull origin master | tee git_delta
+        	fi
         	cd ..
     	else
         	git clone --depth=1 $GIT_REPO_BASE${REPO}".git" | tee git_delta
