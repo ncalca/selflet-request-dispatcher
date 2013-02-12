@@ -1,10 +1,14 @@
 package it.polimi.elet.selflet.istantiator;
 
 import it.polimi.elet.selflet.id.ISelfLetID;
+import it.polimi.elet.servlet.AllocateNewVmServlet;
 
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+
+import org.apache.log4j.Logger;
+import org.eclipse.jetty.util.log.Log;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
@@ -17,6 +21,8 @@ import com.google.common.collect.Sets;
  * @author Nicola Calcavecchia <calcavecchia@gmail.com>
  * */
 public class VirtualMachineIPManager implements IVirtualMachineIPManager {
+
+	private static final Logger LOG = Logger.getLogger(VirtualMachineIPManager.class);
 
 	private static VirtualMachineIPManager instance = null;
 
@@ -159,11 +165,11 @@ public class VirtualMachineIPManager implements IVirtualMachineIPManager {
 
 	@Override
 	public void freeIPOfSelflet(ISelfLetID selfletToBeRemoved) {
-
 		for (Entry<String, String> entry : ipToSelfletIDs.entrySet()) {
 			String ipAddress = entry.getKey();
 			String selfletId = entry.getValue();
 			if (selfletToBeRemoved.toString().equals(selfletId)) {
+				LOG.info("Freeing IP of selflet: " + selfletToBeRemoved + ". Was at " + ipAddress);
 				ipToSelfletIDs.remove(ipAddress);
 				availableIPAddresses.add(ipAddress);
 				takenIPAddresses.remove(ipAddress);

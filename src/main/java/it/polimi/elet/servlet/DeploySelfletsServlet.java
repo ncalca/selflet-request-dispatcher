@@ -10,6 +10,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * This servlet is only used to reset all existing instances
+ * 
+ * @author Nicola Calcavecchia <calcavecchia@gmail.com>
+ * */
 public class DeploySelfletsServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
