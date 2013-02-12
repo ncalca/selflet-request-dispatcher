@@ -91,9 +91,6 @@ public class SelfletIstantiator implements ISelfletIstantiator {
 		//resetSelflets(virtualMachineIPGenerator.getAllIPAddresses());
 		String ipAddress = virtualMachineIPGenerator.getNewIpAddress();
 		virtualMachineIPGenerator.setDispatcherIpAddress(ipAddress);
-		copyDataToVM(ipAddress);
-		executeSetup(ipAddress);
-		createCredentialFile(ipAddress);
 		startBrokerAndDispatcher(ipAddress);
 		return ipAddress;
 	}
@@ -152,7 +149,7 @@ public class SelfletIstantiator implements ISelfletIstantiator {
 
 	private void istantiateNewSelflet(String ipAddress, ISelfLetID newSelfletID, String template) {
 		copyDataToVM(ipAddress);
-		executeSetup(ipAddress);
+	//	executeSetup(ipAddress);
 		startSelflet(ipAddress, newSelfletID, template);
 	}
 
