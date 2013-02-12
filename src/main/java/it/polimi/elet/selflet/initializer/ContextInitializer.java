@@ -40,12 +40,13 @@ public class ContextInitializer implements ServletContextListener {
 		MessageBridge.init();
 
 		periodicThreadStarter = new PeriodicThreadStarter(INITIAL_DELAY);
-		
+
 		periodicThreadStarter.addPeriodicTask(new NodeStateCleaner());
 		periodicThreadStarter.addPeriodicTask(new NeighborSender());
 		periodicThreadStarter.addPeriodicTask(new ResultsLogger());
-		
+
 		periodicThreadStarter.start();
+		LOG.debug("Context initialized");
 	}
 
 	private void loadConfigurationParameters() {

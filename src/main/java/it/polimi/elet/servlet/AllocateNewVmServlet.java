@@ -72,7 +72,7 @@ public class AllocateNewVmServlet extends HttpServlet {
 			// performHttpRequestTo(location);
 		}
 
-		//response.sendRedirect(INDEX);
+		response.sendRedirect(PageNames.INDEX);
 	}
 
 	private void performHttpRequestTo(String location) {
@@ -95,6 +95,7 @@ public class AllocateNewVmServlet extends HttpServlet {
 
 	private void resetInstances() {
 		virtualMachineIpGenerator.resetInstances();
+		selfletIstantiator.resetAllInstances();
 	}
 
 	private String allocateBrokerAndDispatcher() {
