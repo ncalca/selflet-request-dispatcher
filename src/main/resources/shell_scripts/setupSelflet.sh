@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# downloads source code for all repositories and compiles it with maven
+# downloads source code for all repositories and compiles them
 BUILD_ALL=${1:-"notdefined"}
 
 source kill_selflet.sh
@@ -15,39 +15,16 @@ GIT_REPO[5]="selflet-request-dispatcher"
 
 for REPO in "${GIT_REPO[@]}"
 do
-        echo 'Checking out repository for '$REPO
-        if [ -d $REPO ]
-        then
-        	# folder exists
-        	cd $REPO
-        	NOT_REPO=`git status -s | grep fatal: | wc -l`
-        	if [ $NOT_REPO -eq 0 ]
-        	then
-        		cd .. 
-        		rm -rf $REPO
-        		git clone --depth=1 $GIT_REPO_BASE${REPO}".git" | tee git_delta
-        		cd $REPO
-            else        		
-        	git pull origin master | tee git_delta
-        	fi
-        	cd ..
-    	else
-        	git clone --depth=1 $GIT_REPO_BASE${REPO}".git" | tee git_delta
-        	mv git_delta ./$REPO
-    	fi
+	rm -rf $REPO
+	git clone --depth=1 $GIT_REPO_BASE${REPO}".git"
 done
+
 
 for DIRNAME in "${GIT_REPO[@]}"
 do
-        echo "--> Building ${DIRNAME}"
-        cp mavenLifeCyle.sh ${DIRNAME}
-        cd $DIRNAME
-        CHANGED=`cat git_delta | grep up-to-date | wc -l`
-        if [ $CHANGED -eq 0 -o $BUILD_ALL == "-b" ]
-        then
-        	source mavenLifeCyle.sh
-        else
-            echo 'Project '${DIRNAME}' already up to date'
-        fi
-        cd ..
+	echo "--> Building ${DIRNAME}"
+    cp mavenLifeCyle.sh ${DIRNAME}
+    cd $DIRNAME
+    source mavenLifeCyle.sh
+    cd ..
 done

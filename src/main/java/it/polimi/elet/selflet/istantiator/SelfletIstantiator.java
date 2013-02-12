@@ -88,7 +88,7 @@ public class SelfletIstantiator implements ISelfletIstantiator {
 			return virtualMachineIPGenerator.getDispatcherIpAddress();
 		}
 		LOG.debug("Istantiating new broker and dispatcher");
-		resetSelflets(virtualMachineIPGenerator.getAllIPAddresses());
+		//resetSelflets(virtualMachineIPGenerator.getAllIPAddresses());
 		String ipAddress = virtualMachineIPGenerator.getNewIpAddress();
 		virtualMachineIPGenerator.setDispatcherIpAddress(ipAddress);
 		copyDataToVM(ipAddress);
