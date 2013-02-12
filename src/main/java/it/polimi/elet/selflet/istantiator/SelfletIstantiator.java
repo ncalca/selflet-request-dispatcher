@@ -63,7 +63,7 @@ public class SelfletIstantiator implements ISelfletIstantiator {
 	@Override
 	public void resetAllInstances() {
 		Set<String> allIPs = virtualMachineIPGenerator.getAllIPAddresses();
-		resetSelflets(allIPs);
+		// resetSelflets(allIPs);
 		for (String ip : allIPs) {
 			THREAD_POOL.submit(new ResetThread(ip));
 		}
@@ -88,24 +88,11 @@ public class SelfletIstantiator implements ISelfletIstantiator {
 			return virtualMachineIPGenerator.getDispatcherIpAddress();
 		}
 		LOG.debug("Istantiating new broker and dispatcher");
-		//resetSelflets(virtualMachineIPGenerator.getAllIPAddresses());
+		// resetSelflets(virtualMachineIPGenerator.getAllIPAddresses());
 		String ipAddress = virtualMachineIPGenerator.getNewIpAddress();
 		virtualMachineIPGenerator.setDispatcherIpAddress(ipAddress);
 		startBrokerAndDispatcher(ipAddress);
 		return ipAddress;
-	}
-
-	private void resetSelflets(Set<String> allIPAddresses) {
-		for (String ipAddress : allIPAddresses) {
-			LOG.debug("Cleaning " + ipAddress);
-			resetSelflet(ipAddress);
-		}
-	}
-
-	private void resetSelflet(String ipAddress) {
-		SSHConnection sshConnection = createNewSSHConnection(ipAddress);
-		sshConnection.executeWithoutOutput("cd " + REMOTE_FOLDER_FOR_SELFLET + " ; source " + KILLSELFLET_SH
-				+ " ; source " + SETUP_SELFLET_SH);
 	}
 
 	private void createCredentialFile(String ipAddress) {
@@ -149,7 +136,7 @@ public class SelfletIstantiator implements ISelfletIstantiator {
 
 	private void istantiateNewSelflet(String ipAddress, ISelfLetID newSelfletID, String template) {
 		copyDataToVM(ipAddress);
-	//	executeSetup(ipAddress);
+		// executeSetup(ipAddress);
 		startSelflet(ipAddress, newSelfletID, template);
 	}
 
