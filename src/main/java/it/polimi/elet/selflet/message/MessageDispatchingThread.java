@@ -29,7 +29,7 @@ public class MessageDispatchingThread extends Thread {
 	private final INodeStateManager nodeStateManager = NodeStateManager.getInstance();
 	private final ISelfletNeighbors selfletNeighbors = SelfletNeighbors.getInstance();
 	private final IVirtualMachineIPManager virtualMachineIPManager = VirtualMachineIPManager.getInstance();
-	
+
 	private final TCPDispatchingService dispatchingService;
 	private boolean stop;
 
@@ -49,7 +49,7 @@ public class MessageDispatchingThread extends Thread {
 				if (message instanceof RedsMessage) {
 					RedsMessage redsMessage = (RedsMessage) message;
 					SelfLetMsg selfletMessage = redsMessage.getMessage();
-					//LOG.debug("Received selflet message: " + selfletMessage);
+					// LOG.debug("Received selflet message: " + selfletMessage);
 					analyzeMessage(selfletMessage);
 				} else {
 					LOG.debug("Received other kind of message: " + message);
@@ -72,7 +72,7 @@ public class MessageDispatchingThread extends Thread {
 	}
 
 	private void analyzeMessage(SelfLetMsg selfletMessage) {
-		
+
 		switch (selfletMessage.getType()) {
 
 		case ALIVE_SELFLET:
@@ -104,13 +104,14 @@ public class MessageDispatchingThread extends Thread {
 	}
 
 	private void istantiateNewSelfletMessage(SelfLetMsg selfletMessage) {
-		SelfletIstantiatorThread selfletIstantiatorThread = new SelfletIstantiatorThread(dispatchingService, selfletMessage);
+		SelfletIstantiatorThread selfletIstantiatorThread = new SelfletIstantiatorThread(dispatchingService,
+				selfletMessage);
 		ThreadPool.submitGenericJob(selfletIstantiatorThread);
 		LOG.debug("SelfletIstantiatorThread started");
 	}
 
 	private void nodeStateMessage(SelfLetMsg selfletMessage) {
-		LOG.debug("Received node state; " + selfletMessage);
+		LOG.debug("Received node state from " + selfletMessage.getFrom());
 		nodeStateManager.addState((INodeState) selfletMessage.getContent());
 	}
 
