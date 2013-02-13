@@ -91,6 +91,7 @@ public class SelfletIstantiator implements ISelfletIstantiator {
 		// resetSelflets(virtualMachineIPGenerator.getAllIPAddresses());
 		String ipAddress = virtualMachineIPGenerator.getNewIpAddress();
 		virtualMachineIPGenerator.setDispatcherIpAddress(ipAddress);
+		createCredentialFile(ipAddress);
 		startBrokerAndDispatcher(ipAddress);
 		return ipAddress;
 	}
