@@ -26,11 +26,12 @@ public class NodeStateManager implements INodeStateManager {
 	private static final long THRESHOLD = DispatcherConfiguration.stateMaximumAgeInSec * 1000;
 
 	private static final NodeStateManager instance = new NodeStateManager();
-	private final ISelfletNeighbors selfletNeighbors = SelfletNeighbors.getInstance();
+	private static final ISelfletNeighbors selfletNeighbors = SelfletNeighbors.getInstance();
 
 	private final Map<ISelfLetID, INodeState> nodeStates = Maps.newConcurrentMap();
 
 	private NodeStateManager() {
+		/* Private constructor */
 	}
 
 	public static INodeStateManager getInstance() {
@@ -78,19 +79,20 @@ public class NodeStateManager implements INodeStateManager {
 
 	@Override
 	public ISelfLetID getRandomSelfletHavingService(String serviceName) {
-		
-		List<ISelfLetID> selfletIDs = Lists.newArrayList();
+		List<ISelfLetID> selfletIDs = getSelfletsWithService(serviceName);
+		if (selfletIDs.isEmpty()) {
+			throw new NotFoundException("Cannot find a selflet offering service " + serviceName);
+		}
+		return CollectionUtils.randomElement(selfletIDs);
+	}
 
+	private List<ISelfLetID> getSelfletsWithService(String serviceName) {
+		List<ISelfLetID> selfletIDs = Lists.newArrayList();
 		for (INodeState nodeState : nodeStates.values()) {
 			if (nodeState.getAvailableServices().contains(serviceName)) {
 				selfletIDs.add(nodeState.getSelfletID());
 			}
 		}
-
-		if (selfletIDs.isEmpty()) {
-			throw new NotFoundException("Cannot find a selflet offering service " + serviceName);
-		}
-
-		return CollectionUtils.randomElement(selfletIDs);
+		return selfletIDs;
 	}
 }

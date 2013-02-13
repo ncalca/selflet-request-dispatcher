@@ -72,9 +72,11 @@ public class RequestDispatcherServlet extends HttpServlet {
 	private ISelfLetID getReceiver(String receiver, String serviceName) {
 
 		if (!receiver.isEmpty()) {
+			/* Receiver is specified so send it to it */
 			return new SelfLetID(receiver);
 		}
 
+		/* No receiver, so extract from the set of available nodes */
 		return nodeStateManager.getRandomSelfletHavingService(serviceName);
 	}
 
@@ -103,8 +105,8 @@ public class RequestDispatcherServlet extends HttpServlet {
 		ISelfLetID receiverSelfLetID = neighbor;
 		Map<String, Object> parameters = Maps.newHashMap();
 		ServiceExecutionParameter selfletExecutionParameters = new ServiceExecutionParameter(serviceName, parameters);
-		SelfLetMsg selfletMsg = new SelfLetMsg(MessageBridge.THIS_SELFLET_ID, receiverSelfLetID, SelfLetMessageTypeEnum.EXECUTE_ACHIEVABLE_SERVICE,
-				selfletExecutionParameters);
+		SelfLetMsg selfletMsg = new SelfLetMsg(MessageBridge.THIS_SELFLET_ID, receiverSelfLetID,
+				SelfLetMessageTypeEnum.EXECUTE_ACHIEVABLE_SERVICE, selfletExecutionParameters);
 		Set<String> recipients = Sets.newHashSet(receiverSelfLetID.toString());
 		return new RedsMessage(selfletMsg, recipients);
 	}

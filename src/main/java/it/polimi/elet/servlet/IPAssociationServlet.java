@@ -21,9 +21,9 @@ public class IPAssociationServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
-	public final static String DISPATCHER = "dispatcher";
-	public final static String VM = "vm";
-	public final static String SELFLET_ID = "selfletID";
+	public static final String DISPATCHER = "dispatcher";
+	public static final String VM = "vm";
+	public static final String SELFLET_ID = "selfletID";
 
 	private static final IVirtualMachineIPManager virtualMachineIPManager = VirtualMachineIPManager.getInstance();
 

@@ -1,7 +1,7 @@
 package it.polimi.elet.thread;
 
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * Generic thread pool for jobs executed in the dispatcher
@@ -10,13 +10,15 @@ import java.util.concurrent.Executors;
  * */
 public class ThreadPool {
 
+	private static final int GENERIC_THREAD_POOL_SIZE = 20;
+
+	private static final ThreadPoolExecutor GENERIC_THREAD_POOL = (ThreadPoolExecutor) Executors
+			.newFixedThreadPool(GENERIC_THREAD_POOL_SIZE);
+
 	private ThreadPool() {
 		// private constructor
+		GENERIC_THREAD_POOL.prestartAllCoreThreads();
 	}
-
-	private static final int GENERIC_THREAD_POOL_SIZE = 10;
-
-	private static final ExecutorService GENERIC_THREAD_POOL = Executors.newFixedThreadPool(GENERIC_THREAD_POOL_SIZE);
 
 	/**
 	 * Submits a thread to the generic thread pool

@@ -13,6 +13,9 @@ import it.polimi.elet.selflet.negotiation.nodeState.INodeState;
  * */
 public interface INodeStateManager {
 
+	/**
+	 * Returns all the node states
+	 * */
 	List<INodeState> getStates();
 
 	/**
