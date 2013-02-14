@@ -43,10 +43,8 @@ public class MessageDispatchingThread extends Thread {
 
 		try {
 			while (!stop) {
-				LOG.info("Trying to retrieve message");
 
 				while (dispatchingService.hasMoreMessages()) {
-					LOG.info("There is a message");
 					Message message = dispatchingService.getNextMessage();
 
 					if (message instanceof RedsMessage) {
