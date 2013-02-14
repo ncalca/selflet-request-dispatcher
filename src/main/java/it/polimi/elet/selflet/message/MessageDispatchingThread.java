@@ -40,24 +40,29 @@ public class MessageDispatchingThread extends Thread {
 
 	@Override
 	public void run() {
-		while (!stop) {
 
-			while (dispatchingService.hasMoreMessages()) {
+		try {
+			while (!stop) {
 
-				Message message = dispatchingService.getNextMessage();
+				while (dispatchingService.hasMoreMessages()) {
 
-				if (message instanceof RedsMessage) {
-					RedsMessage redsMessage = (RedsMessage) message;
-					SelfLetMsg selfletMessage = redsMessage.getMessage();
-					// LOG.debug("Received selflet message: " + selfletMessage);
-					analyzeMessage(selfletMessage);
-				} else {
-					LOG.debug("Received other kind of message: " + message);
+					Message message = dispatchingService.getNextMessage();
+
+					if (message instanceof RedsMessage) {
+						RedsMessage redsMessage = (RedsMessage) message;
+						SelfLetMsg selfletMessage = redsMessage.getMessage();
+						LOG.info("Received selflet message: " + selfletMessage);
+						analyzeMessage(selfletMessage);
+					} else {
+						LOG.info("Received other kind of message: " + message);
+					}
 				}
+
+				goToSleep();
+
 			}
-
-			goToSleep();
-
+		} catch (Exception e) {
+			LOG.error(e);
 		}
 
 	}
@@ -67,12 +72,12 @@ public class MessageDispatchingThread extends Thread {
 		try {
 			Thread.sleep(WAIT_STEP_MS);
 		} catch (InterruptedException e) {
+			LOG.error(e);
 		}
 
 	}
 
 	private void analyzeMessage(SelfLetMsg selfletMessage) {
-
 		switch (selfletMessage.getType()) {
 
 		case ALIVE_SELFLET:
@@ -92,7 +97,7 @@ public class MessageDispatchingThread extends Thread {
 			break;
 
 		default:
-			LOG.debug("Ignoring message: " + selfletMessage);
+			LOG.warn("Ignoring message: " + selfletMessage);
 		}
 	}
 

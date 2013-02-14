@@ -16,7 +16,7 @@ public class VirtualMachineIPGeneratorTest {
 	public void getAllAvailableIPs() {
 		Set<String> ips = Sets.newHashSet("192.168.1.1", "192.168.1.2", "192.168.1.3");
 		virtualMachineIPGenerator = new VirtualMachineIPManager();
-		virtualMachineIPGenerator.addNewIps(ips);
+		virtualMachineIPGenerator.addKnownIPAddresses(ips);
 		Set<String> receivedIPAddresses = Sets.newHashSet();
 		receivedIPAddresses.add(virtualMachineIPGenerator.getNewIpAddress());
 		receivedIPAddresses.add(virtualMachineIPGenerator.getNewIpAddress());
@@ -29,7 +29,7 @@ public class VirtualMachineIPGeneratorTest {
 	public void getIPsWhenThereAreNoAvailableIPs() {
 		Set<String> ips = Sets.newHashSet();
 		virtualMachineIPGenerator = new VirtualMachineIPManager();
-		virtualMachineIPGenerator.addNewIps(ips);
+		virtualMachineIPGenerator.addKnownIPAddresses(ips);
 
 		Set<String> receivedIPAddresses = Sets.newHashSet();
 		receivedIPAddresses.add(virtualMachineIPGenerator.getNewIpAddress());

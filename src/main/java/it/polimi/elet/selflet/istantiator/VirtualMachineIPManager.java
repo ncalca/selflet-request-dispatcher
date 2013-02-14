@@ -1,14 +1,12 @@
 package it.polimi.elet.selflet.istantiator;
 
 import it.polimi.elet.selflet.id.ISelfLetID;
-import it.polimi.elet.servlet.AllocateNewVmServlet;
 
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
-import org.eclipse.jetty.util.log.Log;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
@@ -80,12 +78,6 @@ public class VirtualMachineIPManager implements IVirtualMachineIPManager {
 		takenIPAddresses.clear();
 		ipToSelfletIDs.clear();
 		this.brokerAddress = "";
-	}
-
-	public void addNewIps(Set<String> ipAddresses) {
-		for (String ipAddress : ipAddresses) {
-			addNewIp(ipAddress);
-		}
 	}
 
 	@Override

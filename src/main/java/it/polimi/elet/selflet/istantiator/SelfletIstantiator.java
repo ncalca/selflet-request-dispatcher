@@ -194,7 +194,7 @@ public class SelfletIstantiator implements ISelfletIstantiator {
 
 		@Override
 		public void run() {
-			LOG.debug("Resetting ip address: " + ip);
+			LOG.info("Resetting ip address: " + ip);
 			resetMachine(ip);
 		}
 
