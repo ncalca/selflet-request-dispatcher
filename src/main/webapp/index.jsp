@@ -84,15 +84,16 @@
 	<b>Neighbors: </b><%=nodeState.getKnownNeighbors()%>
 	<br />
 	<p>Send service request:</p>
-
-	<%
-		for (String service : nodeState.getAvailableServices()) {
-	%>
-
-	<a href="/dispatcher?receiver=<%=selfletID%>&service=<%=service%>"><%=service%></a>
-	<%
-		}
-	%>
+	<ul>
+		<%
+			for (String service : nodeState.getAvailableServices()) {
+		%>
+		<li><a
+			href="/dispatcher?receiver=<%=selfletID%>&service=<%=service%>"><%=service%></a></li>
+		<%
+			}
+		%>
+	</ul>
 	<br />
 	<br />
 	<center>
