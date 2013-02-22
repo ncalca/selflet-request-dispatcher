@@ -26,6 +26,7 @@ public class TemplateManager implements ITemplateManager {
 		templates.add("selflet1");
 		templates.add("selflet2");
 		templates.add("knitro");
+		templates.add("video_provisioning");
 
 	}
 
