@@ -136,8 +136,8 @@ public class SelfletIstantiator implements ISelfletIstantiator {
 	}
 
 	private void istantiateNewSelflet(String ipAddress, ISelfLetID newSelfletID, String template) {
-		// copyDataToVM(ipAddress);
-		// executeSetup(ipAddress);
+		copyDataToVM(ipAddress);
+		executeSetup(ipAddress);
 		startSelflet(ipAddress, newSelfletID, template);
 	}
 
