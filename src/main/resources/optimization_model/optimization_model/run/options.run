@@ -1,0 +1,71 @@
+# OPTIONS
+# SET KNITRO SOLVER
+option solver knitroampl;
+
+# OUTPUT OPTIONS
+option display_1col 1000000;
+option display_precision 3 ;
+# option solution_precision 3 ;
+option display_eps 0.0001;
+# option display_round 3;
+# outlev=6
+option relax_integrality 0;
+
+
+
+# SET OPTIONS FOR KNITRO
+#option knitro_options "ma_terminate=1"
+option knitro_options "par_numthreads=8 maxit=10000 debug=0 outmode=3 algorithm=0 mip_integral_gap_abs=0.9 ms_enable=0 ";
+
+
+#feastol=0.01
+
+### OPTIONS DESCRIPTION
+
+####################################
+# ma_terminate
+####################################
+# Define the termination condition for the multi-algorithm (alg=5) procedure. 
+# 0 Terminate after all algorithms have completed.
+# 1 Terminate at first locally optimal solution.
+# 2 Terminate at first feasible solution.
+
+####################################
+# par_numthreads
+####################################
+# Specify the number of threads to use for parallel computing features (see Parallelism).
+# Default value: 1.
+
+####################################
+# maxit
+####################################
+# Specifies the maximum number of iterations before termination.
+# 0 Let KNITRO automatically choose a value based on the problem type. Currently KNITRO sets this 
+#		value to 10000 for LPs/NLPs and 3000 for MIP problems.
+# n At most n>0 iterations may be performed before terminating. Default value: 0.
+
+####################################
+# debug
+####################################
+# Debugging level (0=none, 1=problem, 2=execution)
+
+####################################
+# outmode
+####################################
+# Specifies where to direct the output from KNITRO.
+# 0 (screen) Output is directed to standard out (e.g., screen). 
+# 1 (file) Output is sent to a file named knitro.log.
+# 2 (both) Output is directed to both the screen and file knitro.log. Default value: 0.
+
+####################################
+# algorithm
+####################################
+# Indicates which algorithm to use to solve the problem
+# 0 (auto) let KNITRO automatically choose an algorithm, based on the problem characteristics.
+# 1 (direct) use the Interior/Direct algorithm.
+# 2 (cg) use the Interior/CG algorithm.
+# 3 (active) use the Active Set algorithm.
+# 5 (multi) run all algorithms, perhaps in parallel (see Algorithms).
+# Default value: 0.
+
+

@@ -1,0 +1,32 @@
+#printf "\tSolving problem %d\n", problemInput ;
+
+# This file is used to print data relative to the problem 
+# and its solution
+
+printf "####### PARAMS ###########\n";
+printf "\tSelfLets %d\n", N ;
+printf "\tServices %d\n", S ;
+printf "\tBehaviors %d\n", B;
+printf "\tMax states %d\n" , max_states;
+
+for{s in Services}{
+	printf "\tBehaviors for service %d: [", s ; 
+	for{ (b, ss) in implementing_behaviors: ss = s}{
+		printf " %d ", b ;
+	}
+	printf "]\n" ;
+}
+
+# display implementing_behaviors ;
+printf "##################\n";
+
+
+if solve_result = "infeasible" then {
+	printf "\n\n";
+	printf "\t\t --------------------\n" ; 
+	printf "\t\t ---- INFEASIBLE! ---\n" ; 
+	printf "\t\t --------------------\n" ; 
+	printf "\n\n";
+	}
+	
+#display selflet_util;

@@ -1,0 +1,34 @@
+printf "####### OUTPUT ###########\n";
+
+#for {s in Services}{
+#	for {n in Selflets}{
+#		for{b in Behaviors}{
+#			if card { (bb, ss) in implementing_behaviors: bb = b and ss = s} = 1 then
+#			printf "\t Service %d in Selflet %d implemented by Behavior %d (%d states) \n", s, n, b, states_of_behavior [b] ;
+#		}
+#	}
+#}
+
+printf "##################\n";
+
+# Writes all needed information in the output file
+
+display N > model_output ;
+display S >> model_output ;
+display B >> model_output ;
+display DR >> model_output ;
+display max_states >> model_output ;
+display implementing_behaviors >> model_output ;
+display lambda_services_selflets >> model_output ;
+display active_selflet >> model_output ;
+display service_on_selflet >> model_output ;
+display behavior_in_selflet >> model_output ;
+display behavior_structure >> model_output ;
+display service_of_state >> model_output ;
+display state_locally_executed, state_remotely_executed, response_time_of_state>> model_output ;
+display lambda_redirect >> model_output ;
+display remote_rate >> model_output ;
+display local_rate >> model_output ;
+display response_time_at_selflet >> model_output;
+display state_demand >> model_output;
+display selflet_util >> model_output;

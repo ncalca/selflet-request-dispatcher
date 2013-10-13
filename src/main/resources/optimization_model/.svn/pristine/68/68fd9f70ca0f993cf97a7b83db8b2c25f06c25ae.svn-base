@@ -1,0 +1,18 @@
+#!/bin/sh
+rm graph.dot
+rm graph.png
+
+sed '/^$/d' model_output > tt 
+mv tt model_output
+
+echo "Generating dot file"
+python generate_dot_file.py
+
+echo "Creating graph.png"
+dot -Tpng graph.dot > graph.png
+
+echo "Opening graph.png"
+#eog graph.png &
+
+open graph.png
+

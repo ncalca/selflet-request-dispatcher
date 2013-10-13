@@ -1,0 +1,184 @@
+#####################
+###  SelfLet optimization model
+###  Author: Nicola Calcavecchia
+#####################
+
+######################################################
+######### PARAMETERS #########
+######################################################
+
+param N > 0 integer ; ### number of SelfLets
+set Selflets := 1..N ;
+ 
+param S > 0 integer ; ### number of services
+set Services := 1..S ;
+
+### Total request rate for service s
+param Lambda {Services} >= 0 ;
+
+### Maximum response time for service s
+param Max_response_time {Services} >= 0 ;
+
+param DR > 0;
+
+###################################################
+######### SETS 	  #########
+###################################################
+
+set behavior_structure dimen 4 ;
+set implementing_behaviors dimen 2;
+
+param B := card(implementing_behaviors);
+
+set Behaviors := 1..B;
+
+param states_of_behavior{b in Behaviors} := card( setof{ (bb, ts, ss, p) in behavior_structure: b = bb } (bb,ts,ss,p));
+param max_states := max{b in Behaviors} states_of_behavior [b];
+set States := 1..max_states;
+
+set service_of_state within (Behaviors cross States cross Services);
+
+### demands for states
+set DL dimen 2 ;
+
+param state_exists{b in Behaviors, i in States} := min(min(card{ (b1, t1, s1, p1) in behavior_structure: b1 = b and (s1 = i or t1 = i)}, 1), card{ (b1, t1, s1, p1) in behavior_structure: b1 = b and (s1 = i or t1 = i)}) ; 
+
+
+param behavior_is_ability{b in Behaviors} := card{ (bb, ts, ss, p) in behavior_structure : bb = b and ts = 1 and ss = 1 } ; 
+
+
+###################################################
+######### VARIABLES #########
+###################################################
+### 1 if selflet n is active
+var active_selflet {Selflets} binary ;
+
+### 1 if service is deployed on selflet
+var service_on_selflet {Selflets, Services} binary ; 
+
+### 1 if service s is currently implemented by b in n
+var behavior_of_service_in_selflet {Selflets, Services, Behaviors} binary ; 
+
+var behavior_in_selflet {Behaviors, Selflets} binary; 
+
+### amount of direct traffic directed to selflet n for service s
+var lambda_services_selflets {Selflets, Services} >=0 ;
+
+var response_time_at_selflet {Selflets, Services} >=0 ;
+
+var response_time {Selflets, Services} >= 0;
+
+var behavior_state_request_rate {Behaviors, Services, Selflets, States} >= 0;
+
+var state_locally_executed {Behaviors, States, Selflets} binary ;
+
+var state_remotely_executed {Behaviors, States, Selflets} binary ;
+
+var state_demand {Behaviors, Selflets, States} >= 0;
+
+var util {Behaviors, Selflets, States, Services} >= 0;
+
+var selflet_util {Selflets} >= 0 ;
+
+var lambda_redirect {Selflets, Behaviors, States, Selflets} >= 0 ;
+
+###################################################
+######### OBJECTIVE #########
+###################################################
+
+minimize total_costs:
+		sum{n in Selflets} active_selflet[n] ;
+
+###################################################
+######### CONSTRAINTS #########
+###################################################
+
+
+	
+######### Each service is placed in at least one selflet
+s.t. place_service {s in Services} :
+		sum{n in Selflets} service_on_selflet[n, s] >= 1 ;
+
+### If selflet s is passive then, no services are placed in s
+s.t. no_service_if_selflet_is_passive {n in Selflets} :
+		sum{s in Services} service_on_selflet[n, s] <= active_selflet[n] * S;
+
+### If the service s is placed over selflet n, then exactly one behavior is implementing it
+s.t. unique_behavior {n in Selflets, s in Services} :
+		sum{ (b, ss) in implementing_behaviors: ss = s } behavior_of_service_in_selflet[n, s, b] = service_on_selflet[n, s] ;
+
+s.t. unique_behavior_cumulative {n in Selflets, s in Services} :
+		sum{b in Behaviors} behavior_of_service_in_selflet[n, s, b] = service_on_selflet[n, s] ;
+
+s.t. behavior_in_selflet_constraint{b in Behaviors, n in Selflets} :
+		behavior_in_selflet[b, n] = sum{s in Services} behavior_of_service_in_selflet[n, s, b] ;
+
+### Total rate for service s is spread over selflets
+s.t. cumulative_request_rates{s in Services} :
+		sum{n in Selflets} lambda_services_selflets[n, s]  = Lambda[s] ;
+
+### No request rate on selflet for service s if it is not deployed there
+s.t. no_rate_if_no_service{n in Selflets, s in Services} :
+		lambda_services_selflets[n, s] <= service_on_selflet[n, s] * Lambda[s] ;
+
+s.t. behavior_initial_state {b in Behaviors, s in Services, n in Selflets} :
+		behavior_state_request_rate[b, s, n, 1] = lambda_services_selflets[n, s] * behavior_of_service_in_selflet[n, s, b] ;
+
+
+s.t. behavior_other_states {s in Services , n in Selflets, b in Behaviors,  i in 2..states_of_behavior[b]} :
+		behavior_state_request_rate[b, s, n, i] = sum{ (bb, ts, ss, p) in behavior_structure: b = bb and ts = i} behavior_state_request_rate[bb, s, n, ss] * p;
+		
+s.t. null_states {s in Services, n in Selflets, b in Behaviors, i in States} :
+		behavior_state_request_rate[b, s, n, i] <= behavior_of_service_in_selflet[n, s, b] * lambda_services_selflets[n, s];
+
+### if the state does not exists, then both local and remote are zero
+s.t. state_local_remote_non_executed {b in Behaviors, i in States, n in Selflets} :
+		state_locally_executed[b, i, n] + state_remotely_executed[b, i, n] <= state_exists[b, i];
+
+### if behavior is is in the selflet and the state exists then either it is local or it is remote
+s.t. state_executed_if_current_behavior {b in Behaviors, i in States, n in Selflets} :
+		state_locally_executed[b, i, n] + state_remotely_executed[b, i, n] = behavior_in_selflet[b, n] * state_exists[b, i];
+	
+### if behavior is in selflet and it is ability, then it is locally executed
+s.t. state_is_locally_executed_if_ability{b in Behaviors, i in States, n in Selflets} :
+		state_locally_executed[b, i, n] >=  behavior_is_ability[b] * state_exists[b, i] * behavior_in_selflet[b, n];
+
+### if behavior is 
+s.t. state_is_locally_executed_if_service_on_selflet {b in Behaviors, i in States, n in Selflets} :
+		state_locally_executed[b, i, n] >= 
+		(sum{ (bb, ii, ss) in service_of_state: bb = b and ii = i}  service_on_selflet[n, ss]) * state_exists[b, i] * behavior_in_selflet[b, n];
+		
+s.t. not_available_services_are_remotely_executed {b in Behaviors, i in States, n in Selflets} :
+		state_remotely_executed[b, i, n] >=  ( sum{ (bb, ii, ss) in service_of_state: bb = b and ii = i}  (1 - service_on_selflet[n, ss])) *  ( 1 - behavior_is_ability[b]) * state_exists[b, i] * behavior_in_selflet[b, n];
+
+s.t. state_demand_constraint {b in Behaviors, n in Selflets, i in States} :
+		state_demand[b, n, i] = sum{ (b_DL, dl_demand) in DL, (bb, ss) in implementing_behaviors: bb = b and b_DL == b} 
+				( state_locally_executed[b, i, n] * behavior_of_service_in_selflet[n, ss, b] * behavior_is_ability[b] * dl_demand + 
+				  state_remotely_executed[b, i, n] * DR )  * state_exists[b, i];
+
+
+### FAKE CONSTRAINT															
+s.t. fake_constraint {n in Selflets} : 
+		sum{s in Services} service_on_selflet[n, s] <= 2;
+																											
+s.t. state_utilization {b in Behaviors, n in Selflets, i in States, s in Services} : 
+		util[b, n, i, s] = state_demand[b, n, i] * behavior_state_request_rate[b, s, n, i] * state_exists[b, i] ; 
+		
+		
+s.t. selflet_utilization {n in Selflets} :
+		selflet_util[n] = sum {b in Behaviors, i in States, s in Services} util[b, n, i, s];
+
+
+s.t. utilization_threshold{n in Selflets} : 
+		selflet_util[n] <= 1;
+
+
+s.t. service_redirect_lambda{n1 in Selflets, b in Behaviors, i in States}:
+		sum{n2 in Selflets: n1 <> n2} lambda_redirect[n1, b, i, n2 ] =  sum{s in Services} behavior_state_request_rate[b, s, n1, i] * state_remotely_executed[b, i, n1] * state_exists[b, i] * active_selflet[n1];
+		
+### Response time for service s is bounded by a parameter
+###s.t. maximum_response_time {s in Services} :
+###		(sum{n in Selflets} lambda_services_selflets[n, s] * response_time[n , s]) /
+###		(sum{n in Selflets} lambda_services_selflets[n, s]) 
+###		<= Max_response_time[s];
+		

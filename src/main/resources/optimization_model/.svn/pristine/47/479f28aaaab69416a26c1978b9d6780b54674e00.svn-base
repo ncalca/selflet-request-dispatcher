@@ -1,0 +1,49 @@
+reset;
+
+# INCLUDE KNITRO AND OUTPUT OPTIONS
+include run/options.run
+
+model mod/selflet.mod;
+data "dat/scalabilityInstances2/6.dat";
+
+
+param MIN_LOAD := 0.2;
+param MAX_LOAD := 0.2;
+param LOAD_STEP := 0.1;
+param MIN_SELFLETS_RANGE := 5;
+param MAX_SELFLETS_RANGE := 5;
+
+for{n_selflets in MIN_SELFLETS_RANGE .. MAX_SELFLETS_RANGE by 1} {
+	for{load in MIN_LOAD .. MAX_LOAD  by LOAD_STEP} {
+		
+		#let MIN_SELFLETS := max(ceil(load * n_selflets), 1);
+		let MIN_SELFLETS := 0;
+	
+#		repeat{
+			display n_selflets;
+			display load;
+		
+			let N := n_selflets;
+			let {j in Services} Lambda[j] := (load * n_selflets) / S; 
+		
+		#	let Lambda[1] := load;
+			display Lambda;
+					
+	#		display active_selflet, service_on_selflet,lambda_services_selflets;
+	#		display behavior_in_selflet;
+				
+			display MIN_SELFLETS;
+			display solve_result;
+			
+			### SOLVE THE PROBLEM
+			include run/solve_problem.run;
+			
+			### EXIT CONDIIONS
+			if solve_result = "solved" then break;
+			if MIN_SELFLETS = 0 then break;
+			
+			let MIN_SELFLETS := MIN_SELFLETS - 1;
+	#	};
+	}
+}	
+

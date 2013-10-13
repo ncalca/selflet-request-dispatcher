@@ -1,0 +1,76 @@
+### DATA ###
+
+data;
+
+### SELFLETS ###
+param N := 4 ;
+
+### SERVICES ###
+param S := 4 ;
+
+param Lambda :=	
+	1	0.1	
+	2	0.2	
+	3	0.6
+	4	0.8	;
+	
+param Max_response_time :=	
+	1	5	
+	2	10	
+	3	10
+	4	10	;
+	
+### BEHAVIOR IMPLEMENTING SERVICES ###
+# (behavior, service implemented)
+set implementing_behaviors :=
+	(1, 1)
+	(2, 1)	
+	(3, 1)
+	(4, 2)	
+	(5, 3)
+	(6, 4)	;
+	
+
+#### BEHAVIOR STRUCTURE ####
+# tuple: (behavior, target_state, source_state, probability)
+set behavior_structure := 
+		(1, 2, 1, 0.3)			(1, 3, 1, 0.7)			(1, 4, 2, 1)		(1, 4, 3, 1) 
+		(2, 2, 1, 0.3)			(2, 3, 1, 0.7)			(2, 4, 2, 1)		(2, 4, 3, 1) 
+		(3, 2, 1, 0.5)			(3, 3, 1, 0.5)			(3, 4, 2, 1)		(3, 4, 3, 1) 
+		(4, 2, 1, 0.1)			(4, 3, 1, 0.9)			(4, 4, 2, 1)		(4, 4, 3, 1)		(4, 5, 4, 1)
+		(5, 1, 1, 1)	
+		(6, 1, 1, 1)	;
+
+
+#### SERVICE IMPLEMENTED AT EACH STATE OF THE BEHAVIOR ####
+# tuple: (behavior, state, service)
+set service_of_state :=
+		(1, 1, 3)		(1, 2, 3)		(1, 3, 3)		(1, 4, 4)
+		(2, 1, 3)		(2, 2, 3)		(2, 3, 3)		(2, 4, 4)		
+		(3, 1, 3)		(3, 2, 3)		(3, 3, 3)		(3, 4, 4)		
+		(4, 1, 3)		(4, 2, 3)		(4, 3, 3)		(4, 4, 4)		(4, 5, 3)	
+		(5, 1, 3)
+		(6, 1, 4);
+		
+		
+#### DEMANDS #####
+
+# Demand for remote execution
+param DR := 0.2	;
+
+# Demand for abilities
+# tuple: (behavior, demand) 
+set DL :=
+	(1, 0)
+	(2, 0)
+	(3, 0)
+	(4, 0)
+	(5,	1)
+	(6, 1)	;
+	
+	
+	
+	
+	
+	
+	

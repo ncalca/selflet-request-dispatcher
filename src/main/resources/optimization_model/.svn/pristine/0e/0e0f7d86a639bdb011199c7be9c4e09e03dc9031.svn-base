@@ -1,0 +1,235 @@
+\documentclass[11pt]{amsart}
+\usepackage{geometry}                % See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   % ... or a4paper or a5paper or ... 
+%\geometry{landscape}                % Activate for for rotated page geometry
+%\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{epstopdf}
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+
+\title{SelfLet optimization model}
+%\author{Nicola Calcavecchia}
+
+\newcommand{\slet}{\texttt{SelfLet}}
+\newcommand{\moreslet}{\texttt{SelfLet}s}
+
+\begin{document}
+\maketitle
+
+{\bf \moreslet{}, services and behaviors:}
+
+We model our system with a set $\mathcal{N}$ of \moreslet{}. We use the index $n$ to denote a \slet{}. 
+
+Each \slet{} acts as a container of services. $\mathcal{S}$ is the set of available services and we denote a single service with index $s$. 
+
+\moreslet{} can be active (i.e., offering services) or not. We use the variable $y_n$ to denote an active \slet{}. 
+
+
+$$
+y_{n} = \left\{ 
+	\begin{array}{rl}
+	1 & \mbox{if \slet{} $n$ is active} \\
+	0 & \mbox{otherwise} 
+	\end{array} \right.
+$$
+
+%There is a 1-1 association between a SelfLet and a VM.
+{\bf Service Placement:}
+
+Services are distributed among \moreslet{} and can have replicas. We formalize this aspect with the following decision variable.
+
+$$
+y_{n,s} = \left\{ 
+	\begin{array}{rl}
+	1 & \mbox{if \slet{} $n$ is running service $s$} \\
+	0 & \mbox{otherwise} 
+	\end{array} \right.
+$$
+
+In the overall system, each service is offered by at least one \slet{}: $ \sum_{n} y_{n,s} >= 1, \: \forall s$.
+
+
+If \slet{} is passive then  no services are placed on it:
+
+$$
+\sum_{s} y_{n,s} \leq y_n \cdot |\mathcal{S}|
+$$
+
+
+{\bf Behavior for service:}
+
+Each service can be implemented by different behaviors, however each behavior implements exactly one service. We denote the set of behaviors implementing service $s$ with the letter $\mathcal{B}_s$.
+
+Each service can have different behaviors implementing its functionality. The following variable is used to identify the current behavior of a given service $s$.
+
+$$
+z_{n,s,b} = \left\{ 
+	\begin{array}{rl}
+	1 & \mbox{if \slet{} $n$ is running service $s$ with behavior $b$} \\
+	0 & \mbox{otherwise} 
+	\end{array} \right.
+$$
+
+
+%$$
+%\sum_{s}\sum_{b} z_{nsb} \leq 1 \; \forall n
+%$$
+
+However, at any time, it is unique the behavior implementing service $s$ in \slet{} $n$ (if $s$ is offered by the \slet{}):
+$$
+\sum_{b \: \in \: \mathcal{B}_s} z_{n,s,b} = y_{n,s}
+$$
+
+{\bf Request rate:}
+
+Each service can be invoked in different ways and in different \moreslet{}. We denote the  overall request rate for service $s$ with $\Lambda_s$.
+
+$\Lambda_{n}^{s}$ is the decision variable representing the direct (i.e., from clients to \slet{}) request rate of \slet{} $n$ for service $s$. Of course $\sum_{n}\Lambda_{n}^{s} = \Lambda_s$.
+
+Requests are directed only toward \moreslet{} offering that service:
+$$
+\Lambda_n^s <= y_{n,s} \cdot \Lambda_s
+$$
+
+{\bf Behavior structure:}
+
+Behaviors are represented with state diagrams and we refer to them with index $b$. The symbol $\mathcal{I}_b$ represents the set of internal states of behavior $b$.
+Each state represents an invocation of a service and it is represented by vector $\mathbf{S}_b = (s_1, s_2,  \dots , s_{|\mathcal{I}_b|})$.
+Behaviors are executed by the \slet{} and according to some run time values, they can have different running traces (i.e., paths). We model this aspect with a transition probability from each state to another. The structure of behavior $b$ is thus represented with a routing matrix $\mathbf{P}_b$.
+
+Some of the services' implementations do not involve other services (i.e., the computation is fully completed in that state). We call these states \emph{ability} states. The following variables denotes states (i.e., services) that are locally executed and do not involve other service invocations.
+
+$$
+x_{n,i} = \left\{
+	\begin{array}{rl}
+	1 & \mbox{if state $i$ is locally executed as ability in \slet{} $n$} \\
+	0 & \mbox{otherwise} 
+	\end{array} \right.
+$$
+
+Binary variables for service execution:
+
+$$
+w_{n,i} = \left\{ 
+	\begin{array}{rl}
+	1 & \mbox{if state $i$ is remotely executed from \slet{} $n$} \\
+	0 & \mbox{otherwise} 
+	\end{array} \right.
+$$
+
+$$
+\tilde{w}_{n,i,m} = \left\{ 
+	\begin{array}{rl}
+	1 & \mbox{if state $i$ is remotely executed from \slet{} $n$ to \slet{} $m$} \\
+	0 & \mbox{otherwise} 
+	\end{array} \right.
+$$
+
+There are two different demand values depending on where the service is executed. 
+
+$$D^s = \left\{ 
+	\begin{array}{rl}
+	DL^s & \mbox{local execution} \\
+	DR^s & \mbox{remote execution} 
+	\end{array} \right.
+$$
+
+
+Demand for state $i$ in \slet{} $n$ is given by the following equation:
+$$
+D_{n,i} = DL^{i} \cdot x_{n,i} + DR^{i} \cdot w_{n,i}
+$$
+where $\sum_{n}\sum_{i} x_{n,i} + w_{n,i} \leq 1$.
+
+Request rate for state $i$ of \slet{} $n$, for behavior $b$ of service $s$ is a function of the behavior structure (i.e., only a fraction of requests goes to state $i$):
+$$
+\mbox{{\boldmath $\Lambda$}}_n^{b,s} = \mathbf{P}_b \cdot \mbox{{\boldmath $\Lambda$}}_n^{b,s} + \Lambda_n^s \cdot \mathbf{e_1}
+$$
+
+Contribution to utilization for state $i$ in behavior $b$ of service $s$ for \slet{} $n$. 
+$$
+U_{i,n} ^{b,s} = D_{n,i} \cdot \lambda_{i,n}^{b,s}
+$$
+
+
+The total utilization for \slet{} $n$ is given by summing up all utilization contributions of each state of behaviors:
+
+$$
+U_n = \sum_{s}\sum_{b}\sum_{i} U_{i,n} ^{b,s} \cdot z_{n,s,b} < 1
+$$
+
+
+
+where $\lambda_{n,i,m}$ is execution frequency for state $i$ from \slet{} $n$ toward \slet{} $m$ (states are unique among \moreslet{}).
+
+$$
+\sum_{m} \lambda_{n,i,m} = \lambda_{i,n}
+$$
+
+where $\lambda_{i,n}$ is the frequency of execution of state $i$ for \slet{} $n$.
+
+There is also another way to express that constraint (i.e., considering internal behavior states):
+$$
+\lambda_{i,n} = \sum_{s}\sum_{b} \lambda_{i,n} ^{b,s}
+$$ 
+
+$$\lambda_{i,n} \leq M \cdot ( x_{n,i} + w_{n,i})$$
+
+Cumulative request rate for service $s$ over all \moreslet{}:
+$$
+\sum_{n} \Lambda_{n}^s = \Lambda^s
+$$
+
+Requests for service $s$ are forwarded toward a \slet{} only if that \slet{} is running it:
+$$
+\Lambda_n^s  \leq \Lambda^s \cdot y_{n,s}
+$$
+
+{\bf Response Time}
+
+We denote with $R_{i,n}$ the average response time for state $i$ in \slet{} $n$ (just a note about the notation: we only use $i$ for referring an internal state of \slet{} $n$). 
+
+The average response time is composed by two parts: (i) the contribution of the current utilization, and (ii) the response time of remote invocations (?).
+
+$$
+R_{i,n} = \frac{D_{n,i}}{1 - U_n} + \frac{\sum_{m \neq n} \tilde{w}_{n,i,m} \cdot \lambda _{n,i,m} \cdot R_{i,m}}{\sum_{m \neq n} \lambda_{n,i,m}}
+$$
+
+
+The average response time for service $s$ in \slet{} $n$, $R^s_n$, is given summing the response time of each state composing it (according to the structure of the behavior).
+
+$$
+R^s_n = \sum_{b}\sum_{i} f(b) R_{i,n}
+$$
+
+The system-wide average response time is given by the weighted average over all \moreslet{}:
+$$
+R^s = \frac{\sum_{n} \Lambda^s_{n} \cdot R_n^{s}}{\sum_{n} \Lambda_n^s}
+$$
+
+
+{\bf SLA:}
+
+Services have an associated SLA expressed as maximum execution time:
+
+$$
+R^s \leq \overline{R}^s
+$$
+
+%$y_ns \leq 2 y_n$ 
+
+
+{\bf Objective Function:}
+
+The objective function is the minimization of the active \slet{}
+
+$$
+\min \sum_{n} y_n
+$$
+
+
+
+
+
+\end{document}  

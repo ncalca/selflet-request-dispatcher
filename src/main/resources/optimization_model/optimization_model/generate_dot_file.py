@@ -1,0 +1,186 @@
+import ast
+import sets
+from numpy import *
+
+
+def read_single_value(file):
+	return int(file.readline().split("=")[1])
+
+def skip_lines(file, times):
+	for i in range(times):
+		file.readline()
+		
+def generate_service_table(attribute_list):
+	table = "<<TABLE>"
+	for (key,value) in attribute_list:
+		table = table + "<TR> <TD>" + str(key) + "</TD> <TD>" +str(value) + "</TD> </TR>\n"
+	return table + "</TABLE>>"
+
+def parse_list_of_tuples(file):
+	list = []
+	line = f.readline()
+	while (":=" not in line and "[" not in line ) and line:
+		list.extend(map(lambda (a): a.replace(";",""), line.split() ))
+		line = f.readline()
+	return map(lambda (tuple): ast.literal_eval(tuple), list)
+
+def node_name(state, behavior, selflet):
+	return "state_" + str(state) + "_" + str(behavior) + "_" + str(selflet)
+
+def service_of_state_in_behavior(state, behavior):
+	return  str(filter(lambda (bb, ii, ss): (bb == behavior and ii == state), service_of_state)[0][2])
+
+def remote_execution(behavior, state, selflet):
+	return len(filter(lambda (bb, ii, ss): (bb == behavior and ii == state and selflet == ss), state_remotely_executed)) > 0
+		
+def make_node_list(selflet, behavior):
+	states = filter(lambda (b, ts, ss, p): b == behavior, behavior_structure)
+	node_string = ""
+	unique_states = sets.Set(map(lambda (b, ts, ss, p): int(ts), states))
+	unique_states = unique_states.union(sets.Set(map(lambda (b, ts, ss, p): int(ss), states)))
+	
+	for state in unique_states:
+		where =  "remote" if remote_execution(behavior, state, selflet) else "local"
+		node_string += "\n" + node_name(state, behavior, selflet) + " [ label = \"{" + str(state)  + "|service: " + service_of_state_in_behavior(state, behavior) + "| " + where + "}\" ]\n" 
+	return node_string
+	
+def get_probability_of_edge(source, target, behavior):
+	list = filter(lambda (bb, ts, ss, p): (bb == behavior and ss == source and ts == target), behavior_structure)
+	return  str(list[0][3])
+	
+def make_edges(edges, selflet):
+	edges_string = ""
+	for (b, ts, ss, p) in edges:
+		if ts == ss:
+			continue
+		edges_string +=  node_name(ss, b, selflet) + 	" -> " + node_name(ts, b, selflet) + " [label = \"" + get_probability_of_edge(ss, ts, b) + "\"]\n"
+	return edges_string
+	
+def make_redirect_edges(selflet):
+	edges_string = ""
+	for (source_selflet, behavior, state, target_selflet) in lambda_redirect:
+		if target_selflet != selflet:
+			continue
+		destination_service = int(service_of_state_in_behavior(state, behavior))
+		destination_behavior = filter( lambda (nn, bb, ss): (nn == target_selflet and ss == destination_service) , behavior_of_service_in_selflet)[0]
+		edges_string += node_name(state, behavior, source_selflet) + " -> " + node_name(1, destination_behavior[1], target_selflet) + " [constraint = false, style = \"dashed\"""]\n"
+		
+	return edges_string
+		
+		
+INPUT_FILE = "model_output"
+f = open(INPUT_FILE,'r')
+
+# read number of selflets
+N = read_single_value(f)
+# read number of services
+S = read_single_value(f)
+# read number of behaviors
+B = read_single_value(f)
+
+f.readline()
+
+lambda_services_selflets = zeros([N, S], float)
+
+for selflet in range(1, N+1):
+	for service in range(1, S+1):
+		service_rate = map(float, f.readline().split())
+		index = map(lambda (n): int(n) - 1, service_rate[0:2])
+		lambda_services_selflets[index[0], index[1]] = service_rate[2]
+
+skip_lines(f, 2)
+
+
+# read active selflets
+active_selflets = []
+for selflet in range(1, N+1):
+	line = f.readline().split()
+	if int(line[1]) == 1:
+		active_selflets.append(selflet)
+
+skip_lines(f, 2)
+
+# read service in selflet
+service_in_selflet = []
+for selflet in range(1, N+1):
+	for service in range(1, S+1):
+		line = map(int, f.readline().split())
+		if line[2] == 1:
+			service_in_selflet.append((line[0], line[1]))
+
+f.readline()
+
+# read behavior of service in selflet
+behavior_of_service_in_selflet = []
+
+for selflet in range(1, N + 1):
+	skip_lines(f,2)
+	for behavior in range(1, B + 1):
+		line = map(int, f.readline().split())
+		for service in range(1, S+1):
+			if line[service] == 1:
+				behavior_of_service_in_selflet.append((selflet, behavior, service))
+				
+skip_lines(f, 2)
+# read behavior structure
+behavior_structure = parse_list_of_tuples(f)
+#read service of state
+service_of_state = parse_list_of_tuples(f)
+
+state_locally_executed = []
+state_remotely_executed = []
+
+for selflet in range(1, N + 1):
+	skip_lines(f,1)
+	for behavior in range(1, B + 1):
+		line = map(int, f.readline().split())
+		for state in range(1, len(line)):
+			if line[state] == 1:
+				state_locally_executed.append((behavior, state, selflet))
+	skip_lines(f,1)
+	
+
+for selflet in range(1, N + 1):
+	skip_lines(f,2)
+	for behavior in range(1, B + 1):
+		line = map(int, f.readline().split() )
+		for state in range(1, len(line)):
+			if line[state] == 1:
+				state_remotely_executed.append((behavior, state, selflet))
+
+#lambda_redirect = [(1, 2, 4, 2)]
+
+# close INPUT_FILE
+
+f.close()
+
+OUTPUT_FILE = "graph.dot"
+f = open(OUTPUT_FILE,'w')
+f.write("digraph G {\n")
+#f.write("\trankdir=\"LR\";\n")
+for selflet in active_selflets:
+	f.write("node [shape=record]; \tsubgraph cluster_selflet" + str(selflet) + " {\n")
+#	f.write("\trankdir=\"TB\";\n")
+	for selflet1, service in filter(lambda (x, y): x==selflet, service_in_selflet):
+		service_attributes = []
+		behavior_tuple = filter(lambda (x, y, z): x == selflet and z == service, behavior_of_service_in_selflet)[0]
+		service_attributes.append(("Service", service))
+		service_attributes.append(("Behavior", behavior_tuple[1]))
+		service_attributes.append(("Rate", lambda_services_selflets[selflet-1, service-1]))
+		f.write("\t\tsubgraph cluster_service" + str(service) + " {\n")
+#		f.write("\t\trankdir=\"TB\";\n")
+		
+		f.write("\t\tlabel = " + generate_service_table(service_attributes) + "\n")
+		f.write("\t\t" + make_node_list(selflet, behavior_tuple[1]))
+		f.write("\t\t")
+		edges = filter(lambda (b, ts, ss, p): b == behavior_tuple[1], behavior_structure)
+		f.write("\t\t" + make_edges(edges, selflet))
+		f.write("\t\t}\n")
+	f.write("\tlabel = \"selflet " + str(selflet) + "\";\n")
+	f.write("\t\t" + make_redirect_edges(selflet))
+	f.write("\t}\n\n")
+f.write("}\n")
+# close DOT FILE
+f.close()
+
+

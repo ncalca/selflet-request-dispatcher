@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Labels</key>
+	<string>Centralized Optimization Model
+Number of Selflets
+Solving time (sec)
+20% load
+30% load
+40% load
+50% load
+60% load
+70% load
+</string>
+	<key>Text</key>
+	<string></string>
+</dict>
+</plist>

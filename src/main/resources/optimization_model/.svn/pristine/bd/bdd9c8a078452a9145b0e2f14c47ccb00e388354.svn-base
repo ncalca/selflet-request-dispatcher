@@ -1,0 +1,25 @@
+printf "####### OUTPUT ###########\n";
+
+for {s in Services}{
+	for {n in Selflets}{
+		for{b in Behaviors}{
+			if behavior_of_service_in_selflet[n, s, b] = 1 then
+			printf "\t Service %d in Selflet %d implemented by Behavior %d (%d states) \n", s, n, b, states_of_behavior [b] ;
+		}
+	}
+}
+
+printf "##################\n";
+
+#("rm model_output") ;
+display N > model_output ;
+display S >> model_output ;
+display B >> model_output ;
+display lambda_services_selflets >> model_output ;
+display active_selflet >> model_output ;
+display service_on_selflet >> model_output ;
+display behavior_of_service_in_selflet >> model_output ;
+display behavior_structure >> model_output ;
+display service_of_state >> model_output ;
+display state_locally_executed >> model_output;
+display state_remotely_executed >> model_output;

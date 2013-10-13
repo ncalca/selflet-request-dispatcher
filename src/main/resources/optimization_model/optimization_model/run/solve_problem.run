@@ -1,0 +1,17 @@
+
+
+#display load;
+#display n_selflets;
+#display util;
+#display Lambda;
+
+shell('date');
+solve;
+shell('date');
+
+include run/print_data.run ;
+include run/print_output.run ;
+if solve_result = "solved" then {
+	shell("./scripts/make_and_show_graph.sh") ;
+}	
+shell("mv knitro.log logs/load_" & trunc(load, 2) & "_n_selflets_" & n_selflets & ".log") ;

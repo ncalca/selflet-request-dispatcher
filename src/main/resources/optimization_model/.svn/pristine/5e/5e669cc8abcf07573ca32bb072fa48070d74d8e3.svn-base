@@ -1,0 +1,46 @@
+reset;
+model selflet.mod;
+data simple_data.dat;
+
+option solver knitroampl;
+
+solve;
+
+option display_precision 3 ;
+#option solution_precision 3 ;
+option display_eps 0.0001;
+#option display_round 3;
+
+
+printf "####### PARAMS ###########\n";
+printf "\tSelfLets %d\n", N ;
+printf "\tServices %d\n", S ;
+printf "\tBehaviors %d\n", B;
+printf "\tMax states %d\n" , max_states;
+
+for{s in Services}{
+	printf "\tBehaviors for service %d: [", s ; 
+	for{ (b, ss) in implementing_behaviors: ss = s}{
+		printf " %d ", b ;
+	}
+	printf "]\n" ;
+}
+
+# display implementing_behaviors ;
+printf "##################\n";
+
+
+
+if solve_result = "infeasible" then {
+	printf "\n\n";
+	printf "\t\t --------------------\n" ; 
+	printf "\t\t ---- INFEASIBLE! ---\n" ; 
+	printf "\t\t --------------------\n" ; 
+	printf "\n\n";
+	} else{
+		include print_output.run
+		shell("./make_and_show_graph.sh") ;		
+	}
+	
+display selflet_util;
+
