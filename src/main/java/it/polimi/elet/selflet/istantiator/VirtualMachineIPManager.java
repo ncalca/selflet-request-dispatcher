@@ -32,6 +32,7 @@ public class VirtualMachineIPManager implements IVirtualMachineIPManager {
 
 	// (IP, SELFLETID) -> TODO replace with better typing
 	private final Map<String, String> ipToSelfletIDs;
+	private final Map<String, ISelfLetID> ipToActiveSelfLets;
 
 	private String brokerAddress = "";
 
@@ -39,6 +40,7 @@ public class VirtualMachineIPManager implements IVirtualMachineIPManager {
 		takenIPAddresses = Sets.newCopyOnWriteArraySet();
 		availableIPAddresses = Sets.newCopyOnWriteArraySet();
 		ipToSelfletIDs = Maps.newConcurrentMap();
+		ipToActiveSelfLets = Maps.newConcurrentMap();
 	}
 
 	public static IVirtualMachineIPManager getInstance() {
@@ -77,6 +79,7 @@ public class VirtualMachineIPManager implements IVirtualMachineIPManager {
 		availableIPAddresses.addAll(takenIPAddresses);
 		takenIPAddresses.clear();
 		ipToSelfletIDs.clear();
+		ipToActiveSelfLets.clear();
 		this.brokerAddress = "";
 	}
 
@@ -117,9 +120,14 @@ public class VirtualMachineIPManager implements IVirtualMachineIPManager {
 
 		return EMPTY;
 	}
+	
+	public Set<ISelfLetID> getActiveSelfLets(){
+		return Sets.newHashSet(ipToActiveSelfLets.values()) ;
+	}
 
 	@Override
 	public void setVmToSelfletBinding(String ipAddress, ISelfLetID selfletID) {
+		ipToActiveSelfLets.put(ipAddress, selfletID);
 		setVmToSelfletBinding(ipAddress, selfletID.toString());
 	}
 
@@ -163,6 +171,7 @@ public class VirtualMachineIPManager implements IVirtualMachineIPManager {
 			if (selfletToBeRemoved.toString().equals(selfletId)) {
 				LOG.info("Freeing IP of selflet: " + selfletToBeRemoved + ". Was at " + ipAddress);
 				ipToSelfletIDs.remove(ipAddress);
+				ipToActiveSelfLets.remove(ipAddress);
 				availableIPAddresses.add(ipAddress);
 				takenIPAddresses.remove(ipAddress);
 			}

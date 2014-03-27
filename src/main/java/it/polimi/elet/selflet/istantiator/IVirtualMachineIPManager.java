@@ -53,6 +53,13 @@ public interface IVirtualMachineIPManager {
 	 * */
 	String getContentOfVM(String ipAddress);
 
+	/**
+	 * Returns the set of SelfLetsID of current active SelfLets
+	 * 
+	 * @return set of SelfLetsID of current active SelfLets
+	 */
+	public Set<ISelfLetID> getActiveSelfLets();
+
 	void setVmToSelfletBinding(String vmIPAddress, String selfletID);
 
 	void setVmToSelfletBinding(String ipAddress, ISelfLetID newSelfletID);
@@ -71,7 +78,7 @@ public interface IVirtualMachineIPManager {
 	 * Returns all known IP addresses
 	 * */
 	Set<String> getAllIPAddresses();
-	
+
 	Set<String> getAvailableIPs();
 
 	void freeIPOfSelflet(ISelfLetID selfletToBeRemoved);
