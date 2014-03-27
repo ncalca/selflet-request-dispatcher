@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -26,9 +27,11 @@ public class NodeStateManager implements INodeStateManager {
 	private static final long THRESHOLD = DispatcherConfiguration.stateMaximumAgeInSec * 1000;
 
 	private static final NodeStateManager instance = new NodeStateManager();
-	private static final ISelfletNeighbors selfletNeighbors = SelfletNeighbors.getInstance();
+	private static final ISelfletNeighbors selfletNeighbors = SelfletNeighbors
+			.getInstance();
 
-	private final Map<ISelfLetID, INodeState> nodeStates = Maps.newConcurrentMap();
+	private final Map<ISelfLetID, INodeState> nodeStates = Maps
+			.newConcurrentMap();
 
 	private NodeStateManager() {
 		/* Private constructor */
@@ -46,12 +49,26 @@ public class NodeStateManager implements INodeStateManager {
 		return nodeStates.get(selfletID);
 	}
 
+	// FIXME trying to manage "ghost selflets". It's not the best solution, but
+	// can help finding the problem...
 	public void cleanOldStates() {
+		Set<Entry<ISelfLetID, INodeState>> oldsSet = nodeStates.entrySet();
+
 		for (Entry<ISelfLetID, INodeState> entry : nodeStates.entrySet()) {
 			if (isOldNodeState(entry.getValue())) {
 				nodeStates.remove(entry.getKey());
 				selfletNeighbors.removeNeighbor(entry.getKey());
 			}
+		}
+
+		// FIXME Double check, trying to solve the bug of "ghost selflets" in
+		// dispatcher neighbors
+		for (Entry<ISelfLetID, INodeState> oldEntry : oldsSet) {
+
+			if (!nodeStates.containsKey(oldEntry.getKey())
+					&& selfletNeighbors.getNeighbors().contains(
+							oldEntry.getKey()))
+				selfletNeighbors.removeNeighbor(oldEntry.getKey());
 		}
 	}
 
@@ -81,7 +98,8 @@ public class NodeStateManager implements INodeStateManager {
 	public ISelfLetID getRandomSelfletHavingService(String serviceName) {
 		List<ISelfLetID> selfletIDs = getSelfletsWithService(serviceName);
 		if (selfletIDs.isEmpty()) {
-			throw new NotFoundException("Cannot find a selflet offering service " + serviceName);
+			throw new NotFoundException(
+					"Cannot find a selflet offering service " + serviceName);
 		}
 		return CollectionUtils.randomElement(selfletIDs);
 	}
