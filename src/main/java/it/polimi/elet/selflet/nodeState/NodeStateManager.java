@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -49,26 +48,13 @@ public class NodeStateManager implements INodeStateManager {
 		return nodeStates.get(selfletID);
 	}
 
-	// FIXME trying to manage "ghost selflets". It's not the best solution, but
-	// can help finding the problem...
 	public void cleanOldStates() {
-		Set<Entry<ISelfLetID, INodeState>> oldsSet = nodeStates.entrySet();
 
 		for (Entry<ISelfLetID, INodeState> entry : nodeStates.entrySet()) {
 			if (isOldNodeState(entry.getValue())) {
 				nodeStates.remove(entry.getKey());
 				selfletNeighbors.removeNeighbor(entry.getKey());
 			}
-		}
-
-		// FIXME Double check, trying to solve the bug of "ghost selflets" in
-		// dispatcher neighbors
-		for (Entry<ISelfLetID, INodeState> oldEntry : oldsSet) {
-
-			if (!nodeStates.containsKey(oldEntry.getKey())
-					&& selfletNeighbors.getNeighbors().contains(
-							oldEntry.getKey()))
-				selfletNeighbors.removeNeighbor(oldEntry.getKey());
 		}
 	}
 
