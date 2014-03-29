@@ -17,6 +17,7 @@ public class ResultEntry {
 	private Map<String, Double> responseTimes = Maps.newHashMap();
 
 	private double averageUtilization;
+	private double averageUtilizationUpperBound;
 
 	public List<String> getMonitoredServices() {
 		return monitoredServices;
@@ -44,7 +45,8 @@ public class ResultEntry {
 
 	@Override
 	public String toString() {
-		return "Active: " + activeSelflets + ", monitored: " + monitoredServices + ", responseTimes: " + responseTimes;
+		return "Active: " + activeSelflets + ", monitored: "
+				+ monitoredServices + ", responseTimes: " + responseTimes;
 	}
 
 	public void setAverageUtilization(double averageUtilization) {
@@ -53,5 +55,14 @@ public class ResultEntry {
 
 	public double getAverageUtilization() {
 		return this.averageUtilization;
+	}
+
+	public void setAverageUtilizationUpperBound(
+			double averageUtilizationUpperBound) {
+		this.averageUtilizationUpperBound = averageUtilizationUpperBound;
+	}
+
+	public double getAverageUtilizationUpperBound() {
+		return this.averageUtilizationUpperBound;
 	}
 }

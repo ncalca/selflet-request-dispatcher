@@ -26,6 +26,7 @@ public class CSVWriter {
 	private static final String EPOCH_HEADER = "epoch";
 	private static final String ACTIVE_SEFLETS_HEADER = "activeSelflets";
 	private static final String UTILIZATION_HEADER = "utilization";
+	private static final String UTILIZATION_UPPER_BOUND_HEADER = "upperBound";
 
 	private final List<String> monitoredServices;
 
@@ -42,6 +43,7 @@ public class CSVWriter {
 		writeField(EPOCH_HEADER);
 		writeField(ACTIVE_SEFLETS_HEADER);
 		writeField(UTILIZATION_HEADER);
+		writeField(UTILIZATION_UPPER_BOUND_HEADER);
 
 		for (String service : monitoredServices) {
 			writeField(service);
@@ -65,6 +67,7 @@ public class CSVWriter {
 		writeField(++currentTimeInterval);
 		writeField(resultEntry.getActiveSelflets());
 		writeField(resultEntry.getAverageUtilization());
+		writeField(resultEntry.getAverageUtilizationUpperBound());
 		for (String service : resultEntry.getMonitoredServices()) {
 			writeField(resultEntry.getResponseTime(service));
 		}

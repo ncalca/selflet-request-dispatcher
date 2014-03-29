@@ -84,6 +84,7 @@ public class ResultsLogger extends TimerTask implements IPeriodicTask {
 		ResultEntry resultEntry = new ResultEntry();
 		resultEntry.setActiveSelflets(states.size());
 		resultEntry.setAverageUtilization(computeAverageUtilization(states));
+		resultEntry.setAverageUtilizationUpperBound(computeAverageUtilizationUpperBound(states));
 		resultEntry.setMonitoredServices(monitoredServices);
 		setResponseTimes(resultEntry, states);
 		return resultEntry;
@@ -95,6 +96,22 @@ public class ResultsLogger extends TimerTask implements IPeriodicTask {
 
 		for (INodeState nodeState : states) {
 			sum += nodeState.getUtilization();
+			count++;
+		}
+
+		if (count == 0) {
+			return 0;
+		}
+
+		return sum / count;
+	}
+
+	private double computeAverageUtilizationUpperBound(List<INodeState> states) {
+		double sum = 0;
+		int count = 0;
+
+		for (INodeState nodeState : states) {
+			sum += nodeState.getUtilizationUpperBound();
 			count++;
 		}
 
