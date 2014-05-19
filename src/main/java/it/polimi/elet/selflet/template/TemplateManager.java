@@ -23,6 +23,7 @@ public class TemplateManager implements ITemplateManager {
 
 	private void loadTemplates() {
 		// TODO, just a mock
+		templates.add("empty");
 		templates.add("selflet1");
 		templates.add("selflet2");
 		templates.add("knitro");
