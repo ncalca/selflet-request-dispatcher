@@ -5,6 +5,7 @@ import it.polimi.elet.selflet.istantiator.IVirtualMachineIPManager;
 import it.polimi.elet.selflet.istantiator.SelfletIstantiatorThread;
 import it.polimi.elet.selflet.istantiator.VirtualMachineIPManager;
 import it.polimi.elet.selflet.negotiation.nodeState.INodeState;
+import it.polimi.elet.selflet.negotiation.nodeState.NodeState;
 import it.polimi.elet.selflet.nodeState.INodeStateManager;
 import it.polimi.elet.selflet.nodeState.NodeStateManager;
 import it.polimi.elet.thread.ThreadPool;
@@ -22,13 +23,17 @@ import polimi.reds.TCPDispatchingService;
  * */
 public class MessageDispatchingThread extends Thread {
 
-	private static final Logger LOG = Logger.getLogger(MessageDispatchingThread.class);
+	private static final Logger LOG = Logger
+			.getLogger(MessageDispatchingThread.class);
 
 	private static final int WAIT_STEP_MS = 50;
 
-	private final INodeStateManager nodeStateManager = NodeStateManager.getInstance();
-	private final ISelfletNeighbors selfletNeighbors = SelfletNeighbors.getInstance();
-	private final IVirtualMachineIPManager virtualMachineIPManager = VirtualMachineIPManager.getInstance();
+	private final INodeStateManager nodeStateManager = NodeStateManager
+			.getInstance();
+	private final ISelfletNeighbors selfletNeighbors = SelfletNeighbors
+			.getInstance();
+	private final IVirtualMachineIPManager virtualMachineIPManager = VirtualMachineIPManager
+			.getInstance();
 
 	private final TCPDispatchingService dispatchingService;
 	private boolean stop;
@@ -56,6 +61,8 @@ public class MessageDispatchingThread extends Thread {
 						LOG.info("Received other kind of message: " + message);
 					}
 				}
+
+				killZombieSelflets();
 
 				goToSleep();
 
@@ -101,15 +108,20 @@ public class MessageDispatchingThread extends Thread {
 	}
 
 	private void removeSelflet(SelfLetMsg selfletMessage) {
-		LOG.debug("Received request to remove selflet " + selfletMessage.getFrom());
+		LOG.debug("Received request to remove selflet "
+				+ selfletMessage.getFrom());
 		ISelfLetID selfletToBeRemoved = selfletMessage.getFrom();
+		removeSelflet(selfletToBeRemoved);
+	}
+	
+	private void removeSelflet(ISelfLetID selfletToBeRemoved){
 		nodeStateManager.removeNodeStateOfNeighbor(selfletToBeRemoved);
 		virtualMachineIPManager.freeIPOfSelflet(selfletToBeRemoved);
 	}
 
 	private void istantiateNewSelfletMessage(SelfLetMsg selfletMessage) {
-		SelfletIstantiatorThread selfletIstantiatorThread = new SelfletIstantiatorThread(dispatchingService,
-				selfletMessage);
+		SelfletIstantiatorThread selfletIstantiatorThread = new SelfletIstantiatorThread(
+				dispatchingService, selfletMessage);
 		ThreadPool.submitGenericJob(selfletIstantiatorThread);
 		LOG.debug("SelfletIstantiatorThread started");
 	}
@@ -122,6 +134,15 @@ public class MessageDispatchingThread extends Thread {
 	private void aliveSelfletMessage(SelfLetMsg selfletMessage) {
 		ISelfLetID from = selfletMessage.getFrom();
 		selfletNeighbors.addNeighbor(from);
+	}
+
+	private void killZombieSelflets() {
+		for (INodeState nodeState : nodeStateManager.getStates()) {
+			if (!selfletNeighbors.getNeighbors().contains(
+					nodeState.getSelfletID())) {
+				removeSelflet(nodeState.getSelfletID());
+			}
+		}
 	}
 
 }
