@@ -140,7 +140,7 @@ public class MessageDispatchingThread extends Thread {
 		for (INodeState nodeState : nodeStateManager.getStates()) {
 			if (!selfletNeighbors.getNeighbors().contains(
 					nodeState.getSelfletID())) {
-				removeSelflet(nodeState.getSelfletID());
+				virtualMachineIPManager.freeIPOfSelflet(nodeState.getSelfletID());
 			}
 		}
 	}
