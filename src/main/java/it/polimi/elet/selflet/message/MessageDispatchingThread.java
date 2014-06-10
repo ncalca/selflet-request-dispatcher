@@ -11,6 +11,7 @@ import it.polimi.elet.selflet.nodeState.NodeStateManager;
 import it.polimi.elet.thread.ThreadPool;
 
 import org.apache.log4j.Logger;
+import org.eclipse.jetty.util.log.Log;
 
 import polimi.reds.Message;
 import polimi.reds.TCPDispatchingService;
@@ -137,11 +138,12 @@ public class MessageDispatchingThread extends Thread {
 	}
 
 	private void killZombieSelflets() {
-		
+		Log.debug("killing zombies...");
 		for(ISelfLetID selfletId : virtualMachineIPManager.getActiveSelfLets()){
 			if (!selfletNeighbors.getNeighbors().contains(selfletId))
 			{
 				virtualMachineIPManager.freeIPOfSelflet(selfletId);
+				Log.debug("killed zombie: " + selfletId);
 			}
 		}
 	}
