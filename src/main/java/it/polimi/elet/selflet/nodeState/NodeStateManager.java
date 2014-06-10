@@ -11,6 +11,8 @@ import com.google.common.collect.Maps;
 import it.polimi.elet.selflet.configuration.DispatcherConfiguration;
 import it.polimi.elet.selflet.exceptions.NotFoundException;
 import it.polimi.elet.selflet.id.ISelfLetID;
+import it.polimi.elet.selflet.istantiator.IVirtualMachineIPManager;
+import it.polimi.elet.selflet.istantiator.VirtualMachineIPManager;
 import it.polimi.elet.selflet.message.ISelfletNeighbors;
 import it.polimi.elet.selflet.message.SelfletNeighbors;
 import it.polimi.elet.selflet.negotiation.nodeState.INodeState;
@@ -27,6 +29,8 @@ public class NodeStateManager implements INodeStateManager {
 
 	private static final NodeStateManager instance = new NodeStateManager();
 	private static final ISelfletNeighbors selfletNeighbors = SelfletNeighbors
+			.getInstance();
+	private final IVirtualMachineIPManager virtualMachineIPManager = VirtualMachineIPManager
 			.getInstance();
 
 	private final Map<ISelfLetID, INodeState> nodeStates = Maps
@@ -54,6 +58,7 @@ public class NodeStateManager implements INodeStateManager {
 			if (isOldNodeState(entry.getValue())) {
 				nodeStates.remove(entry.getKey());
 				selfletNeighbors.removeNeighbor(entry.getKey());
+				virtualMachineIPManager.freeIPOfSelflet(entry.getKey());
 			}
 		}
 	}
