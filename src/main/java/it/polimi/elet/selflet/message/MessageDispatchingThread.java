@@ -63,8 +63,6 @@ public class MessageDispatchingThread extends Thread {
 					}
 				}
 
-				killZombieSelflets();
-
 				goToSleep();
 
 			}
@@ -135,17 +133,6 @@ public class MessageDispatchingThread extends Thread {
 	private void aliveSelfletMessage(SelfLetMsg selfletMessage) {
 		ISelfLetID from = selfletMessage.getFrom();
 		selfletNeighbors.addNeighbor(from);
-	}
-
-	private void killZombieSelflets() {
-		Log.debug("killing zombies...");
-		for(ISelfLetID selfletId : virtualMachineIPManager.getActiveSelfLets()){
-			if (!selfletNeighbors.getNeighbors().contains(selfletId))
-			{
-				virtualMachineIPManager.freeIPOfSelflet(selfletId);
-				Log.debug("killed zombie: " + selfletId);
-			}
-		}
 	}
 
 }
