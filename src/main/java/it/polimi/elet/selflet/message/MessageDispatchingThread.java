@@ -137,10 +137,11 @@ public class MessageDispatchingThread extends Thread {
 	}
 
 	private void killZombieSelflets() {
-		for (INodeState nodeState : nodeStateManager.getStates()) {
-			if (!selfletNeighbors.getNeighbors().contains(
-					nodeState.getSelfletID())) {
-				virtualMachineIPManager.freeIPOfSelflet(nodeState.getSelfletID());
+		
+		for(ISelfLetID selfletId : virtualMachineIPManager.getActiveSelfLets()){
+			if (!selfletNeighbors.getNeighbors().contains(selfletId))
+			{
+				virtualMachineIPManager.freeIPOfSelflet(selfletId);
 			}
 		}
 	}
