@@ -25,6 +25,7 @@ import it.polimi.elet.selflet.utilities.CollectionUtils;
  * */
 public class NodeStateManager implements INodeStateManager {
 
+	private static final int MAX_NEIGHBORS_PER_SELFLET = DispatcherConfiguration.maxNeighborsPerSelflet;
 	private static final long THRESHOLD = DispatcherConfiguration.stateMaximumAgeInSec * 1000;
 
 	private static final NodeStateManager instance = new NodeStateManager();
@@ -103,5 +104,17 @@ public class NodeStateManager implements INodeStateManager {
 			}
 		}
 		return selfletIDs;
+	}
+	
+	@Override
+	public boolean isNeighborhoodFull(ISelfLetID selflet){
+		INodeState nodestate = getNodeState(selflet);
+		boolean isFull = true;
+		isFull = isFull & nodestate.getKnownNeighbors().size() >= MAX_NEIGHBORS_PER_SELFLET;
+		for(ISelfLetID neighbor : nodestate.getKnownNeighbors()){
+			INodeState nodestateOfNeighbor = getNodeState(neighbor);
+			isFull = isFull & nodestateOfNeighbor.getKnownNeighbors().size() >= MAX_NEIGHBORS_PER_SELFLET;
+		}
+		return isFull;
 	}
 }

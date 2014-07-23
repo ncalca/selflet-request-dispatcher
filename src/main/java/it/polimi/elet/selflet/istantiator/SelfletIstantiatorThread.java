@@ -25,10 +25,18 @@ public class SelfletIstantiatorThread extends Thread {
 	private final ISelfletIstantiator selfletIstantiator = SelfletIstantiator.getInstance();
 	private final SelfLetMsg selfletMessage;
 	private final TCPDispatchingService dispatchingService;
+	private final String selfletTemplate;
 
 	public SelfletIstantiatorThread(TCPDispatchingService dispatchingService, SelfLetMsg selfletMessage) {
 		this.selfletMessage = selfletMessage;
 		this.dispatchingService = dispatchingService;
+		this.selfletTemplate = DEFAULT_TEMPLATE;
+	}
+	
+	public SelfletIstantiatorThread(TCPDispatchingService dispatchingService, SelfLetMsg selfletMessage, String selfletTemplate) {
+		this.selfletMessage = selfletMessage;
+		this.dispatchingService = dispatchingService;
+		this.selfletTemplate = selfletTemplate;
 	}
 
 	@Override
@@ -40,7 +48,7 @@ public class SelfletIstantiatorThread extends Thread {
 		LOG.debug("Istantiating new selflet");
 		try {
 			// AllocatedSelflet allocatedSelflet =
-					selfletIstantiator.istantiateNewSelflet(DEFAULT_TEMPLATE);
+					selfletIstantiator.istantiateNewSelflet(selfletTemplate);
 			// replyToSelflet(allocatedSelflet.getSelfletID());
 		} catch (IllegalStateException e) {
 			LOG.error("No more IPs available", e);

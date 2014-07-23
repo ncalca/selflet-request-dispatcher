@@ -5,13 +5,11 @@ import it.polimi.elet.selflet.istantiator.IVirtualMachineIPManager;
 import it.polimi.elet.selflet.istantiator.SelfletIstantiatorThread;
 import it.polimi.elet.selflet.istantiator.VirtualMachineIPManager;
 import it.polimi.elet.selflet.negotiation.nodeState.INodeState;
-import it.polimi.elet.selflet.negotiation.nodeState.NodeState;
 import it.polimi.elet.selflet.nodeState.INodeStateManager;
 import it.polimi.elet.selflet.nodeState.NodeStateManager;
 import it.polimi.elet.thread.ThreadPool;
 
 import org.apache.log4j.Logger;
-import org.eclipse.jetty.util.log.Log;
 
 import polimi.reds.Message;
 import polimi.reds.TCPDispatchingService;
@@ -112,15 +110,24 @@ public class MessageDispatchingThread extends Thread {
 		ISelfLetID selfletToBeRemoved = selfletMessage.getFrom();
 		removeSelflet(selfletToBeRemoved);
 	}
-	
-	private void removeSelflet(ISelfLetID selfletToBeRemoved){
+
+	private void removeSelflet(ISelfLetID selfletToBeRemoved) {
 		nodeStateManager.removeNodeStateOfNeighbor(selfletToBeRemoved);
 		virtualMachineIPManager.freeIPOfSelflet(selfletToBeRemoved);
 	}
 
 	private void istantiateNewSelfletMessage(SelfLetMsg selfletMessage) {
-		SelfletIstantiatorThread selfletIstantiatorThread = new SelfletIstantiatorThread(
-				dispatchingService, selfletMessage);
+		SelfletIstantiatorThread selfletIstantiatorThread;
+		if (!nodeStateManager.isNeighborhoodFull(selfletMessage.getFrom())) {
+			LOG.info("trying to start a default selflet");
+			selfletIstantiatorThread = new SelfletIstantiatorThread(
+					dispatchingService, selfletMessage);
+		} else {
+			String template = "videoProvisioner";
+			selfletIstantiatorThread = new SelfletIstantiatorThread(
+					dispatchingService, selfletMessage, template);
+			LOG.info("trying to start a " + template + " selflet");
+		}
 		ThreadPool.submitGenericJob(selfletIstantiatorThread);
 		LOG.debug("SelfletIstantiatorThread started");
 	}

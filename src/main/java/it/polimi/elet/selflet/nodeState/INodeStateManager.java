@@ -47,5 +47,11 @@ public interface INodeStateManager {
 	 * Returns a selflet that offers the given service
 	 * */
 	ISelfLetID getRandomSelfletHavingService(String serviceName);
+	
+	/**
+	 * check if the neighborhood of the selflet is full
+	 * 
+	 */
+	boolean isNeighborhoodFull(ISelfLetID selflet);
 
 }
