@@ -123,7 +123,7 @@ public class MessageDispatchingThread extends Thread {
 			selfletIstantiatorThread = new SelfletIstantiatorThread(
 					dispatchingService, selfletMessage);
 		} else {
-			String template = "videoProvisioner";
+			String template = "video_provisioning";
 			selfletIstantiatorThread = new SelfletIstantiatorThread(
 					dispatchingService, selfletMessage, template);
 			LOG.info("trying to start a " + template + " selflet");

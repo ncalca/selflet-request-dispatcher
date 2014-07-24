@@ -58,7 +58,7 @@ public class NeighborSender extends TimerTask implements IPeriodicTask {
 			mapNeighborsToAdd(knownSelflets);
 			// TODO By now the removal of an existing neighbor is disabled to
 			// prevent undesired behavior. The case where all the selflets have a
-			// full neighborhood is handled instatiating a new selflet with all
+			// full neighborhood is handled instantiating a new selflet with all
 			// the services. The change in the neighborhood should be studied
 			// carefully.
 			// mapNeighborsToChange(knownSelflets);
