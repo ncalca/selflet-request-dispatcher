@@ -24,6 +24,7 @@ public class DispatcherConfiguration extends Configuration {
 	public static String monitoredServices;
 	public static long minimumTimeBetweenTwoIstantiationsInSec;
 	public static String defaultProjectTemplate;
+	public static String completeProjectTemplate;
 	public static boolean isLocal;
 
 	private DispatcherConfiguration() {

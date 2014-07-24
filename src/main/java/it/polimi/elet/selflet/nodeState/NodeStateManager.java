@@ -105,16 +105,21 @@ public class NodeStateManager implements INodeStateManager {
 		}
 		return selfletIDs;
 	}
-	
+
 	@Override
-	public boolean isNeighborhoodFull(ISelfLetID selflet){
-		INodeState nodestate = getNodeState(selflet);
-		boolean isFull = true;
-		isFull = isFull & nodestate.getKnownNeighbors().size() >= MAX_NEIGHBORS_PER_SELFLET;
-		for(ISelfLetID neighbor : nodestate.getKnownNeighbors()){
-			INodeState nodestateOfNeighbor = getNodeState(neighbor);
-			isFull = isFull & nodestateOfNeighbor.getKnownNeighbors().size() >= MAX_NEIGHBORS_PER_SELFLET;
+	public boolean isNeighborhoodFull(ISelfLetID selflet) {
+		if (haveStateOfSelflet(selflet)) {
+			INodeState nodestate = getNodeState(selflet);
+			boolean isFull = true;
+			isFull = isFull
+					& nodestate.getKnownNeighbors().size() >= MAX_NEIGHBORS_PER_SELFLET;
+			for (ISelfLetID neighbor : nodestate.getKnownNeighbors()) {
+				INodeState nodestateOfNeighbor = getNodeState(neighbor);
+				isFull = isFull
+						& nodestateOfNeighbor.getKnownNeighbors().size() >= MAX_NEIGHBORS_PER_SELFLET;
+			}
+			return isFull;
 		}
-		return isFull;
+		return false;
 	}
 }

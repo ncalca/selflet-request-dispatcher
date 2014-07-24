@@ -54,7 +54,7 @@ public class MessageDispatchingThread extends Thread {
 					if (message instanceof RedsMessage) {
 						RedsMessage redsMessage = (RedsMessage) message;
 						SelfLetMsg selfletMessage = redsMessage.getMessage();
-						LOG.info("Received selflet message: " + selfletMessage);
+						LOG.info("Received selflet message: " + selfletMessage.getType());
 						analyzeMessage(selfletMessage);
 					} else {
 						LOG.info("Received other kind of message: " + message);
@@ -117,17 +117,10 @@ public class MessageDispatchingThread extends Thread {
 	}
 
 	private void istantiateNewSelfletMessage(SelfLetMsg selfletMessage) {
-		SelfletIstantiatorThread selfletIstantiatorThread;
-		if (!nodeStateManager.isNeighborhoodFull(selfletMessage.getFrom())) {
-			LOG.info("trying to start a default selflet");
-			selfletIstantiatorThread = new SelfletIstantiatorThread(
-					dispatchingService, selfletMessage);
-		} else {
-			String template = "video_provisioning";
-			selfletIstantiatorThread = new SelfletIstantiatorThread(
-					dispatchingService, selfletMessage, template);
-			LOG.info("trying to start a " + template + " selflet");
-		}
+		boolean needsCompleteSelflet = nodeStateManager.isNeighborhoodFull(selfletMessage.getFrom());
+		LOG.debug("needs a complete selflet? " + needsCompleteSelflet);
+		SelfletIstantiatorThread selfletIstantiatorThread = new SelfletIstantiatorThread(
+				dispatchingService, selfletMessage, needsCompleteSelflet);
 		ThreadPool.submitGenericJob(selfletIstantiatorThread);
 		LOG.debug("SelfletIstantiatorThread started");
 	}
