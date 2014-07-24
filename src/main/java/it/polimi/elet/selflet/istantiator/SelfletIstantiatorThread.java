@@ -15,28 +15,41 @@ import it.polimi.elet.selflet.message.SelfLetMsg;
 
 public class SelfletIstantiatorThread extends Thread {
 
-	private static final Logger LOG = Logger.getLogger(SelfletIstantiatorThread.class);
+	private static final Logger LOG = Logger
+			.getLogger(SelfletIstantiatorThread.class);
 	private static final long MINIMUM_TIME_BETWEEN_ISTANTIATIONS = DispatcherConfiguration.minimumTimeBetweenTwoIstantiationsInSec * 1000;
 
 	private static final String DEFAULT_TEMPLATE = DispatcherConfiguration.defaultProjectTemplate;
+	private static final String COMPLETE_TEMPLATE = DispatcherConfiguration.completeProjectTemplate;
 
 	private static long lastIstantiationTime = 0;
 
-	private final ISelfletIstantiator selfletIstantiator = SelfletIstantiator.getInstance();
+	private final ISelfletIstantiator selfletIstantiator = SelfletIstantiator
+			.getInstance();
 	private final SelfLetMsg selfletMessage;
 	private final TCPDispatchingService dispatchingService;
 	private final String selfletTemplate;
+	private final boolean needsCompleteSelflet;
 
-	public SelfletIstantiatorThread(TCPDispatchingService dispatchingService, SelfLetMsg selfletMessage) {
+	public SelfletIstantiatorThread(TCPDispatchingService dispatchingService,
+			SelfLetMsg selfletMessage) {
 		this.selfletMessage = selfletMessage;
 		this.dispatchingService = dispatchingService;
+		this.needsCompleteSelflet = false;
 		this.selfletTemplate = DEFAULT_TEMPLATE;
 	}
-	
-	public SelfletIstantiatorThread(TCPDispatchingService dispatchingService, SelfLetMsg selfletMessage, String selfletTemplate) {
+
+	public SelfletIstantiatorThread(TCPDispatchingService dispatchingService,
+			SelfLetMsg selfletMessage, boolean needsCompleteSelflet) {
 		this.selfletMessage = selfletMessage;
 		this.dispatchingService = dispatchingService;
-		this.selfletTemplate = selfletTemplate;
+		this.needsCompleteSelflet = needsCompleteSelflet;
+		if (this.needsCompleteSelflet) {
+			this.selfletTemplate = COMPLETE_TEMPLATE;
+		} else {
+			this.selfletTemplate = DEFAULT_TEMPLATE;
+		}
+		LOG.debug("instantiating with template: " + selfletTemplate);
 	}
 
 	@Override
@@ -48,7 +61,7 @@ public class SelfletIstantiatorThread extends Thread {
 		LOG.debug("Istantiating new selflet");
 		try {
 			// AllocatedSelflet allocatedSelflet =
-					selfletIstantiator.istantiateNewSelflet(selfletTemplate);
+			selfletIstantiator.istantiateNewSelflet(selfletTemplate);
 			// replyToSelflet(allocatedSelflet.getSelfletID());
 		} catch (IllegalStateException e) {
 			LOG.error("No more IPs available", e);
@@ -67,7 +80,9 @@ public class SelfletIstantiatorThread extends Thread {
 	}
 
 	private RedsMessage createReply(ISelfLetID receiver, ISelfLetID newSelfletID) {
-		SelfLetMsg selfletMsg = new SelfLetMsg(MessageBridge.THIS_SELFLET_ID, receiver, SelfLetMessageTypeEnum.ISTANTIATE_NEW_SELFLET_REPLY, newSelfletID);
+		SelfLetMsg selfletMsg = new SelfLetMsg(MessageBridge.THIS_SELFLET_ID,
+				receiver, SelfLetMessageTypeEnum.ISTANTIATE_NEW_SELFLET_REPLY,
+				newSelfletID);
 		return new RedsMessage(selfletMsg, Sets.newHashSet(receiver.toString()));
 	}
 
