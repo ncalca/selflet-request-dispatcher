@@ -114,9 +114,13 @@ public class NodeStateManager implements INodeStateManager {
 			isFull = isFull
 					& nodestate.getKnownNeighbors().size() >= MAX_NEIGHBORS_PER_SELFLET;
 			for (ISelfLetID neighbor : nodestate.getKnownNeighbors()) {
-				INodeState nodestateOfNeighbor = getNodeState(neighbor);
-				isFull = isFull
-						& nodestateOfNeighbor.getKnownNeighbors().size() >= MAX_NEIGHBORS_PER_SELFLET;
+				if (haveStateOfSelflet(neighbor)) {
+					INodeState nodestateOfNeighbor = getNodeState(neighbor);
+					isFull = isFull
+							& nodestateOfNeighbor.getKnownNeighbors().size() >= MAX_NEIGHBORS_PER_SELFLET;
+				} else {
+					return false;
+				}
 			}
 			return isFull;
 		}
