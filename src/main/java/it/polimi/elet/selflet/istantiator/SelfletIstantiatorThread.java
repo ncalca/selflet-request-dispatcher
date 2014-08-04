@@ -29,27 +29,12 @@ public class SelfletIstantiatorThread extends Thread {
 	private final SelfLetMsg selfletMessage;
 	private final TCPDispatchingService dispatchingService;
 	private final String selfletTemplate;
-	private final boolean needsCompleteSelflet;
 
 	public SelfletIstantiatorThread(TCPDispatchingService dispatchingService,
 			SelfLetMsg selfletMessage) {
 		this.selfletMessage = selfletMessage;
 		this.dispatchingService = dispatchingService;
-		this.needsCompleteSelflet = false;
 		this.selfletTemplate = DEFAULT_TEMPLATE;
-	}
-
-	public SelfletIstantiatorThread(TCPDispatchingService dispatchingService,
-			SelfLetMsg selfletMessage, boolean needsCompleteSelflet) {
-		this.selfletMessage = selfletMessage;
-		this.dispatchingService = dispatchingService;
-		this.needsCompleteSelflet = needsCompleteSelflet;
-		if (this.needsCompleteSelflet) {
-			this.selfletTemplate = COMPLETE_TEMPLATE;
-		} else {
-			this.selfletTemplate = DEFAULT_TEMPLATE;
-		}
-		LOG.debug("instantiating with template: " + selfletTemplate);
 	}
 
 	@Override
