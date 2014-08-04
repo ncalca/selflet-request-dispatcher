@@ -57,12 +57,14 @@ public class NeighborSender extends TimerTask implements IPeriodicTask {
 			initializeNeighborsMaps(knownSelflets);
 			mapNeighborsToAdd(knownSelflets);
 			// TODO By now the removal of an existing neighbor is disabled to
-			// prevent undesired behavior. The case where all the selflets have a
+			// prevent undesired behavior. The case where all the selflets have
+			// a
 			// full neighborhood is handled instantiating a new selflet with all
 			// the services. The change in the neighborhood should be studied
 			// carefully.
 			// mapNeighborsToChange(knownSelflets);
 			sendNeighborsMessagesIfNeeded();
+			sendServiceRequestForLonelySelflets(knownSelflets);
 		} else {
 			LOG.debug("Number of known selflets < 2; no need to send neighbors");
 		}
@@ -106,6 +108,29 @@ public class NeighborSender extends TimerTask implements IPeriodicTask {
 				updateNeighborsToRemoveMapping(myNewNeighbor,
 						oldNeighbotToRemove);
 			}
+		}
+	}
+
+	private void sendServiceRequestForLonelySelflets(
+			Set<ISelfLetID> knownSelflets) {
+		Set<ISelfLetID> lonelySelflets = getLonelySelflets(knownSelflets);
+		if (lonelySelflets.isEmpty()) {
+			return;
+		}
+		ISelfLetID smartestSelflet = getSmartestSelfletFromSet(knownSelflets);
+		for (ISelfLetID lonelySelflet : lonelySelflets) {
+			if (nodeStateManager.haveStateOfSelflet(lonelySelflet)) {
+				INodeState nodestate = nodeStateManager.getNodeState(lonelySelflet);
+				if(nodestate.getAvailableServices().contains("videoProvisioner")){
+					continue;
+				}
+			}
+			SelfLetMsg selfletMsg = new SelfLetMsg(lonelySelflet,
+					smartestSelflet, DOWNLOAD_ACHIEVABLE_SERVICE,
+					"videoProvisioner");
+			RedsMessage serviceRequestmessage = new RedsMessage(selfletMsg,
+					smartestSelflet.getID().toString());
+			messageBridge.publish(serviceRequestmessage);
 		}
 	}
 
@@ -199,7 +224,7 @@ public class NeighborSender extends TimerTask implements IPeriodicTask {
 		if (nodeStateManager.haveStateOfSelflet(selflet)) {
 			INodeState nodestate = nodeStateManager.getNodeState(selflet);
 			Set<ISelfLetID> neighborsOfSelflet = nodestate.getKnownNeighbors();
-			int numberOfNeighbors = neighborsOfSelflet.size();
+			int numberOfNeighbors = neighborsOfSelflet.size() + neighborsToAddMap.get(selflet).size();
 			return numberOfNeighbors >= MAX_NEIGHBORS_PER_SELFLET;
 		} else {
 			return true;
