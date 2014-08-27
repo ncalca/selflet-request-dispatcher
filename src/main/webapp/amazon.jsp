@@ -67,6 +67,10 @@
 				%>
 				<b><a href="http://<%=ipAddress%>:8080">Dashboard</a></b>
 				<%
+					} else {
+				%>
+				<b><a href="retrieveLogs?ipAddress=<%=ipAddress%>">Logs</a></b>
+				<%
 					}
 				%>
 			</p>

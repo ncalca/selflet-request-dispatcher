@@ -80,6 +80,14 @@
 		<url-pattern>*.JSPX</url-pattern>
 		<url-pattern>*.XSP</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>SelfletLogRetriever</servlet-name>
+		<servlet-class>it.polimi.elet.servlet.SelfletLogRetriever</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SelfletLogRetriever</servlet-name>
+		<url-pattern>/retrieveLogs/*</url-pattern>
+	</servlet-mapping>
 
 
 </web-app>
