@@ -53,6 +53,9 @@
 	<p>
 		<b><a href="allocateNew?reset=1">Reset instances</a></b>
 	</p>
+	<p>
+		<b><a href="/logs">Selflets Logs</a></b>
+	</p>
 	<hr>
 	<ol>
 		<%
@@ -69,7 +72,7 @@
 				<%
 					} else {
 				%>
-				<b><a href="retrieveLogs?ipAddress=<%=ipAddress%>">Logs</a></b>
+				<b><a href="retrieveLogs?ipAddress=<%=ipAddress%>">Get logs</a></b>
 				<%
 					}
 				%>

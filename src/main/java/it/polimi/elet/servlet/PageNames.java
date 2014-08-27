@@ -9,5 +9,7 @@ public class PageNames {
 
 	public static final String INDEX = "index.jsp";
 	
+	public static final String AMAZON = "amazon.jsp";
+	
 	public static final String ASSOCIATION_SERVLET = "associateIPs";
 }

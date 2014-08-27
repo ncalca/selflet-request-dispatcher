@@ -20,7 +20,7 @@ public class SelfletLogRetriever extends HttpServlet {
 	private static final String USERNAME = DispatcherConfiguration.username;
 	private static final String PASSWORD = DispatcherConfiguration.password;
 	private static final int PORT_NUMBER = 22;
-	private static final String LOCALFOLDER = "/home/guser/selflet/selflet-request-dispatcher/logs/";
+	private static final String LOCALFOLDER = "/home/guser/selflet/selflet-request-dispatcher/src/main/webapp/logs/";
 	private static final String REMOTEFOLDER = "/home/guser/selflet/selflets-log/";
 	
 	
@@ -29,6 +29,7 @@ public class SelfletLogRetriever extends HttpServlet {
 		
 		String ipAddress = request.getParameter("ipAddress");
 		getLogsFromIp(ipAddress);
+		response.sendRedirect(PageNames.AMAZON);
 	}
 	
 	private void getLogsFromIp(String ipAddress){
