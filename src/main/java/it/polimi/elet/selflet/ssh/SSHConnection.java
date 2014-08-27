@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+import java.util.Vector;
 
 import org.eclipse.jetty.util.log.Log;
 
@@ -99,9 +100,9 @@ public class SSHConnection {
 			channel = session.openChannel("exec");
 			ChannelExec clientExec = (ChannelExec) channel;
 			clientExec.setCommand(command);
-//			clientExec.setInputStream(null); // < /dev/null
-//			clientExec.setOutputStream(System.out);
-//			clientExec.setErrStream(System.err); // forward stderr to JVM's
+			// clientExec.setInputStream(null); // < /dev/null
+			// clientExec.setOutputStream(System.out);
+			// clientExec.setErrStream(System.err); // forward stderr to JVM's
 			clientExec.connect();
 		} catch (JSchException e) {
 			e.printStackTrace();
@@ -170,7 +171,8 @@ public class SSHConnection {
 			ChannelSftp clientFtp = (ChannelSftp) channel;
 			File file = new File(srcFile);
 			fileInputStream = new FileInputStream(file);
-			clientFtp.put(fileInputStream, dstFile, monitor, ChannelSftp.OVERWRITE);
+			clientFtp.put(fileInputStream, dstFile, monitor,
+					ChannelSftp.OVERWRITE);
 		} catch (SftpException e) {
 			e.printStackTrace();
 		} catch (JSchException e) {
@@ -213,12 +215,32 @@ public class SSHConnection {
 		}
 	}
 
+	public void getFiles(String filesFolder, String destFolder){
+		try {
+			channel = session.openChannel("sftp");
+			channel.connect();
+			ChannelSftp clientFtp = (ChannelSftp) channel;
+			clientFtp.cd(filesFolder);
+			Vector<ChannelSftp.LsEntry> list = clientFtp.ls("*.log");
+			for(ChannelSftp.LsEntry entry : list) {
+				clientFtp.get(entry.getFilename(), destFolder + entry.getFilename());
+			}
+		} catch (JSchException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SftpException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	public void putFile(InputStream inputStream, String destinationFile) {
 		try {
 			channel = session.openChannel("sftp");
 			channel.connect();
 			ChannelSftp clientFtp = (ChannelSftp) channel;
-			clientFtp.put(inputStream, destinationFile, monitor, ChannelSftp.OVERWRITE);
+			clientFtp.put(inputStream, destinationFile, monitor,
+					ChannelSftp.OVERWRITE);
 		} catch (SftpException e) {
 			e.printStackTrace();
 		} catch (JSchException e) {

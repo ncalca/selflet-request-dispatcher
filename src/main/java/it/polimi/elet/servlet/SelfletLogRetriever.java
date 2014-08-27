@@ -20,8 +20,8 @@ public class SelfletLogRetriever extends HttpServlet {
 	private static final String USERNAME = DispatcherConfiguration.username;
 	private static final String PASSWORD = DispatcherConfiguration.password;
 	private static final int PORT_NUMBER = 22;
-	private static final String LOCALFOLDER = "selflet/selflet-request-dispatcher/logs";
-	private static final String REMOTEFOLDER = "selflet/selflet/selflets-logs";
+	private static final String LOCALFOLDER = "/home/guser/selflet/selflet-request-dispatcher/logs";
+	private static final String REMOTEFOLDER = "/home/guser/selflet/selflets-log/";
 	
 	
 	@Override
@@ -33,9 +33,10 @@ public class SelfletLogRetriever extends HttpServlet {
 	
 	private void getLogsFromIp(String ipAddress){
 		SSHConnection connection = createNewSSHConnection(ipAddress);
-		String command = "scp -r " + USERNAME + "@" + ipAddress + ":" + LOCALFOLDER + " " + REMOTEFOLDER;
-		connection.execute(command);
+//		String command = "scp -r " + USERNAME + "@" + ipAddress + ":" + LOCALFOLDER + " " + REMOTEFOLDER;
+//		connection.execute(command);
 //		connection.getFile(REMOTEFOLDER, LOCALFOLDER);
+		connection.getFiles(REMOTEFOLDER, LOCALFOLDER);
 		
 	}
 	
