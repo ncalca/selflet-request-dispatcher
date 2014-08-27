@@ -1,5 +1,6 @@
 package it.polimi.elet.selflet.nodeState;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -93,7 +94,29 @@ public class NodeStateManager implements INodeStateManager {
 			throw new NotFoundException(
 					"Cannot find a selflet offering service " + serviceName);
 		}
-		return CollectionUtils.randomElement(selfletIDs);
+		// Why return just a random selflet? return a random selflet between the
+		// ones which are not overloaded if there are any...
+		// return CollectionUtils.randomElement(selfletIDs);
+		return getRandomSelfletNotOverloadedFromList(selfletIDs);
+	}
+
+	private ISelfLetID getRandomSelfletNotOverloadedFromList(
+			List<ISelfLetID> selfletsList) {
+		List<ISelfLetID> selfletsNotOverloaded = new ArrayList<ISelfLetID>();
+		INodeState nodestate = null;
+		for (ISelfLetID selflet : selfletsList) {
+			nodestate = getNodeState(selflet);
+			if (nodestate.getUtilization() < nodestate
+					.getUtilizationUpperBound()) {
+				selfletsNotOverloaded.add(selflet);
+			}
+		}
+
+		if (!selfletsNotOverloaded.isEmpty()) {
+			return CollectionUtils.randomElement(selfletsNotOverloaded);
+		}
+
+		return CollectionUtils.randomElement(selfletsList);
 	}
 
 	private List<ISelfLetID> getSelfletsWithService(String serviceName) {
