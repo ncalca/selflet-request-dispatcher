@@ -94,10 +94,9 @@ public class NodeStateManager implements INodeStateManager {
 			throw new NotFoundException(
 					"Cannot find a selflet offering service " + serviceName);
 		}
-		// Why return just a random selflet? return a random selflet between the
-		// ones which are not overloaded if there are any...
-		// return CollectionUtils.randomElement(selfletIDs);
-		return getRandomSelfletNotOverloadedFromList(selfletIDs);
+		// Why return just a random selflet?
+		 return CollectionUtils.randomElement(selfletIDs);
+//		return getRandomSelfletNotOverloadedFromList(selfletIDs);
 	}
 
 	private ISelfLetID getRandomSelfletNotOverloadedFromList(
