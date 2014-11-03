@@ -59,8 +59,10 @@
 	<hr>
 	<ol>
 		<%
+			String ipAddresses = "";
 			for (String ipAddress : activeIPAddresses) {
 				String contents = virtualMachineIPManager.getContentOfVM(ipAddress);
+				ipAddresses += (ipAddress + ",");
 		%>
 		<li>
 			<p>
@@ -72,7 +74,7 @@
 				<%
 					} else {
 				%>
-				<b><a href="retrieveLogs?ipAddress=<%=ipAddress%>">Get logs</a></b>
+				<b><a href="retrieveLogs?ipAddresses=<%=ipAddress%>">Get logs</a></b>
 				<%
 					}
 				%>
@@ -82,6 +84,9 @@
 			}
 		%>
 	</ol>
+	<p>
+		<b><a href="retrieveLogs?ipAddresses=<%=ipAddresses%>">Get all logs</a></b>
+	</p>
 
 </BODY>
 </HTML>

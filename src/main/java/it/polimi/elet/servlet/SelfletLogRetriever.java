@@ -27,8 +27,17 @@ public class SelfletLogRetriever extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String ipAddress = request.getParameter("ipAddress");
-		getLogsFromIp(ipAddress);
+		String ipAddresses = request.getParameter("ipAddresses");
+		if (ipAddresses.contains(",")) {
+			ipAddresses = ipAddresses.substring(0,ipAddresses.length() -1);
+			String[] parts = ipAddresses.split(",");
+			for (String ipAddress : parts){
+				getLogsFromIp(ipAddress);
+			}
+		} else {
+			getLogsFromIp(ipAddresses);			
+		}
+		
 		response.sendRedirect(PageNames.AMAZON);
 	}
 	
