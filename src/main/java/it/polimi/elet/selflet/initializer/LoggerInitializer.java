@@ -21,9 +21,15 @@ public class LoggerInitializer {
 			System.err.println("Cannot find root logger");
 			return;
 		}
+		
+		Logger activeSelfletsLogger = Logger.getLogger("activeSelfletsLogger");
+		if(activeSelfletsLogger == null){
+			System.err.println("Cannot find active selflets logger");
+		}
 
 		setConsoleAppender(rootLogger);
-		setFileAppender(rootLogger);
+//		setFileAppender(rootLogger);
+//		setActiveSelfletsAppender(activeSelfletsLogger);
 	}
 
 	private void setFileAppender(Logger rootLogger) {
@@ -34,8 +40,16 @@ public class LoggerInitializer {
 		fileAppender.setFile(logFileName);
 		fileAppender.activateOptions();
 
-		// LOG.addAppender(fileAppender);
-		// LOG.addAppender(consoleAppender);
+	}
+	
+	private void setActiveSelfletsAppender(Logger activeSelfletsLogger) {
+		FileAppender fileAppender = (FileAppender) activeSelfletsLogger.getAppender("activeSelfletsAppender");
+
+		String logFileName = "./log/activeSelflets.log";
+
+		fileAppender.setFile(logFileName);
+		fileAppender.activateOptions();
+
 	}
 
 	private void setConsoleAppender(Logger rootLogger) {

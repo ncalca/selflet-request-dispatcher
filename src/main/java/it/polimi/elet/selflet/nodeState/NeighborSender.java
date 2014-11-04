@@ -34,7 +34,7 @@ import com.google.common.collect.Sets;
  * */
 public class NeighborSender extends TimerTask implements IPeriodicTask {
 
-	private static final Logger LOG = Logger.getLogger(NeighborSender.class);
+	private static final Logger LOG = Logger.getLogger("activeSelfletsLogger");
 
 	private static final int MAX_NEIGHBORS_PER_SELFLET = DispatcherConfiguration.maxNeighborsPerSelflet;
 	private static final int SLEEP_TIME = DispatcherConfiguration.neighborsUpdaterSleepPeriodInSec * 1000;
@@ -50,6 +50,9 @@ public class NeighborSender extends TimerTask implements IPeriodicTask {
 	@Override
 	public void run() {
 		Set<ISelfLetID> knownSelflets = selfletNeighbors.getNeighbors();
+		
+		LOG.info(System.currentTimeMillis() + "," + knownSelflets.size());
+		
 		neighborsToAddMap = new HashMap<ISelfLetID, Set<ISelfLetID>>();
 		neighborsToRemoveMap = new HashMap<ISelfLetID, Set<ISelfLetID>>();
 		LOG.debug("Known selflets: " + knownSelflets.size());
@@ -58,8 +61,7 @@ public class NeighborSender extends TimerTask implements IPeriodicTask {
 			mapNeighborsToAdd(knownSelflets);
 			// TODO By now the removal of an existing neighbor is disabled to
 			// prevent undesired behavior. The case where all the selflets have
-			// a
-			// full neighborhood is handled instantiating a new selflet with all
+			// a full neighborhood is handled instantiating a new selflet with all
 			// the services. The change in the neighborhood should be studied
 			// carefully.
 			// mapNeighborsToChange(knownSelflets);
@@ -320,7 +322,7 @@ public class NeighborSender extends TimerTask implements IPeriodicTask {
 
 	private void sendNewNeighbors(ISelfLetID selflet,
 			Set<ISelfLetID> newNeighbors) {
-		LOG.info("sending neighbor to add to selflet: " + selflet);
+		LOG.debug("sending neighbor to add to selflet: " + selflet);
 		RedsMessage neighborMessage = prepareNeighborMessage(selflet,
 				newNeighbors);
 
@@ -338,7 +340,7 @@ public class NeighborSender extends TimerTask implements IPeriodicTask {
 
 	private void sendNeighborsToRemove(ISelfLetID selflet,
 			Set<ISelfLetID> neighborsToRemove) {
-		LOG.info("sending neighbor to remove to selflet: " + selflet);
+		LOG.debug("sending neighbor to remove to selflet: " + selflet);
 		Set<RedsMessage> removeNeighborsMessages = prepareRemoveNeighborMessage(
 				selflet, neighborsToRemove);
 
