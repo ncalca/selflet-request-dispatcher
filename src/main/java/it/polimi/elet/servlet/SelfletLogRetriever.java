@@ -22,6 +22,8 @@ public class SelfletLogRetriever extends HttpServlet {
 	private static final int PORT_NUMBER = 22;
 	private static final String LOCALFOLDER = "/home/guser/selflet/selflet-request-dispatcher/src/main/webapp/logs/";
 	private static final String REMOTEFOLDER = "/home/guser/selflet/selflets-log/";
+
+	private static final String SCRIPTFOLDER = "/home/guser/selflet/selflet-request-dispatcher/src/main/resources/shell_scripts/mergeSelfletsLogs.sh";
 	
 	
 	@Override
@@ -33,6 +35,7 @@ public class SelfletLogRetriever extends HttpServlet {
 			String[] parts = ipAddresses.split(",");
 			for (String ipAddress : parts){
 				getLogsFromIp(ipAddress);
+				formatLogs();
 			}
 		} else {
 			getLogsFromIp(ipAddresses);			
@@ -48,6 +51,15 @@ public class SelfletLogRetriever extends HttpServlet {
 //		connection.getFile(REMOTEFOLDER, LOCALFOLDER);
 		connection.getFiles(REMOTEFOLDER, LOCALFOLDER);
 		
+	}
+	
+	private void formatLogs(){
+		try {
+			Runtime.getRuntime().exec("source " + SCRIPTFOLDER);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	private SSHConnection createNewSSHConnection(String ipAddress) {
