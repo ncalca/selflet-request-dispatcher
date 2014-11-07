@@ -23,7 +23,8 @@ public class SelfletLogRetriever extends HttpServlet {
 	private static final String LOCALFOLDER = "/home/guser/selflet/selflet-request-dispatcher/src/main/webapp/logs/";
 	private static final String REMOTEFOLDER = "/home/guser/selflet/selflets-log/";
 
-	private static final String SCRIPTFOLDER = "/home/guser/selflet/selflet-request-dispatcher/src/main/resources/shell_scripts/mergeSelfletsLogs.sh";
+	private static final String SCRIPTFOLDER = "/home/guser/selflet/selflet-request-dispatcher/src/main/resources/shell_scripts/";
+	private static final String SCRIPT = "mergeSelfletsLogs.sh";
 	
 	
 	@Override
@@ -55,7 +56,7 @@ public class SelfletLogRetriever extends HttpServlet {
 	
 	private void formatLogs(){
 		try {
-			Runtime.getRuntime().exec("source " + SCRIPTFOLDER);
+			Runtime.getRuntime().exec("cd " + SCRIPTFOLDER + " ; source " + SCRIPT);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
