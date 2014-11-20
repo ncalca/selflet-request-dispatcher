@@ -47,6 +47,7 @@ public class SelfletIstantiatorThread extends Thread {
 		try {
 			// AllocatedSelflet allocatedSelflet =
 			selfletIstantiator.istantiateNewSelflet(selfletTemplate);
+			lastIstantiationTime = System.currentTimeMillis();
 			// replyToSelflet(allocatedSelflet.getSelfletID());
 		} catch (IllegalStateException e) {
 			LOG.error("No more IPs available", e);
