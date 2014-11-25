@@ -22,7 +22,8 @@ public class DispatcherConfiguration extends Configuration {
 	public static int resultLoggerPeriodInSec;
 	public static String csvFilePath;
 	public static String monitoredServices;
-	public static long minimumTimeBetweenTwoIstantiationsInSec;
+	public static long minimumTimeToFreeInstantiationSlots;
+	public static int maxInstantiationSlots;
 	public static String defaultProjectTemplate;
 	public static String completeProjectTemplate;
 	public static boolean isLocal;

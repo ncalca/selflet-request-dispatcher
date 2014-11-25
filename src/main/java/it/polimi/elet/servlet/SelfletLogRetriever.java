@@ -1,6 +1,7 @@
 package it.polimi.elet.servlet;
 
 import it.polimi.elet.selflet.configuration.DispatcherConfiguration;
+
 import it.polimi.elet.selflet.ssh.SSHConnection;
 
 import java.io.IOException;
@@ -10,13 +11,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import static com.google.common.base.Strings.nullToEmpty;
+
 public class SelfletLogRetriever extends HttpServlet {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	private static final String USERNAME = DispatcherConfiguration.username;
 	private static final String PASSWORD = DispatcherConfiguration.password;
 	private static final int PORT_NUMBER = 22;
@@ -25,44 +28,66 @@ public class SelfletLogRetriever extends HttpServlet {
 
 	private static final String SCRIPTFOLDER = "/home/guser/selflet/selflet-request-dispatcher/src/main/resources/shell_scripts/";
 	private static final String SCRIPT = "mergeSelfletsLogs.sh";
-	
-	
+
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+
+		String ipAddressesList = nullToEmpty(request.getParameter("ipAddressesList"));
+		String getAllLogs = nullToEmpty(request.getParameter("getLogs"));
+		String clearLogs = nullToEmpty(request.getParameter("clearLogs"));
+		String[] ipAddresses = null;
 		
-		String ipAddresses = request.getParameter("ipAddresses");
-		if (ipAddresses.contains(",")) {
-			ipAddresses = ipAddresses.substring(0,ipAddresses.length() -1);
-			String[] parts = ipAddresses.split(",");
-			for (String ipAddress : parts){
-				getLogsFromIp(ipAddress);
-				formatLogs();
+		if (!ipAddressesList.isEmpty()) {
+			if (ipAddressesList.contains(",")) {
+				ipAddressesList = ipAddressesList
+						.substring(0, ipAddressesList.length() - 1);
+				ipAddresses = ipAddressesList.split(",");
+			} else {
+				ipAddresses = new String[]{ipAddressesList};
 			}
 		} else {
-			getLogsFromIp(ipAddresses);			
+			response.sendError(404, "empty ip address");
 		}
 		
+		if(!getAllLogs.isEmpty()){
+			for(String ipAddress : ipAddresses){
+				getLogsFromIp(ipAddress);
+			}
+		}
+		
+		if(!clearLogs.isEmpty()){
+			for(String ipAddress : ipAddresses){
+				clearLogs(ipAddress);
+			}
+		}
+
 		response.sendRedirect(PageNames.AMAZON);
 	}
-	
-	private void getLogsFromIp(String ipAddress){
+
+	private void getLogsFromIp(String ipAddress) {
 		SSHConnection connection = createNewSSHConnection(ipAddress);
-//		String command = "scp -r " + USERNAME + "@" + ipAddress + ":" + LOCALFOLDER + " " + REMOTEFOLDER;
-//		connection.execute(command);
-//		connection.getFile(REMOTEFOLDER, LOCALFOLDER);
 		connection.getFiles(REMOTEFOLDER, LOCALFOLDER);
-		
+
 	}
-	
-	private void formatLogs(){
+
+	//FIXME not working...
+	private void formatLogs() {
 		try {
-			Runtime.getRuntime().exec("cd " + SCRIPTFOLDER + " ; source " + SCRIPT);
+			Runtime.getRuntime().exec(
+					"cd " + SCRIPTFOLDER + " ; source " + SCRIPT);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
+	private void clearLogs(String ipAddress){
+		SSHConnection connection = createNewSSHConnection(ipAddress);
+		String removeCommand = "rm " + REMOTEFOLDER + "*.log";
+		connection.execute(removeCommand);
+	}
+
 	private SSHConnection createNewSSHConnection(String ipAddress) {
 		return new SSHConnection(USERNAME, ipAddress, PORT_NUMBER, PASSWORD);
 	}

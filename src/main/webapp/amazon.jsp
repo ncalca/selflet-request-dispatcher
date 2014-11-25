@@ -62,7 +62,6 @@
 			String ipAddresses = "";
 			for (String ipAddress : activeIPAddresses) {
 				String contents = virtualMachineIPManager.getContentOfVM(ipAddress);
-				ipAddresses += (ipAddress + ",");
 		%>
 		<li>
 			<p>
@@ -73,8 +72,10 @@
 				<b><a href="http://<%=ipAddress%>:8080">Dashboard</a></b>
 				<%
 					} else {
+				ipAddresses += (ipAddress + ",");
 				%>
-				<b><a href="retrieveLogs?ipAddresses=<%=ipAddress%>">Get logs</a></b>
+				<b><a href="retrieveLogs?ipAddressesList=<%=ipAddress%>&getLogs=true">Get logs</a></b>
+				<b><a href="retrieveLogs?ipAddressesList=<%=ipAddress%>&clearLogs=true">Clear logs</a></b>
 				<%
 					}
 				%>
@@ -85,7 +86,10 @@
 		%>
 	</ol>
 	<p>
-		<b><a href="retrieveLogs?ipAddresses=<%=ipAddresses%>">Get all logs</a></b>
+		<b><a href="retrieveLogs?ipAddressesList=<%=ipAddresses%>&getLogs=true">Get all logs</a></b>
+	</p>
+	<p>
+		<b><a href="retrieveLogs?ipAddressesList=<%=ipAddresses%>&clearLogs=true">Clear all logs</a></b>
 	</p>
 
 </BODY>
