@@ -51,7 +51,7 @@ public class JmeterStartServlet extends HttpServlet {
 		IVirtualMachineIPManager vmManager = VirtualMachineIPManager
 				.getInstance();
 		String jmeterIpAddress = vmManager.getNewIpAddress();
-		// Add a function to tell the ipmanager to reserve that ip address
+		vmManager.setJmeterIpAddress(jmeterIpAddress);
 		SSHConnection connection = createNewSSHConnection(jmeterIpAddress);
 		String commandLocate = "cd " + JMETER_FOLDER;
 		String commandStart = "./jmeter -n -t " + TRACK_FOLDER + TRACK_NAME
