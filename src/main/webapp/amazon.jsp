@@ -107,6 +107,9 @@
  %>
 		</li>
 	</ol>
+	<%
+		}
+	%>
 	<p>
 		<b><a
 			href="retrieveLogs?ipAddressesList=<%=ipAddresses%>&getLogs=true">Get
@@ -118,9 +121,6 @@
 				all logs</a></b>
 	</p>
 	</p>
-	<%
-		}
-	%>
 
 </BODY>
 </HTML>
