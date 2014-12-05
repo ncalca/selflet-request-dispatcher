@@ -8,6 +8,7 @@ import it.polimi.elet.selflet.schema.SchemaLoader;
 import it.polimi.elet.selflet.ssh.SSHConnection;
 
 import java.io.InputStream;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -122,6 +123,20 @@ public class SelfletIstantiator implements ISelfletIstantiator {
 		AllocatedSelflet allocatedSelflet = new AllocatedSelflet(ipAddress, newSelfletID);
 		return allocatedSelflet;
 	}
+	
+	public void instantiateMultipleSelflets(int numberOfSelfltes, String template){
+		String[] ipAddresses = new String[numberOfSelfltes];
+		ISelfLetID[] selfletIds = new ISelfLetID[numberOfSelfltes];
+		for(int ip = 0; ip < numberOfSelfltes; ip++){
+			ipAddresses[ip] = virtualMachineIPGenerator.getNewIpAddress();
+			selfletIds[ip] = getNewSelfletID();
+		}
+		
+		for(int newSelflet = 0; newSelflet < numberOfSelfltes; newSelflet++){
+			THREAD_POOL.submit(new InstatiationThread(ipAddresses[newSelflet], selfletIds[newSelflet], template));
+			virtualMachineIPGenerator.setVmToSelfletBinding(ipAddresses[newSelflet], selfletIds[newSelflet]);
+		}
+	}
 
 	private void copyDataToVM(String ipAddress) {
 
@@ -199,5 +214,23 @@ public class SelfletIstantiator implements ISelfletIstantiator {
 			resetMachine(ip);
 		}
 
+	}
+	
+	class InstatiationThread extends Thread {
+		private String ipAddress;
+		private ISelfLetID newSelfletID;
+		private String template;
+		
+		public InstatiationThread(String ipAddress, ISelfLetID newSelfletID, String template){
+			this.ipAddress = ipAddress;
+			this.newSelfletID = newSelfletID;
+			this.template = template;
+		}
+		
+		@Override
+		public void run() {
+			istantiateNewSelflet(ipAddress, newSelfletID, template);
+		}
+		
 	}
 }

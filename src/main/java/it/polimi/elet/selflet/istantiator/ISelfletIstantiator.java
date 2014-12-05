@@ -14,6 +14,8 @@ public interface ISelfletIstantiator {
 	 * @return the selflet ID associated with the new selflet
 	 * */
 	AllocatedSelflet istantiateNewSelflet(String template);
+	
+	void instantiateMultipleSelflets(int numberOfSelfltes, String template);
 
 	/**
 	 * Creates a new broker and dispatcher
