@@ -43,6 +43,8 @@ public class JmeterStartServlet extends HttpServlet {
 		} catch (Exception e) {
 			resp.sendError(404, "Error starting jmeter: " + e.getMessage());
 		}
+		
+		resp.sendRedirect(PageNames.INDEX);
 
 	}
 
