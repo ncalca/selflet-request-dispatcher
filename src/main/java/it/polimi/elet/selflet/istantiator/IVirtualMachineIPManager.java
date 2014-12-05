@@ -82,5 +82,15 @@ public interface IVirtualMachineIPManager {
 	Set<String> getAvailableIPs();
 
 	void freeIPOfSelflet(ISelfLetID selfletToBeRemoved);
+	
+	/**
+	 * Set the ip address used by jmeter
+	 */
+	void setJmeterIpAddress(String ipAddress);
+	
+	/**
+	 * Return true if this IP address is associated to Jmeter
+	 */
+	boolean isJmeter(String ipAddress);
 
 }

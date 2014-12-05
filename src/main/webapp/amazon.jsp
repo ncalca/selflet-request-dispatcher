@@ -23,10 +23,12 @@
 	<hr>
 
 	<%
-		IVirtualMachineIPManager virtualMachineIPManager = VirtualMachineIPManager.getInstance();
+		IVirtualMachineIPManager virtualMachineIPManager = VirtualMachineIPManager
+				.getInstance();
 		//		ISelfletIstantiator selfletIstantiator = SelfletIstantiator.getInstance();
 		IAmazonFrontend amazonFrontend = AmazonFrontend.getInstance();
-		Set<String> activeIPAddresses = amazonFrontend.getActiveIpAddresses();
+		Set<String> activeIPAddresses = amazonFrontend
+				.getActiveIpAddresses();
 	%>
 
 	<p>
@@ -37,21 +39,32 @@
 		<a href="allocateNew?new_dispatcher=1">Allocate new dispatcher</a>
 	</p>
 	<hr>
+	<b>Selflet allocation</b>
+	<br>
 	<p><form action="allocateNew?">
-	template:
-	<select name="template">
-		<%
-		ITemplateManager templateManager = TemplateManager.getInstance();
-		List<String> templates = templateManager.getTemplates();
-		for (String template : templates) {
+		template: <select name="template">
+			<%
+				ITemplateManager templateManager = TemplateManager.getInstance();
+				List<String> templates = templateManager.getTemplates();
+				for (String template : templates) {
 			%>
 			<option value=<%=template%>><%=template%></option>
 			<%
-		}
-	%>
-	</select>
-	Number of selflets: <input type="text" name="new_selflet" value="1">
-	<input type="submit" value="Submit" />
+				}
+			%>
+		</select> Number of selflets: <input type="text" name="new_selflet" value="1">
+		<input type="submit" value="Submit" /></form>
+	</p>
+	<p>
+		<b>Jmeter start</b><br>
+	<form action="startJmeter?">
+		<%
+			String dispIpAddr = virtualMachineIPManager
+					.getDispatcherIpAddress();
+		%>
+		Dispatcher IP address:<input type="text" name="disp_ip_addr"
+			value=<%=dispIpAddr%>><%=dispIpAddr%>
+		<input type="submit" value="Start" />
 	</form>
 	</p>
 	<hr>
@@ -66,7 +79,8 @@
 		<%
 			String ipAddresses = "";
 			for (String ipAddress : activeIPAddresses) {
-				String contents = virtualMachineIPManager.getContentOfVM(ipAddress);
+				String contents = virtualMachineIPManager
+						.getContentOfVM(ipAddress);
 		%>
 		<li>
 			<p>
@@ -76,26 +90,37 @@
 				%>
 				<b><a href="http://<%=ipAddress%>:8080">Dashboard</a></b>
 				<%
-					} else {
-				ipAddresses += (ipAddress + ",");
+					} else if (contents.equals("JMETER")) {
 				%>
-				<b><a href="retrieveLogs?ipAddressesList=<%=ipAddress%>&getLogs=true">Get logs</a></b>
-				<b><a href="retrieveLogs?ipAddressesList=<%=ipAddress%>&clearLogs=true">Clear logs</a></b>
+				sending load to
+				<%=dispIpAddr%>
 				<%
-					}
+					} else {
 				%>
-			</p>
+				<b><a
+					href="retrieveLogs?ipAddressesList=<%=ipAddress%>&getLogs=true">Get
+						logs</a></b> <b><a
+					href="retrieveLogs?ipAddressesList=<%=ipAddress%>&clearLogs=true">Clear
+						logs</a></b>
+			</p> <%
+ 	}
+ %>
 		</li>
-		<%
-			}
-		%>
 	</ol>
 	<p>
-		<b><a href="retrieveLogs?ipAddressesList=<%=ipAddresses%>&getLogs=true">Get all logs</a></b>
+		<b><a
+			href="retrieveLogs?ipAddressesList=<%=ipAddresses%>&getLogs=true">Get
+				all logs</a></b>
 	</p>
 	<p>
-		<b><a href="retrieveLogs?ipAddressesList=<%=ipAddresses%>&clearLogs=true">Clear all logs</a></b>
+		<b><a
+			href="retrieveLogs?ipAddressesList=<%=ipAddresses%>&clearLogs=true">Clear
+				all logs</a></b>
 	</p>
+	</p>
+	<%
+		}
+	%>
 
 </BODY>
 </HTML>

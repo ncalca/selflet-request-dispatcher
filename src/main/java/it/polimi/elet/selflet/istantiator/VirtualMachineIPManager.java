@@ -25,6 +25,7 @@ public class VirtualMachineIPManager implements IVirtualMachineIPManager {
 	private static VirtualMachineIPManager instance = null;
 
 	private String DISPATCHER = "DISPATCHER";
+	private String JMETER = "JMETER";
 	private String EMPTY = "";
 
 	private final Set<String> availableIPAddresses;
@@ -35,6 +36,7 @@ public class VirtualMachineIPManager implements IVirtualMachineIPManager {
 	private final Map<String, ISelfLetID> ipToActiveSelfLets;
 
 	private String brokerAddress = "";
+	private String jmeterAddress = "";
 
 	public VirtualMachineIPManager() {
 		takenIPAddresses = Sets.newCopyOnWriteArraySet();
@@ -113,6 +115,10 @@ public class VirtualMachineIPManager implements IVirtualMachineIPManager {
 		if (isDispatcher(ipAddress)) {
 			return DISPATCHER;
 		}
+		
+		if (isJmeter(ipAddress)){
+			return JMETER;
+		}
 
 		if (ipToSelfletIDs.containsKey(ipAddress)) {
 			return ipToSelfletIDs.get(ipAddress);
@@ -176,5 +182,16 @@ public class VirtualMachineIPManager implements IVirtualMachineIPManager {
 				takenIPAddresses.remove(ipAddress);
 			}
 		}
+	}
+
+	@Override
+	public void setJmeterIpAddress(String ipAddress) {
+		jmeterAddress = ipAddress;
+		
+	}
+
+	@Override
+	public boolean isJmeter(String ipAddress) {
+		return jmeterAddress.equals(ipAddress);
 	}
 }
