@@ -17,7 +17,7 @@
 //   -->
 </script>
 </head>
-<body onload="JavaScript:timedRefresh(5000);">
+<body onload="JavaScript:timedRefresh(30000);">
 
 	<h1>Amazon status</h1>
 	<hr>
@@ -37,18 +37,23 @@
 		<a href="allocateNew?new_dispatcher=1">Allocate new dispatcher</a>
 	</p>
 	<hr>
-	<%
+	<p><form action="allocateNew?">
+	template:
+	<select name="template">
+		<%
 		ITemplateManager templateManager = TemplateManager.getInstance();
 		List<String> templates = templateManager.getTemplates();
 		for (String template : templates) {
-	%>
-	<p>
-		<a href="allocateNew?new_selflet=1&template=<%=template%>">Add
-			selflet:</a> Template<b> <%=template%></b>
-	</p>
-	<%
+			%>
+			<option value=<%=template%>><%=template%></option>
+			<%
 		}
 	%>
+	</select>
+	Number of selflets: <input type="text" name="new_selflet" value="1">
+	<input type="submit" value="Submit" />
+	</form>
+	</p>
 	<hr>
 	<p>
 		<b><a href="allocateNew?reset=1">Reset instances</a></b>
