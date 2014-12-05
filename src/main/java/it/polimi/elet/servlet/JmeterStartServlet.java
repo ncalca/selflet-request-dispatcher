@@ -56,7 +56,7 @@ public class JmeterStartServlet extends HttpServlet {
 		String commandLocate = "cd " + JMETER_FOLDER;
 		String commandStart = "./jmeter -n -t " + TRACK_FOLDER + TRACK_NAME
 				+ " -JdispatcherIpAddress=" + dispatcherIpAddress
-				+ " selflets_results.jtl";
+				+ " -l selflets_results.jtl";
 		connection.execute(commandLocate);
 		connection.execute(commandStart);
 
