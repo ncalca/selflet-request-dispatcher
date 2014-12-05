@@ -56,7 +56,7 @@ public class JmeterStartServlet extends HttpServlet {
 		vmManager.setJmeterIpAddress(jmeterIpAddress);
 		SSHConnection connection = createNewSSHConnection(jmeterIpAddress);
 		String commandLocate = "cd " + JMETER_FOLDER;
-		String commandStart = "./jmeter -n -t " + TRACK_FOLDER + TRACK_NAME
+		String commandStart = "screen -d -m ./jmeter -n -t " + TRACK_FOLDER + TRACK_NAME
 				+ " -JdispatcherIpAddress=" + dispatcherIpAddress
 				+ " -l selflets_results.jtl";
 		connection.execute(commandLocate);
