@@ -50,22 +50,12 @@ public class AllocateNewVmServlet extends HttpServlet {
 
 		if (!numberOfSelflets.isEmpty()) {
 			int numberOfSelfletsInt = Integer.parseInt(numberOfSelflets);
-			if (numberOfSelfletsInt < 2) {
-				List<AllocatedSelflet> ids = newSelflets(numberOfSelflets,
-						template);
-				if (ids.size() > 1) {
-					throw new IllegalStateException(
-							"Multiple serlflet istantiation not implemented yet!");
-				}
-			} else {
-				selfletIstantiator.instantiateMultipleSelflets(numberOfSelfletsInt, template);
-			}
+			selfletIstantiator.instantiateMultipleSelflets(numberOfSelfletsInt,
+					template);
 		}
 
 		if (!newDispatcher.isEmpty()) {
-
 			allocateBrokerAndDispatcher();
-
 		}
 
 		response.sendRedirect(PageNames.INDEX);
@@ -75,24 +65,4 @@ public class AllocateNewVmServlet extends HttpServlet {
 		return selfletIstantiator.istantiateBrokerAndDispatcher();
 	}
 
-	private List<AllocatedSelflet> newSelflets(String numberOfSelflets,
-			String template) {
-		int number = 0;
-		try {
-			number = Integer.valueOf(numberOfSelflets);
-		} catch (NumberFormatException e) {
-			LOG.error(e);
-		}
-		return allocateVMs(number, template);
-	}
-
-	private List<AllocatedSelflet> allocateVMs(int number, String template) {
-		List<AllocatedSelflet> allocatedSelflets = Lists.newArrayList();
-		for (int i = 0; i < number; i++) {
-			AllocatedSelflet allocatedSelflet = selfletIstantiator
-					.istantiateNewSelflet(template);
-			allocatedSelflets.add(allocatedSelflet);
-		}
-		return allocatedSelflets;
-	}
 }

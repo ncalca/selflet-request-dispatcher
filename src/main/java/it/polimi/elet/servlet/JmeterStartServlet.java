@@ -7,6 +7,8 @@ import it.polimi.elet.selflet.istantiator.VirtualMachineIPManager;
 import it.polimi.elet.selflet.ssh.SSHConnection;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -57,10 +59,17 @@ public class JmeterStartServlet extends HttpServlet {
 		String commandLocate = "cd " + JMETER_FOLDER;
 		String commandStart = "screen -d -m ./jmeter -n -t " + TRACK_FOLDER + " -JdispatcherIpAddress=" + dispatcherIpAddress + " -l selflets_results.jtl";
 		connection.execute(commandLocate + ";" + commandStart);
+		vmManager.setJmeterStartTime(createJmeterStartTime());
 
 	}
 
 	private SSHConnection createNewSSHConnection(String ipAddress) {
 		return new SSHConnection(USERNAME, ipAddress, PORT_NUMBER, PASSWORD);
+	}
+	
+	private String createJmeterStartTime() {
+		Calendar cal = Calendar.getInstance();
+    	SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+    	return sdf.format(cal.getTime());
 	}
 }

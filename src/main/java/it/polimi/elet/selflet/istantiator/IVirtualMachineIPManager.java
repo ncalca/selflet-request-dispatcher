@@ -92,5 +92,9 @@ public interface IVirtualMachineIPManager {
 	 * Return true if this IP address is associated to Jmeter
 	 */
 	boolean isJmeter(String ipAddress);
+	
+	void setJmeterStartTime(String dateTime);
+	
+	String getJmeterStartTime();
 
 }

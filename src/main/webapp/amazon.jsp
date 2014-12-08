@@ -53,7 +53,7 @@
 				}
 			%>
 		</select> Number of selflets: <input type="text" name="new_selflet" value="1">
-		<input type="submit" value="Submit" /></form>
+		<input type="submit" value="Allocate" /></form>
 	</p>
 	<p>
 		<b>Jmeter start</b><br>
@@ -63,7 +63,7 @@
 					.getDispatcherIpAddress();
 		%>
 		Dispatcher IP address:<input type="text" name="disp_ip_addr"
-			value=<%=dispIpAddr%>><%=dispIpAddr%>
+			value=<%=dispIpAddr%>>
 		<input type="submit" value="Start" />
 	</form>
 	</p>
@@ -91,9 +91,10 @@
 				<b><a href="http://<%=ipAddress%>:8080">Dashboard</a></b>
 				<%
 					} else if (contents.equals("JMETER")) {
+						String jmeterStartTime = virtualMachineIPManager.getJmeterStartTime();
 				%>
-				sending load to
-				<%=dispIpAddr%>
+				start time:
+				<%=jmeterStartTime%>
 				<%
 					} else {
 				%>

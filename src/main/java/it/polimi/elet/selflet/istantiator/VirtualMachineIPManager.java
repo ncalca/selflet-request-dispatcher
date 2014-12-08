@@ -37,6 +37,7 @@ public class VirtualMachineIPManager implements IVirtualMachineIPManager {
 
 	private String brokerAddress = "";
 	private String jmeterAddress = "";
+	private String jmeterStartTime = "";
 
 	public VirtualMachineIPManager() {
 		takenIPAddresses = Sets.newCopyOnWriteArraySet();
@@ -193,5 +194,15 @@ public class VirtualMachineIPManager implements IVirtualMachineIPManager {
 	@Override
 	public boolean isJmeter(String ipAddress) {
 		return jmeterAddress.equals(ipAddress);
+	}
+
+	@Override
+	public void setJmeterStartTime(String dateTime) {
+		jmeterStartTime = dateTime;	
+	}
+
+	@Override
+	public String getJmeterStartTime() {
+		return jmeterStartTime;
 	}
 }
