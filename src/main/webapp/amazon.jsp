@@ -107,10 +107,10 @@
  	}
  %>
 		</li>
+		<%
+			}
+		%>
 	</ol>
-	<%
-		}
-	%>
 	<p>
 		<b><a
 			href="retrieveLogs?ipAddressesList=<%=ipAddresses%>&getLogs=true">Get
