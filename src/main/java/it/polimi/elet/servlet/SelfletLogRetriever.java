@@ -22,6 +22,7 @@ public class SelfletLogRetriever extends HttpServlet {
 
 	private static final String USERNAME = DispatcherConfiguration.username;
 	private static final String PASSWORD = DispatcherConfiguration.password;
+	private static final String LOCALHOST = "127.0.0.1";
 	private static final int PORT_NUMBER = 22;
 	private static final String LOCALFOLDER = "/home/guser/selflet/selflet-request-dispatcher/src/main/webapp/logs/";
 	private static final String REMOTEFOLDER = "/home/guser/selflet/selflets-log/";
@@ -53,6 +54,7 @@ public class SelfletLogRetriever extends HttpServlet {
 		if(!getAllLogs.isEmpty()){
 			for(String ipAddress : ipAddresses){
 				getLogsFromIp(ipAddress);
+				formatLogs(LOCALHOST);
 			}
 		}
 		
@@ -72,14 +74,10 @@ public class SelfletLogRetriever extends HttpServlet {
 	}
 
 	//FIXME not working...
-	private void formatLogs() {
-		try {
-			Runtime.getRuntime().exec(
-					"cd " + SCRIPTFOLDER + " ; source " + SCRIPT);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	private void formatLogs(String ipAddress) {
+		SSHConnection connection = createNewSSHConnection(ipAddress);
+		String command = "cd " + SCRIPTFOLDER + " ; source " + SCRIPT;
+		connection.execute(command);
 	}
 	
 	private void clearLogs(String ipAddress){
