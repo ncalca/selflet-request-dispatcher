@@ -54,8 +54,8 @@ public class SelfletLogRetriever extends HttpServlet {
 		if(!getAllLogs.isEmpty()){
 			for(String ipAddress : ipAddresses){
 				getLogsFromIp(ipAddress);
-				formatLogs(LOCALHOST);
 			}
+			formatLogs(LOCALHOST);
 		}
 		
 		if(!clearLogs.isEmpty()){
