@@ -97,6 +97,7 @@
 				<%=jmeterStartTime%>
 				<%
 					} else {
+						ipAddresses += (ipAddress + ",");
 				%>
 				<b><a
 					href="retrieveLogs?ipAddressesList=<%=ipAddress%>&getLogs=true">Get
