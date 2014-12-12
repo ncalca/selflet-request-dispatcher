@@ -9,7 +9,7 @@ mv all_actions.csv ../results/
 cat results*.log > all_results.csv
 rm results*.log
 sed -i '1,1s/^/timestamp,reqType,service,rt,numberOfReqs \n/g' all_results.csv
-mv all_results.log ../results/
+mv all_results.csv ../results/
 
 cat selflet*.log > all_logs.log
 rm selflet*.log
