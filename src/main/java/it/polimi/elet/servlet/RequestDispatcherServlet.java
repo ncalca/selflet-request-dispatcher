@@ -35,6 +35,7 @@ import static com.google.common.base.Strings.*;
 public class RequestDispatcherServlet extends HttpServlet {
 
 	private static final Logger LOG = Logger.getLogger(RequestDispatcherServlet.class);
+	private static final Logger REQSLOG = Logger.getLogger("reqsLogger");
 
 	private static final MessageBridge messageBridge = MessageBridge.getInstance();
 	private static final INodeStateManager nodeStateManager = NodeStateManager.getInstance();
@@ -63,6 +64,7 @@ public class RequestDispatcherServlet extends HttpServlet {
 				ISelfLetID receiverID = getReceiver(receiver, serviceName);
 				LOG.debug("Dispatching request for service " + serviceName + " to selflet " + receiverID);
 				sendToSelflet(receiverID, serviceName);
+				REQSLOG.info(System.currentTimeMillis() + ", " + receiverID + ", " + serviceName + ", " + "1");
 			} catch (NotFoundException e) {
 				LOG.error("Cannot find receiver for service " + serviceName);
 			}
