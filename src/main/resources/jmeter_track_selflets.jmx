@@ -195,25 +195,11 @@
       </hashTree>
       <kg.apc.jmeter.threads.UltimateThreadGroup guiclass="kg.apc.jmeter.threads.UltimateThreadGroupGui" testclass="kg.apc.jmeter.threads.UltimateThreadGroup" testname="selflet_test_step_high" enabled="true">
         <collectionProp name="ultimatethreadgroupdata">
-          <collectionProp name="882411046">
-            <stringProp name="49">1</stringProp>
+          <collectionProp name="-330550651">
+            <stringProp name="50">2</stringProp>
             <stringProp name="48">0</stringProp>
             <stringProp name="48">0</stringProp>
             <stringProp name="46821456">13200</stringProp>
-            <stringProp name="48">0</stringProp>
-          </collectionProp>
-          <collectionProp name="-1963695567">
-            <stringProp name="49">1</stringProp>
-            <stringProp name="1541058">2400</stringProp>
-            <stringProp name="48">0</stringProp>
-            <stringProp name="46737849">10800</stringProp>
-            <stringProp name="48">0</stringProp>
-          </collectionProp>
-          <collectionProp name="522661682">
-            <stringProp name="50">2</stringProp>
-            <stringProp name="1693857">7800</stringProp>
-            <stringProp name="48">0</stringProp>
-            <stringProp name="1630431">5400</stringProp>
             <stringProp name="48">0</stringProp>
           </collectionProp>
         </collectionProp>
@@ -254,54 +240,54 @@
         <hashTree>
           <kg.apc.jmeter.timers.VariableThroughputTimer guiclass="kg.apc.jmeter.timers.VariableThroughputTimerGui" testclass="kg.apc.jmeter.timers.VariableThroughputTimer" testname="jp@gc - Throughput Shaping Timer" enabled="true">
             <collectionProp name="load_profile">
-              <collectionProp name="1913205484">
+              <collectionProp name="1315652620">
                 <stringProp name="47603">0.1</stringProp>
                 <stringProp name="47603">0.1</stringProp>
                 <stringProp name="50547">300</stringProp>
               </collectionProp>
-              <collectionProp name="-965043956">
+              <collectionProp name="-786059028">
                 <stringProp name="1475746">0.15</stringProp>
                 <stringProp name="1475746">0.15</stringProp>
                 <stringProp name="50547">300</stringProp>
               </collectionProp>
-              <collectionProp name="1913206476">
+              <collectionProp name="1315690316">
                 <stringProp name="47604">0.2</stringProp>
                 <stringProp name="47604">0.2</stringProp>
                 <stringProp name="50547">300</stringProp>
               </collectionProp>
-              <collectionProp name="-965013204">
+              <collectionProp name="-782578100">
                 <stringProp name="1475777">0.25</stringProp>
                 <stringProp name="1475777">0.25</stringProp>
                 <stringProp name="50547">300</stringProp>
               </collectionProp>
-              <collectionProp name="1913207468">
+              <collectionProp name="1315728012">
                 <stringProp name="47605">0.3</stringProp>
                 <stringProp name="47605">0.3</stringProp>
                 <stringProp name="50547">300</stringProp>
               </collectionProp>
-              <collectionProp name="-964982452">
+              <collectionProp name="-755202868">
                 <stringProp name="1475808">0.35</stringProp>
                 <stringProp name="1475808">0.35</stringProp>
                 <stringProp name="50547">300</stringProp>
               </collectionProp>
-              <collectionProp name="1913208460">
+              <collectionProp name="1315765708">
                 <stringProp name="47606">0.4</stringProp>
                 <stringProp name="47606">0.4</stringProp>
                 <stringProp name="50547">300</stringProp>
               </collectionProp>
-              <collectionProp name="1464112626">
+              <collectionProp name="-751721940">
                 <stringProp name="1475839">0.45</stringProp>
                 <stringProp name="1475839">0.45</stringProp>
                 <stringProp name="50547">300</stringProp>
               </collectionProp>
-              <collectionProp name="1644318359">
+              <collectionProp name="1046912311">
                 <stringProp name="47607">0.5</stringProp>
                 <stringProp name="47607">0.5</stringProp>
                 <stringProp name="1630431">5400</stringProp>
               </collectionProp>
-              <collectionProp name="49839678">
-                <stringProp name="48568">1.5</stringProp>
-                <stringProp name="48568">1.5</stringProp>
+              <collectionProp name="1681486615">
+                <stringProp name="49">1</stringProp>
+                <stringProp name="49">1</stringProp>
                 <stringProp name="1630431">5400</stringProp>
               </collectionProp>
             </collectionProp>
@@ -559,8 +545,8 @@
       </hashTree>
       <kg.apc.jmeter.threads.UltimateThreadGroup guiclass="kg.apc.jmeter.threads.UltimateThreadGroupGui" testclass="kg.apc.jmeter.threads.UltimateThreadGroup" testname="LocalTest" enabled="false">
         <collectionProp name="ultimatethreadgroupdata">
-          <collectionProp name="-888478599">
-            <stringProp name="49">1</stringProp>
+          <collectionProp name="-135808984">
+            <stringProp name="50">2</stringProp>
             <stringProp name="48">0</stringProp>
             <stringProp name="48">0</stringProp>
             <stringProp name="1572771">3600</stringProp>
@@ -604,10 +590,10 @@
         <hashTree>
           <kg.apc.jmeter.timers.VariableThroughputTimer guiclass="kg.apc.jmeter.timers.VariableThroughputTimerGui" testclass="kg.apc.jmeter.timers.VariableThroughputTimer" testname="jp@gc - Throughput Shaping Timer" enabled="true">
             <collectionProp name="load_profile">
-              <collectionProp name="126572965">
-                <stringProp name="47607">0.5</stringProp>
-                <stringProp name="47607">0.5</stringProp>
-                <stringProp name="1572771">3600</stringProp>
+              <collectionProp name="103309824">
+                <stringProp name="47610">0.8</stringProp>
+                <stringProp name="47610">0.8</stringProp>
+                <stringProp name="1722">60</stringProp>
               </collectionProp>
             </collectionProp>
           </kg.apc.jmeter.timers.VariableThroughputTimer>
@@ -719,63 +705,6 @@
           <boolProp name="include_checkbox_state">false</boolProp>
           <boolProp name="exclude_checkbox_state">false</boolProp>
         </kg.apc.jmeter.vizualizers.CorrectedResultCollector>
-        <hashTree/>
-        <ResultCollector guiclass="MonitorHealthVisualizer" testclass="ResultCollector" testname="Monitor Results" enabled="true">
-          <boolProp name="ResultCollector.error_logging">false</boolProp>
-          <objProp>
-            <value class="SampleSaveConfiguration">
-              <time>true</time>
-              <latency>true</latency>
-              <timestamp>true</timestamp>
-              <success>true</success>
-              <label>true</label>
-              <code>true</code>
-              <message>true</message>
-              <threadName>true</threadName>
-              <dataType>true</dataType>
-              <encoding>false</encoding>
-              <assertions>true</assertions>
-              <subresults>true</subresults>
-              <responseData>false</responseData>
-              <samplerData>false</samplerData>
-              <xml>false</xml>
-              <fieldNames>false</fieldNames>
-              <responseHeaders>false</responseHeaders>
-              <requestHeaders>false</requestHeaders>
-              <responseDataOnError>false</responseDataOnError>
-              <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
-              <assertionsResultsToSave>0</assertionsResultsToSave>
-              <bytes>true</bytes>
-            </value>
-          </objProp>
-          <objProp>
-            <value class="SampleSaveConfiguration">
-              <time>true</time>
-              <latency>true</latency>
-              <timestamp>true</timestamp>
-              <success>true</success>
-              <label>true</label>
-              <code>true</code>
-              <message>true</message>
-              <threadName>true</threadName>
-              <dataType>true</dataType>
-              <encoding>false</encoding>
-              <assertions>true</assertions>
-              <subresults>true</subresults>
-              <responseData>false</responseData>
-              <samplerData>false</samplerData>
-              <xml>false</xml>
-              <fieldNames>false</fieldNames>
-              <responseHeaders>false</responseHeaders>
-              <requestHeaders>false</requestHeaders>
-              <responseDataOnError>false</responseDataOnError>
-              <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
-              <assertionsResultsToSave>0</assertionsResultsToSave>
-              <bytes>true</bytes>
-            </value>
-          </objProp>
-          <stringProp name="filename"></stringProp>
-        </ResultCollector>
         <hashTree/>
       </hashTree>
     </hashTree>
