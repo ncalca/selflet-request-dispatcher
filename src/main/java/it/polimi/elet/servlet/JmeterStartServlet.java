@@ -4,9 +4,11 @@ import static com.google.common.base.Strings.nullToEmpty;
 import it.polimi.elet.selflet.configuration.DispatcherConfiguration;
 import it.polimi.elet.selflet.istantiator.IVirtualMachineIPManager;
 import it.polimi.elet.selflet.istantiator.VirtualMachineIPManager;
+import it.polimi.elet.selflet.schema.SchemaLoader;
 import it.polimi.elet.selflet.ssh.SSHConnection;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -56,7 +58,8 @@ public class JmeterStartServlet extends HttpServlet {
 		String jmeterIpAddress = vmManager.getNewIpAddress();
 		vmManager.setJmeterIpAddress(jmeterIpAddress);
 		SSHConnection connection = createNewSSHConnection(jmeterIpAddress);
-		connection.putFile("home/guser/selflet/selflet-request-dispatcher/src/main/resources/jmeter_track_selflets.jmx", JMETER_FOLDER + "/jmeter_track_selflets.jmx");
+		InputStream stream = SchemaLoader.class.getResourceAsStream("/resources/jmeter_track_selflets.jmx");
+		connection.putFile(stream, JMETER_FOLDER + "/jmeter_track_selflets.jmx");
 		String commandLocate = "cd " + JMETER_FOLDER;
 		//String commandStart = "screen -d -m ./jmeter -n -t " + TRACK_FOLDER + " -JdispatcherIpAddress=" + dispatcherIpAddress + " -l selflets_results.jtl";
 		String commandStart = "screen -d -m ./jmeter -n -t jmeter_track_selflets.jmx -JdispatcherIpAddress=" + dispatcherIpAddress + " -l selflets_results.jtl";
