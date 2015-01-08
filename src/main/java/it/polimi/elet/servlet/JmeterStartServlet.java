@@ -30,8 +30,9 @@ public class JmeterStartServlet extends HttpServlet {
 	private final int PORT_NUMBER = 22;
 
 	private final String JMETER_FOLDER = "apache-jmeter/bin";
-	private final String TRACK_FOLDER = "../../selflet/selflet-request-dispatcher/src/main/resources/jmeter_track_selflets.jmx";
-
+	private final String TRACK_FOLDER = "/home/guser/selflet/selflet-request-dispatcher/src/main/resources/";
+	private final String TRACK_NAME = "jmeter_track_selflets.jmx";
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -58,12 +59,13 @@ public class JmeterStartServlet extends HttpServlet {
 		String jmeterIpAddress = vmManager.getNewIpAddress();
 		vmManager.setJmeterIpAddress(jmeterIpAddress);
 		SSHConnection connectionFile = createNewSSHConnection(jmeterIpAddress);
-		connectionFile.putFile("/home/guser/selflet/selflet-request-dispatcher/src/main/resources/jmeter_track_selflets.jmx", JMETER_FOLDER + "/jmeter_track_selflets.jmx");
-		//String commandStart = "screen -d -m ./jmeter -n -t " + TRACK_FOLDER + " -JdispatcherIpAddress=" + dispatcherIpAddress + " -l selflets_results.jtl";
+		connectionFile.putFile(TRACK_FOLDER + TRACK_NAME, JMETER_FOLDER + TRACK_NAME);
+		connectionFile.disconnect();
 		String commandLocate = "cd " + JMETER_FOLDER;
-		String commandStart = "screen -d -m ./jmeter -n -t jmeter_track_selflets.jmx -JdispatcherIpAddress=" + dispatcherIpAddress + " -l selflets_results.jtl";
+		String commandStart = "screen -d -m ./jmeter -n -t " + TRACK_NAME + " -JdispatcherIpAddress=" + dispatcherIpAddress + " -l selflets_results.jtl";
 		SSHConnection connection = createNewSSHConnection(jmeterIpAddress);
 		connection.execute(commandLocate + ";" + commandStart);
+		connection.disconnect();
 		vmManager.setJmeterStartTime(createJmeterStartTime());
 
 	}
