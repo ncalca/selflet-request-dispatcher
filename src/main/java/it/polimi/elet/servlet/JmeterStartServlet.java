@@ -58,8 +58,7 @@ public class JmeterStartServlet extends HttpServlet {
 		String jmeterIpAddress = vmManager.getNewIpAddress();
 		vmManager.setJmeterIpAddress(jmeterIpAddress);
 		SSHConnection connectionFile = createNewSSHConnection(jmeterIpAddress);
-		InputStream stream = SchemaLoader.class.getResourceAsStream("/resources/jmeter_track_selflets.jmx");
-		connectionFile.putFile(stream, JMETER_FOLDER + "/jmeter_track_selflets.jmx");
+		connectionFile.putFile("/home/guser/selflet/selflet-request-dispatcher/src/main/resources/jmeter_track_selflets.jmx", JMETER_FOLDER + "/jmeter_track_selflets.jmx");
 		//String commandStart = "screen -d -m ./jmeter -n -t " + TRACK_FOLDER + " -JdispatcherIpAddress=" + dispatcherIpAddress + " -l selflets_results.jtl";
 		String commandLocate = "cd " + JMETER_FOLDER;
 		String commandStart = "screen -d -m ./jmeter -n -t jmeter_track_selflets.jmx -JdispatcherIpAddress=" + dispatcherIpAddress + " -l selflets_results.jtl";
