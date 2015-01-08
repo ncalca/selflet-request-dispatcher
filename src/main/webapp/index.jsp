@@ -12,7 +12,6 @@
 
 <%@ page import="java.util.*"%>
 <%@ page import="java.io.Serializable"%>
-<%@ page import="java.util.Map.*"%>
 <%@ page import="java.util.List.*"%>
 <%@ page import="java.net.*"%>
 
@@ -27,7 +26,7 @@
 //   -->
 </script>
 </head>
-<body onload="JavaScript:timedRefresh(5000);">
+<body onload="JavaScript:timedRefresh(30000);">
 	<h1>Selflet request dispatcher</h1>
 	<hr>
 	<p>
@@ -95,34 +94,7 @@
 		%>
 	</ul>
 	<br />
-	<br />
-	<center>
-		<table border="1">
-			<tr>
-				<th colspan="2">Generic data for Selflet <%=selfletID%>
-				</th>
-			<tr>
-				<th colspan="2">Last update <%=nodeState.getTimeStamp()%>
-				</th>
-				<%
-					Map<String, Serializable> genericData = nodeState.getGenericData();
-						List<String> keys = new ArrayList(genericData.keySet());
-						Collections.sort(keys);
-						for (String key : keys) {
-				%>
-			
-			<tr>
-				<td><b> <%=key%>
-				</b></td>
-				<td><%=genericData.get(key)%></td>
-			</tr>
-
-			<%
-				}
-			%>
-		</table>
-	</center>
-	<br />
+	
 	<%
 		}
 	%>
