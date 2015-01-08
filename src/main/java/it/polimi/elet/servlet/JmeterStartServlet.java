@@ -30,7 +30,8 @@ public class JmeterStartServlet extends HttpServlet {
 	private final int PORT_NUMBER = 22;
 
 	private final String JMETER_FOLDER = "apache-jmeter/bin/";
-	private final String TRACK_FOLDER = "selflet/selflet-request-dispatcher/src/main/resources/";
+	//TODO this is relative, but I don't know exactly the absolute path...
+	private final String TRACK_FOLDER = "/home/guser/selflet/selflet-request-dispatcher/src/main/resources/";
 	private final String TRACK_NAME = "jmeter_track_selflets.jmx";
 	
 	@Override
@@ -58,12 +59,10 @@ public class JmeterStartServlet extends HttpServlet {
 				.getInstance();
 		String jmeterIpAddress = vmManager.getNewIpAddress();
 		vmManager.setJmeterIpAddress(jmeterIpAddress);
-		SSHConnection connectionFile = createNewSSHConnection(jmeterIpAddress);
-		connectionFile.putFile(TRACK_FOLDER + TRACK_NAME, JMETER_FOLDER + TRACK_NAME);
-		connectionFile.disconnect();
+		SSHConnection connection = createNewSSHConnection(jmeterIpAddress);
+		connection.putFile(TRACK_FOLDER + TRACK_NAME, JMETER_FOLDER + TRACK_NAME);
 		String commandLocate = "cd " + JMETER_FOLDER;
 		String commandStart = "screen -d -m ./jmeter -n -t " + TRACK_NAME + " -JdispatcherIpAddress=" + dispatcherIpAddress + " -l selflets_results.jtl";
-		SSHConnection connection = createNewSSHConnection(jmeterIpAddress);
 		connection.execute(commandLocate + ";" + commandStart);
 		connection.disconnect();
 		vmManager.setJmeterStartTime(createJmeterStartTime());
