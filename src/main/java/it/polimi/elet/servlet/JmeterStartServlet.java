@@ -29,8 +29,8 @@ public class JmeterStartServlet extends HttpServlet {
 	private final String PASSWORD = DispatcherConfiguration.password;
 	private final int PORT_NUMBER = 22;
 
-	private final String JMETER_FOLDER = "apache-jmeter/bin";
-	private final String TRACK_FOLDER = "/home/guser/selflet/selflet-request-dispatcher/src/main/resources/";
+	private final String JMETER_FOLDER = "apache-jmeter/bin/";
+	private final String TRACK_FOLDER = "selflet/selflet-request-dispatcher/src/main/resources/";
 	private final String TRACK_NAME = "jmeter_track_selflets.jmx";
 	
 	@Override
