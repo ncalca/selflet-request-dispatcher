@@ -193,13 +193,13 @@
         </kg.apc.jmeter.vizualizers.CorrectedResultCollector>
         <hashTree/>
       </hashTree>
-      <kg.apc.jmeter.threads.UltimateThreadGroup guiclass="kg.apc.jmeter.threads.UltimateThreadGroupGui" testclass="kg.apc.jmeter.threads.UltimateThreadGroup" testname="selflet_test_step_low" enabled="false">
+      <kg.apc.jmeter.threads.UltimateThreadGroup guiclass="kg.apc.jmeter.threads.UltimateThreadGroupGui" testclass="kg.apc.jmeter.threads.UltimateThreadGroup" testname="selflet_test_step_low" enabled="true">
         <collectionProp name="ultimatethreadgroupdata">
-          <collectionProp name="1635080661">
+          <collectionProp name="1811272857">
             <stringProp name="50">2</stringProp>
             <stringProp name="48">0</stringProp>
             <stringProp name="48">0</stringProp>
-            <stringProp name="46821456">13200</stringProp>
+            <stringProp name="46795509">12600</stringProp>
             <stringProp name="48">0</stringProp>
           </collectionProp>
         </collectionProp>
@@ -222,7 +222,7 @@
               </elementProp>
             </collectionProp>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">184.73.98.61</stringProp>
+          <stringProp name="HTTPSampler.domain">${__P(dispatcherIpAddress,127.0.0.1)}</stringProp>
           <stringProp name="HTTPSampler.port">8080</stringProp>
           <stringProp name="HTTPSampler.connect_timeout">5000</stringProp>
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
@@ -240,11 +240,6 @@
         <hashTree>
           <kg.apc.jmeter.timers.VariableThroughputTimer guiclass="kg.apc.jmeter.timers.VariableThroughputTimerGui" testclass="kg.apc.jmeter.timers.VariableThroughputTimer" testname="jp@gc - Throughput Shaping Timer" enabled="true">
             <collectionProp name="load_profile">
-              <collectionProp name="-786267235">
-                <stringProp name="1475715">0.05</stringProp>
-                <stringProp name="1475715">0.05</stringProp>
-                <stringProp name="53430">600</stringProp>
-              </collectionProp>
               <collectionProp name="1315652620">
                 <stringProp name="47603">0.1</stringProp>
                 <stringProp name="47603">0.1</stringProp>
@@ -968,9 +963,9 @@
         </kg.apc.jmeter.vizualizers.CorrectedResultCollector>
         <hashTree/>
       </hashTree>
-      <kg.apc.jmeter.threads.UltimateThreadGroup guiclass="kg.apc.jmeter.threads.UltimateThreadGroupGui" testclass="kg.apc.jmeter.threads.UltimateThreadGroup" testname="quickTest" enabled="true">
+      <kg.apc.jmeter.threads.UltimateThreadGroup guiclass="kg.apc.jmeter.threads.UltimateThreadGroupGui" testclass="kg.apc.jmeter.threads.UltimateThreadGroup" testname="quickTest" enabled="false">
         <collectionProp name="ultimatethreadgroupdata">
-          <collectionProp name="-379764591">
+          <collectionProp name="1585866721">
             <stringProp name="50">2</stringProp>
             <stringProp name="48">0</stringProp>
             <stringProp name="48">0</stringProp>
