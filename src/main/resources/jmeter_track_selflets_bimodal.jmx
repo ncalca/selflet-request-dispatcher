@@ -1,477 +1,488 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jmeterTestPlan version="1.2" properties="2.5" jmeter="2.10 r1533061">
   <hashTree>
-    <kg.apc.jmeter.threads.UltimateThreadGroup guiclass="kg.apc.jmeter.threads.UltimateThreadGroupGui" testclass="kg.apc.jmeter.threads.UltimateThreadGroup" testname="selflet_test_bimodal" enabled="false">
-      <collectionProp name="ultimatethreadgroupdata">
-        <collectionProp name="1016813630">
-          <stringProp name="50">2</stringProp>
-          <stringProp name="0">0</stringProp>
-          <stringProp name="48">0</stringProp>
-          <stringProp name="47689239">21600</stringProp>
-          <stringProp name="48">0</stringProp>
-        </collectionProp>
-      </collectionProp>
-      <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
-        <boolProp name="LoopController.continue_forever">false</boolProp>
-        <intProp name="LoopController.loops">-1</intProp>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan" enabled="true">
+      <stringProp name="TestPlan.comments"></stringProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+        <collectionProp name="Arguments.arguments"/>
       </elementProp>
-      <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
-    </kg.apc.jmeter.threads.UltimateThreadGroup>
+      <stringProp name="TestPlan.user_define_classpath"></stringProp>
+    </TestPlan>
     <hashTree>
-      <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="videoProvisioner" enabled="true">
-        <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
-          <collectionProp name="Arguments.arguments">
-            <elementProp name="service" elementType="HTTPArgument">
-              <boolProp name="HTTPArgument.always_encode">false</boolProp>
-              <stringProp name="Argument.value">videoProvisioner</stringProp>
-              <stringProp name="Argument.metadata">=</stringProp>
-              <boolProp name="HTTPArgument.use_equals">true</boolProp>
-              <stringProp name="Argument.name">service</stringProp>
-            </elementProp>
+      <kg.apc.jmeter.threads.UltimateThreadGroup guiclass="kg.apc.jmeter.threads.UltimateThreadGroupGui" testclass="kg.apc.jmeter.threads.UltimateThreadGroup" testname="selflet_test_bimodal" enabled="true">
+        <collectionProp name="ultimatethreadgroupdata">
+          <collectionProp name="1016813630">
+            <stringProp name="50">2</stringProp>
+            <stringProp name="0">0</stringProp>
+            <stringProp name="48">0</stringProp>
+            <stringProp name="47689239">21600</stringProp>
+            <stringProp name="48">0</stringProp>
           </collectionProp>
+        </collectionProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <intProp name="LoopController.loops">-1</intProp>
         </elementProp>
-        <stringProp name="HTTPSampler.domain">${__P(dispatcherIpAddress,127.0.0.1)}</stringProp>
-        <stringProp name="HTTPSampler.port">8080</stringProp>
-        <stringProp name="HTTPSampler.connect_timeout">5000</stringProp>
-        <stringProp name="HTTPSampler.response_timeout"></stringProp>
-        <stringProp name="HTTPSampler.protocol"></stringProp>
-        <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-        <stringProp name="HTTPSampler.path">dispatcher</stringProp>
-        <stringProp name="HTTPSampler.method">GET</stringProp>
-        <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
-        <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-        <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
-        <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-        <boolProp name="HTTPSampler.monitor">false</boolProp>
-        <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-      </HTTPSamplerProxy>
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+      </kg.apc.jmeter.threads.UltimateThreadGroup>
       <hashTree>
-        <kg.apc.jmeter.timers.VariableThroughputTimer guiclass="kg.apc.jmeter.timers.VariableThroughputTimerGui" testclass="kg.apc.jmeter.timers.VariableThroughputTimer" testname="jp@gc - Throughput Shaping Timer" enabled="true">
-          <collectionProp name="load_profile">
-	<collectionProp name="0">
-		<stringProp name="0">0.126615969581749</stringProp>
-		<stringProp name="1">0.147908745247148</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="1">
-		<stringProp name="1">0.147908745247148</stringProp>
-		<stringProp name="2">0.193155893536122</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="2">
-		<stringProp name="2">0.193155893536122</stringProp>
-		<stringProp name="3">0.187832699619772</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="3">
-		<stringProp name="3">0.187832699619772</stringProp>
-		<stringProp name="4">0.23041825095057</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="4">
-		<stringProp name="4">0.23041825095057</stringProp>
-		<stringProp name="5">0.278326996197719</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="5">
-		<stringProp name="5">0.278326996197719</stringProp>
-		<stringProp name="6">0.278326996197719</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="6">
-		<stringProp name="6">0.278326996197719</stringProp>
-		<stringProp name="7">0.299619771863118</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="7">
-		<stringProp name="7">0.299619771863118</stringProp>
-		<stringProp name="8">0.312927756653992</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="8">
-		<stringProp name="8">0.312927756653992</stringProp>
-		<stringProp name="9">0.328897338403042</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="9">
-		<stringProp name="9">0.328897338403042</stringProp>
-		<stringProp name="10">0.360836501901141</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="10">
-		<stringProp name="10">0.360836501901141</stringProp>
-		<stringProp name="11">0.430038022813688</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="11">
-		<stringProp name="11">0.430038022813688</stringProp>
-		<stringProp name="12">0.440684410646388</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="12">
-		<stringProp name="12">0.440684410646388</stringProp>
-		<stringProp name="13">0.379467680608365</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="13">
-		<stringProp name="13">0.379467680608365</stringProp>
-		<stringProp name="14">0.477946768060836</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="14">
-		<stringProp name="14">0.477946768060836</stringProp>
-		<stringProp name="15">0.480608365019011</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="15">
-		<stringProp name="15">0.480608365019011</stringProp>
-		<stringProp name="16">0.485931558935361</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="16">
-		<stringProp name="16">0.485931558935361</stringProp>
-		<stringProp name="17">0.451330798479087</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="17">
-		<stringProp name="17">0.451330798479087</stringProp>
-		<stringProp name="18">0.451330798479087</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="18">
-		<stringProp name="18">0.451330798479087</stringProp>
-		<stringProp name="19">0.459315589353612</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="19">
-		<stringProp name="19">0.459315589353612</stringProp>
-		<stringProp name="20">0.496577946768061</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="20">
-		<stringProp name="20">0.496577946768061</stringProp>
-		<stringProp name="21">0.485931558935361</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="21">
-		<stringProp name="21">0.485931558935361</stringProp>
-		<stringProp name="22">0.501901140684411</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="22">
-		<stringProp name="22">0.501901140684411</stringProp>
-		<stringProp name="23">0.390114068441065</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="23">
-		<stringProp name="23">0.390114068441065</stringProp>
-		<stringProp name="24">0.403422053231939</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="24">
-		<stringProp name="24">0.403422053231939</stringProp>
-		<stringProp name="25">0.328897338403042</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="25">
-		<stringProp name="25">0.328897338403042</stringProp>
-		<stringProp name="26">0.254372623574144</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="26">
-		<stringProp name="26">0.254372623574144</stringProp>
-		<stringProp name="27">0.254372623574144</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="27">
-		<stringProp name="27">0.254372623574144</stringProp>
-		<stringProp name="28">0.187832699619772</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="28">
-		<stringProp name="28">0.187832699619772</stringProp>
-		<stringProp name="29">0.190494296577947</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="29">
-		<stringProp name="29">0.190494296577947</stringProp>
-		<stringProp name="30">0.187832699619772</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="30">
-		<stringProp name="30">0.187832699619772</stringProp>
-		<stringProp name="31">0.166539923954373</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="31">
-		<stringProp name="31">0.166539923954373</stringProp>
-		<stringProp name="32">0.145247148288973</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="32">
-		<stringProp name="32">0.145247148288973</stringProp>
-		<stringProp name="33">0.137262357414449</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="33">
-		<stringProp name="33">0.137262357414449</stringProp>
-		<stringProp name="34">0.126615969581749</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="34">
-		<stringProp name="34">0.126615969581749</stringProp>
-		<stringProp name="35">0.113307984790875</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="35">
-		<stringProp name="35">0.113307984790875</stringProp>
-		<stringProp name="36">0.1</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="36">
-		<stringProp name="36">0.1</stringProp>
-		<stringProp name="37">0.134600760456274</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="37">
-		<stringProp name="37">0.134600760456274</stringProp>
-		<stringProp name="38">0.193155893536122</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="38">
-		<stringProp name="38">0.193155893536122</stringProp>
-		<stringProp name="39">0.190494296577947</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="39">
-		<stringProp name="39">0.190494296577947</stringProp>
-		<stringProp name="40">0.24638783269962</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="40">
-		<stringProp name="40">0.24638783269962</stringProp>
-		<stringProp name="41">0.270342205323194</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="41">
-		<stringProp name="41">0.270342205323194</stringProp>
-		<stringProp name="42">0.24638783269962</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="42">
-		<stringProp name="42">0.24638783269962</stringProp>
-		<stringProp name="43">0.275665399239544</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="43">
-		<stringProp name="43">0.275665399239544</stringProp>
-		<stringProp name="44">0.299619771863118</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="44">
-		<stringProp name="44">0.299619771863118</stringProp>
-		<stringProp name="45">0.320912547528517</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="45">
-		<stringProp name="45">0.320912547528517</stringProp>
-		<stringProp name="46">0.331558935361217</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="46">
-		<stringProp name="46">0.331558935361217</stringProp>
-		<stringProp name="47">0.422053231939164</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="47">
-		<stringProp name="47">0.422053231939164</stringProp>
-		<stringProp name="48">0.422053231939164</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="48">
-		<stringProp name="48">0.422053231939164</stringProp>
-		<stringProp name="49">0.459315589353612</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="49">
-		<stringProp name="49">0.459315589353612</stringProp>
-		<stringProp name="50">0.8</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="50">
-		<stringProp name="50">0.8</stringProp>
-		<stringProp name="51">0.792015209125475</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="51">
-		<stringProp name="51">0.792015209125475</stringProp>
-		<stringProp name="52">0.616349809885932</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="52">
-		<stringProp name="52">0.616349809885932</stringProp>
-		<stringProp name="53">0.539163498098859</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="53">
-		<stringProp name="53">0.539163498098859</stringProp>
-		<stringProp name="54">0.555133079847909</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="54">
-		<stringProp name="54">0.555133079847909</stringProp>
-		<stringProp name="55">0.485931558935361</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="55">
-		<stringProp name="55">0.485931558935361</stringProp>
-		<stringProp name="56">0.605703422053232</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="56">
-		<stringProp name="56">0.605703422053232</stringProp>
-		<stringProp name="57">0.587072243346008</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="57">
-		<stringProp name="57">0.587072243346008</stringProp>
-		<stringProp name="58">0.533840304182509</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="58">
-		<stringProp name="58">0.533840304182509</stringProp>
-		<stringProp name="59">0.451330798479087</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="59">
-		<stringProp name="59">0.451330798479087</stringProp>
-		<stringProp name="60">0.435361216730038</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="60">
-		<stringProp name="60">0.435361216730038</stringProp>
-		<stringProp name="61">0.334220532319392</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="61">
-		<stringProp name="61">0.334220532319392</stringProp>
-		<stringProp name="62">0.233079847908745</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="62">
-		<stringProp name="62">0.233079847908745</stringProp>
-		<stringProp name="63">0.23041825095057</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="63">
-		<stringProp name="63">0.23041825095057</stringProp>
-		<stringProp name="64">0.217110266159696</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="64">
-		<stringProp name="64">0.217110266159696</stringProp>
-		<stringProp name="65">0.195817490494297</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="65">
-		<stringProp name="65">0.195817490494297</stringProp>
-		<stringProp name="66">0.185171102661597</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="66">
-		<stringProp name="66">0.185171102661597</stringProp>
-		<stringProp name="67">0.155893536121673</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="67">
-		<stringProp name="67">0.155893536121673</stringProp>
-		<stringProp name="68">0.174524714828897</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="68">
-		<stringProp name="68">0.174524714828897</stringProp>
-		<stringProp name="69">0.171863117870722</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="69">
-		<stringProp name="69">0.171863117870722</stringProp>
-		<stringProp name="70">0.129277566539924</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-	<collectionProp name="70">
-		<stringProp name="70">0.129277566539924</stringProp>
-		<stringProp name="71">0.137262357414449</stringProp>
-		<stringProp name="300">300</stringProp>
-	</collectionProp>
-</collectionProp>
-        </kg.apc.jmeter.timers.VariableThroughputTimer>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="videoProvisioner" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="service" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">videoProvisioner</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                <stringProp name="Argument.name">service</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">${__P(dispatcherIpAddress,127.0.0.1)}</stringProp>
+          <stringProp name="HTTPSampler.port">8080</stringProp>
+          <stringProp name="HTTPSampler.connect_timeout">5000</stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">dispatcher</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <kg.apc.jmeter.timers.VariableThroughputTimer guiclass="kg.apc.jmeter.timers.VariableThroughputTimerGui" testclass="kg.apc.jmeter.timers.VariableThroughputTimer" testname="jp@gc - Throughput Shaping Timer" enabled="true">
+            <collectionProp name="load_profile">
+              <collectionProp name="-1884112529">
+                <stringProp name="1">0.126615969581749</stringProp>
+                <stringProp name="2">0.147908745247148</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="-361981957">
+                <stringProp name="2">0.147908745247148</stringProp>
+                <stringProp name="3">0.193155893536122</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="1035240503">
+                <stringProp name="3">0.193155893536122</stringProp>
+                <stringProp name="4">0.187832699619772</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="-663521433">
+                <stringProp name="4">0.187832699619772</stringProp>
+                <stringProp name="5">0.23041825095057</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="-1867238780">
+                <stringProp name="5">0.23041825095057</stringProp>
+                <stringProp name="6">0.278326996197719</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="892317557">
+                <stringProp name="6">0.278326996197719</stringProp>
+                <stringProp name="7">0.278326996197719</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="-1581596849">
+                <stringProp name="7">0.278326996197719</stringProp>
+                <stringProp name="8">0.299619771863118</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="-923292463">
+                <stringProp name="8">0.299619771863118</stringProp>
+                <stringProp name="9">0.312927756653992</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="1704411126">
+                <stringProp name="9">0.312927756653992</stringProp>
+                <stringProp name="10">0.328897338403042</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="256535947">
+                <stringProp name="10">0.328897338403042</stringProp>
+                <stringProp name="11">0.360836501901141</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="-1935382039">
+                <stringProp name="11">0.360836501901141</stringProp>
+                <stringProp name="12">0.430038022813688</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="1787963761">
+                <stringProp name="12">0.430038022813688</stringProp>
+                <stringProp name="13">0.440684410646388</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="177265311">
+                <stringProp name="13">0.440684410646388</stringProp>
+                <stringProp name="14">0.379467680608365</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="-23915020">
+                <stringProp name="14">0.379467680608365</stringProp>
+                <stringProp name="15">0.477946768060836</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="-1966856128">
+                <stringProp name="15">0.477946768060836</stringProp>
+                <stringProp name="16">0.480608365019011</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="1108216328">
+                <stringProp name="16">0.480608365019011</stringProp>
+                <stringProp name="17">0.485931558935361</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="-1305759829">
+                <stringProp name="17">0.485931558935361</stringProp>
+                <stringProp name="18">0.451330798479087</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="552660789">
+                <stringProp name="18">0.451330798479087</stringProp>
+                <stringProp name="19">0.451330798479087</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="-1151574498">
+                <stringProp name="19">0.451330798479087</stringProp>
+                <stringProp name="20">0.459315589353612</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="-2095205527">
+                <stringProp name="20">0.459315589353612</stringProp>
+                <stringProp name="21">0.496577946768061</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="-505724775">
+                <stringProp name="21">0.496577946768061</stringProp>
+                <stringProp name="22">0.485931558935361</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="1955154703">
+                <stringProp name="22">0.485931558935361</stringProp>
+                <stringProp name="23">0.501901140684411</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="1130015258">
+                <stringProp name="23">0.501901140684411</stringProp>
+                <stringProp name="24">0.390114068441065</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="2060883803">
+                <stringProp name="24">0.390114068441065</stringProp>
+                <stringProp name="25">0.403422053231939</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="-969325405">
+                <stringProp name="25">0.403422053231939</stringProp>
+                <stringProp name="26">0.328897338403042</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="-1557815858">
+                <stringProp name="26">0.328897338403042</stringProp>
+                <stringProp name="27">0.254372623574144</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="-470857931">
+                <stringProp name="27">0.254372623574144</stringProp>
+                <stringProp name="28">0.254372623574144</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="-412444693">
+                <stringProp name="28">0.254372623574144</stringProp>
+                <stringProp name="29">0.187832699619772</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="-361939488">
+                <stringProp name="29">0.187832699619772</stringProp>
+                <stringProp name="30">0.190494296577947</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="-1598392735">
+                <stringProp name="30">0.190494296577947</stringProp>
+                <stringProp name="31">0.187832699619772</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="158117489">
+                <stringProp name="31">0.187832699619772</stringProp>
+                <stringProp name="32">0.166539923954373</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="-1279701977">
+                <stringProp name="32">0.166539923954373</stringProp>
+                <stringProp name="33">0.145247148288973</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="-921114388">
+                <stringProp name="33">0.145247148288973</stringProp>
+                <stringProp name="34">0.137262357414449</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="-1494370738">
+                <stringProp name="34">0.137262357414449</stringProp>
+                <stringProp name="35">0.126615969581749</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="-1265265276">
+                <stringProp name="35">0.126615969581749</stringProp>
+                <stringProp name="36">0.113307984790875</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="-318760998">
+                <stringProp name="36">0.113307984790875</stringProp>
+                <stringProp name="37">0.1</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="1524892383">
+                <stringProp name="37">0.1</stringProp>
+                <stringProp name="38">0.134600760456274</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="567975127">
+                <stringProp name="38">0.134600760456274</stringProp>
+                <stringProp name="39">0.193155893536122</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="-665714302">
+                <stringProp name="39">0.193155893536122</stringProp>
+                <stringProp name="40">0.190494296577947</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="-950665041">
+                <stringProp name="40">0.190494296577947</stringProp>
+                <stringProp name="41">0.24638783269962</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="1937986689">
+                <stringProp name="41">0.24638783269962</stringProp>
+                <stringProp name="42">0.270342205323194</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="-1330627127">
+                <stringProp name="42">0.270342205323194</stringProp>
+                <stringProp name="43">0.24638783269962</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="231657119">
+                <stringProp name="43">0.24638783269962</stringProp>
+                <stringProp name="44">0.275665399239544</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="1557997272">
+                <stringProp name="44">0.275665399239544</stringProp>
+                <stringProp name="45">0.299619771863118</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="599597102">
+                <stringProp name="45">0.299619771863118</stringProp>
+                <stringProp name="46">0.320912547528517</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="679239750">
+                <stringProp name="46">0.320912547528517</stringProp>
+                <stringProp name="47">0.331558935361217</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="-1226707155">
+                <stringProp name="47">0.331558935361217</stringProp>
+                <stringProp name="48">0.422053231939164</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="1793417781">
+                <stringProp name="48">0.422053231939164</stringProp>
+                <stringProp name="49">0.422053231939164</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="1124257333">
+                <stringProp name="49">0.422053231939164</stringProp>
+                <stringProp name="50">0.459315589353612</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="-2092034726">
+                <stringProp name="50">0.459315589353612</stringProp>
+                <stringProp name="51">0.8</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="418442680">
+                <stringProp name="51">0.8</stringProp>
+                <stringProp name="52">0.792015209125475</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="1766403491">
+                <stringProp name="52">0.792015209125475</stringProp>
+                <stringProp name="53">0.616349809885932</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="442709327">
+                <stringProp name="53">0.616349809885932</stringProp>
+                <stringProp name="54">0.539163498098859</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="1362474437">
+                <stringProp name="54">0.539163498098859</stringProp>
+                <stringProp name="55">0.555133079847909</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="1288316653">
+                <stringProp name="55">0.555133079847909</stringProp>
+                <stringProp name="56">0.485931558935361</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="1812915298">
+                <stringProp name="56">0.485931558935361</stringProp>
+                <stringProp name="57">0.605703422053232</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="1717896944">
+                <stringProp name="57">0.605703422053232</stringProp>
+                <stringProp name="58">0.587072243346008</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="335816327">
+                <stringProp name="58">0.587072243346008</stringProp>
+                <stringProp name="59">0.533840304182509</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="1889951176">
+                <stringProp name="59">0.533840304182509</stringProp>
+                <stringProp name="60">0.451330798479087</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="17340900">
+                <stringProp name="60">0.451330798479087</stringProp>
+                <stringProp name="61">0.435361216730038</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="1135531116">
+                <stringProp name="61">0.435361216730038</stringProp>
+                <stringProp name="62">0.334220532319392</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="-936586452">
+                <stringProp name="62">0.334220532319392</stringProp>
+                <stringProp name="63">0.233079847908745</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="2068911830">
+                <stringProp name="63">0.233079847908745</stringProp>
+                <stringProp name="64">0.23041825095057</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="-1010822194">
+                <stringProp name="64">0.23041825095057</stringProp>
+                <stringProp name="65">0.217110266159696</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="-1041209294">
+                <stringProp name="65">0.217110266159696</stringProp>
+                <stringProp name="66">0.195817490494297</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="-1359842152">
+                <stringProp name="66">0.195817490494297</stringProp>
+                <stringProp name="67">0.185171102661597</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="-672178316">
+                <stringProp name="67">0.185171102661597</stringProp>
+                <stringProp name="68">0.155893536121673</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="-1147969499">
+                <stringProp name="68">0.155893536121673</stringProp>
+                <stringProp name="69">0.174524714828897</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="857216418">
+                <stringProp name="69">0.174524714828897</stringProp>
+                <stringProp name="70">0.171863117870722</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="1932112237">
+                <stringProp name="70">0.171863117870722</stringProp>
+                <stringProp name="71">0.129277566539924</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+              <collectionProp name="2107900306">
+                <stringProp name="71">0.129277566539924</stringProp>
+                <stringProp name="72">0.137262357414449</stringProp>
+                <stringProp name="300">300</stringProp>
+              </collectionProp>
+            </collectionProp>
+          </kg.apc.jmeter.timers.VariableThroughputTimer>
+          <hashTree/>
+        </hashTree>
+        <kg.apc.jmeter.vizualizers.CorrectedResultCollector guiclass="kg.apc.jmeter.vizualizers.ThreadsStateOverTimeGui" testclass="kg.apc.jmeter.vizualizers.CorrectedResultCollector" testname="jp@gc - Active Threads Over Time" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>false</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+            </value>
+          </objProp>
+          <objProp>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>true</xml>
+              <fieldNames>false</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+          <longProp name="interval_grouping">500</longProp>
+          <boolProp name="graph_aggregated">false</boolProp>
+          <stringProp name="include_sample_labels"></stringProp>
+          <stringProp name="exclude_sample_labels"></stringProp>
+          <stringProp name="start_offset"></stringProp>
+          <stringProp name="end_offset"></stringProp>
+          <boolProp name="include_checkbox_state">false</boolProp>
+          <boolProp name="exclude_checkbox_state">false</boolProp>
+        </kg.apc.jmeter.vizualizers.CorrectedResultCollector>
         <hashTree/>
       </hashTree>
-      <kg.apc.jmeter.vizualizers.CorrectedResultCollector guiclass="kg.apc.jmeter.vizualizers.ThreadsStateOverTimeGui" testclass="kg.apc.jmeter.vizualizers.CorrectedResultCollector" testname="jp@gc - Active Threads Over Time" enabled="true">
-        <boolProp name="ResultCollector.error_logging">false</boolProp>
-        <objProp>
-          <value class="SampleSaveConfiguration">
-            <time>true</time>
-            <latency>true</latency>
-            <timestamp>true</timestamp>
-            <success>true</success>
-            <label>true</label>
-            <code>true</code>
-            <message>true</message>
-            <threadName>true</threadName>
-            <dataType>true</dataType>
-            <encoding>false</encoding>
-            <assertions>true</assertions>
-            <subresults>true</subresults>
-            <responseData>false</responseData>
-            <samplerData>false</samplerData>
-            <xml>false</xml>
-            <fieldNames>false</fieldNames>
-            <responseHeaders>false</responseHeaders>
-            <requestHeaders>false</requestHeaders>
-            <responseDataOnError>false</responseDataOnError>
-            <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
-            <assertionsResultsToSave>0</assertionsResultsToSave>
-            <bytes>true</bytes>
-          </value>
-        </objProp>
-        <objProp>
-          <value class="SampleSaveConfiguration">
-            <time>true</time>
-            <latency>true</latency>
-            <timestamp>true</timestamp>
-            <success>true</success>
-            <label>true</label>
-            <code>true</code>
-            <message>true</message>
-            <threadName>true</threadName>
-            <dataType>true</dataType>
-            <encoding>false</encoding>
-            <assertions>true</assertions>
-            <subresults>true</subresults>
-            <responseData>false</responseData>
-            <samplerData>false</samplerData>
-            <xml>true</xml>
-            <fieldNames>false</fieldNames>
-            <responseHeaders>false</responseHeaders>
-            <requestHeaders>false</requestHeaders>
-            <responseDataOnError>false</responseDataOnError>
-            <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
-            <assertionsResultsToSave>0</assertionsResultsToSave>
-            <bytes>true</bytes>
-          </value>
-        </objProp>
-        <stringProp name="filename"></stringProp>
-        <longProp name="interval_grouping">500</longProp>
-        <boolProp name="graph_aggregated">false</boolProp>
-        <stringProp name="include_sample_labels"></stringProp>
-        <stringProp name="exclude_sample_labels"></stringProp>
-        <stringProp name="start_offset"></stringProp>
-        <stringProp name="end_offset"></stringProp>
-        <boolProp name="include_checkbox_state">false</boolProp>
-        <boolProp name="exclude_checkbox_state">false</boolProp>
-      </kg.apc.jmeter.vizualizers.CorrectedResultCollector>
-      <hashTree/>
     </hashTree>
   </hashTree>
 </jmeterTestPlan>
