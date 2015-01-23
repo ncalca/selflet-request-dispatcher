@@ -26,6 +26,7 @@ public class DispatcherConfiguration extends Configuration {
 	public static int maxInstantiationSlots;
 	public static String defaultProjectTemplate;
 	public static String completeProjectTemplate;
+	public static String trackName;
 	public static boolean isLocal;
 
 	private DispatcherConfiguration() {

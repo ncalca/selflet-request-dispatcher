@@ -195,7 +195,7 @@
       </hashTree>
       <kg.apc.jmeter.threads.UltimateThreadGroup guiclass="kg.apc.jmeter.threads.UltimateThreadGroupGui" testclass="kg.apc.jmeter.threads.UltimateThreadGroup" testname="selflet_test_step_low" enabled="true">
         <collectionProp name="ultimatethreadgroupdata">
-          <collectionProp name="1811272857">
+          <collectionProp name="2119003023">
             <stringProp name="50">2</stringProp>
             <stringProp name="48">0</stringProp>
             <stringProp name="48">0</stringProp>
@@ -595,26 +595,12 @@
       </hashTree>
       <kg.apc.jmeter.threads.UltimateThreadGroup guiclass="kg.apc.jmeter.threads.UltimateThreadGroupGui" testclass="kg.apc.jmeter.threads.UltimateThreadGroup" testname="selflet_test_bimodal" enabled="false">
         <collectionProp name="ultimatethreadgroupdata">
-          <collectionProp name="-198454553">
-            <stringProp name="49">1</stringProp>
+          <collectionProp name="1016813630">
+            <stringProp name="50">2</stringProp>
             <stringProp name="0">0</stringProp>
             <stringProp name="48">0</stringProp>
-            <stringProp name="1745751">9000</stringProp>
+            <stringProp name="47689239">21600</stringProp>
             <stringProp name="48">0</stringProp>
-          </collectionProp>
-          <collectionProp name="1415735601">
-            <stringProp name="49">1</stringProp>
-            <stringProp name="48">0</stringProp>
-            <stringProp name="1512228">1500</stringProp>
-            <stringProp name="56313">900</stringProp>
-            <stringProp name="56313">900</stringProp>
-          </collectionProp>
-          <collectionProp name="-1788663654">
-            <stringProp name="51">3</stringProp>
-            <stringProp name="1571810">3500</stringProp>
-            <stringProp name="1567966">3100</stringProp>
-            <stringProp name="54391">700</stringProp>
-            <stringProp name="1512228">1500</stringProp>
           </collectionProp>
         </collectionProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
@@ -654,76 +640,6 @@
         <hashTree>
           <kg.apc.jmeter.timers.VariableThroughputTimer guiclass="kg.apc.jmeter.timers.VariableThroughputTimerGui" testclass="kg.apc.jmeter.timers.VariableThroughputTimer" testname="jp@gc - Throughput Shaping Timer" enabled="true">
             <collectionProp name="load_profile">
-              <collectionProp name="1317825887">
-                <stringProp name="47603">0.1</stringProp>
-                <stringProp name="47603">0.1</stringProp>
-                <stringProp name="52469">500</stringProp>
-              </collectionProp>
-              <collectionProp name="1317863583">
-                <stringProp name="47604">0.2</stringProp>
-                <stringProp name="47604">0.2</stringProp>
-                <stringProp name="52469">500</stringProp>
-              </collectionProp>
-              <collectionProp name="1317901279">
-                <stringProp name="47605">0.3</stringProp>
-                <stringProp name="47605">0.3</stringProp>
-                <stringProp name="52469">500</stringProp>
-              </collectionProp>
-              <collectionProp name="-107323015">
-                <stringProp name="47606">0.4</stringProp>
-                <stringProp name="47606">0.4</stringProp>
-                <stringProp name="1507423">1000</stringProp>
-              </collectionProp>
-              <collectionProp name="1317901279">
-                <stringProp name="47605">0.3</stringProp>
-                <stringProp name="47605">0.3</stringProp>
-                <stringProp name="52469">500</stringProp>
-              </collectionProp>
-              <collectionProp name="-107398407">
-                <stringProp name="47604">0.2</stringProp>
-                <stringProp name="47604">0.2</stringProp>
-                <stringProp name="1507423">1000</stringProp>
-              </collectionProp>
-              <collectionProp name="1317901279">
-                <stringProp name="47605">0.3</stringProp>
-                <stringProp name="47605">0.3</stringProp>
-                <stringProp name="52469">500</stringProp>
-              </collectionProp>
-              <collectionProp name="1317938975">
-                <stringProp name="47606">0.4</stringProp>
-                <stringProp name="47606">0.4</stringProp>
-                <stringProp name="52469">500</stringProp>
-              </collectionProp>
-              <collectionProp name="1317976671">
-                <stringProp name="47607">0.5</stringProp>
-                <stringProp name="47607">0.5</stringProp>
-                <stringProp name="52469">500</stringProp>
-              </collectionProp>
-              <collectionProp name="1318014367">
-                <stringProp name="47608">0.6</stringProp>
-                <stringProp name="47608">0.6</stringProp>
-                <stringProp name="52469">500</stringProp>
-              </collectionProp>
-              <collectionProp name="1318052063">
-                <stringProp name="47609">0.7</stringProp>
-                <stringProp name="47609">0.7</stringProp>
-                <stringProp name="52469">500</stringProp>
-              </collectionProp>
-              <collectionProp name="-106401447">
-                <stringProp name="47610">0.8</stringProp>
-                <stringProp name="47610">0.8</stringProp>
-                <stringProp name="1507423">1000</stringProp>
-              </collectionProp>
-              <collectionProp name="1318014367">
-                <stringProp name="47608">0.6</stringProp>
-                <stringProp name="47608">0.6</stringProp>
-                <stringProp name="52469">500</stringProp>
-              </collectionProp>
-              <collectionProp name="1317938975">
-                <stringProp name="47606">0.4</stringProp>
-                <stringProp name="47606">0.4</stringProp>
-                <stringProp name="52469">500</stringProp>
-              </collectionProp>
               <collectionProp name="1317825887">
                 <stringProp name="47603">0.1</stringProp>
                 <stringProp name="47603">0.1</stringProp>
