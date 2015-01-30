@@ -4,14 +4,17 @@ import it.polimi.elet.selflet.id.ISelfLetID;
 import it.polimi.elet.selflet.istantiator.IVirtualMachineIPManager;
 import it.polimi.elet.selflet.istantiator.SelfletIstantiatorThread;
 import it.polimi.elet.selflet.istantiator.VirtualMachineIPManager;
+import it.polimi.elet.selflet.negotiation.ReplyRequestData;
 import it.polimi.elet.selflet.negotiation.nodeState.INodeState;
 import it.polimi.elet.selflet.nodeState.INodeStateManager;
 import it.polimi.elet.selflet.nodeState.NodeStateManager;
+import it.polimi.elet.servlet.RequestDispatcherServlet;
 import it.polimi.elet.thread.ThreadPool;
 
 import org.apache.log4j.Logger;
 
 import polimi.reds.Message;
+import polimi.reds.MessageID;
 import polimi.reds.TCPDispatchingService;
 
 /**
@@ -24,6 +27,7 @@ public class MessageDispatchingThread extends Thread {
 
 	private static final Logger LOG = Logger
 			.getLogger(MessageDispatchingThread.class);
+	private static final Logger REQSLOG = Logger.getLogger("reqsLogger");
 
 	private static final int WAIT_STEP_MS = 50;
 
@@ -54,8 +58,6 @@ public class MessageDispatchingThread extends Thread {
 					if (message instanceof RedsMessage) {
 						RedsMessage redsMessage = (RedsMessage) message;
 						SelfLetMsg selfletMessage = redsMessage.getMessage();
-						LOG.info("Received selflet message: "
-								+ selfletMessage.getType());
 						analyzeMessage(selfletMessage);
 					} else {
 						LOG.info("Received other kind of message: " + message);
@@ -99,9 +101,14 @@ public class MessageDispatchingThread extends Thread {
 		case REMOVE_SELFLET:
 			removeSelflet(selfletMessage);
 			break;
+			
+		case REDIRECT_REQUEST_REPLY:
+			long replyTime = System.currentTimeMillis();
+			computeResponseTime(replyTime, selfletMessage);
+			break;
 
 		default:
-			LOG.warn("Ignoring message: " + selfletMessage);
+			System.out.println("Message received: " + selfletMessage);
 		}
 	}
 
@@ -132,6 +139,18 @@ public class MessageDispatchingThread extends Thread {
 	private void aliveSelfletMessage(SelfLetMsg selfletMessage) {
 		ISelfLetID from = selfletMessage.getFrom();
 		selfletNeighbors.addNeighbor(from);
+	}
+	
+	private void computeResponseTime(long replyTime, SelfLetMsg selfletMessage){
+		ReplyRequestData replyData = (ReplyRequestData)selfletMessage.getContent();
+		MessageID msgID = replyData.getMessageId();
+		
+		ISelfLetID from = selfletMessage.getFrom();
+		String serviceName = replyData.getServiceName();
+		
+		long arrivalTime = RequestDispatcherServlet.requestMap.remove(msgID);
+		long responseTime = replyTime - arrivalTime;
+		REQSLOG.info(System.currentTimeMillis() + "," + serviceName + "," + responseTime + "," + from + ", 1");
 	}
 
 }

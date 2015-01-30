@@ -1,5 +1,6 @@
 package it.polimi.elet.servlet;
 
+import it.polimi.elet.selflet.configuration.DispatcherConfiguration;
 import it.polimi.elet.selflet.exceptions.NotFoundException;
 import it.polimi.elet.selflet.id.ISelfLetID;
 import it.polimi.elet.selflet.id.SelfLetID;
@@ -14,6 +15,7 @@ import it.polimi.elet.selflet.nodeState.INodeStateManager;
 import it.polimi.elet.selflet.nodeState.NodeStateManager;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -25,6 +27,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
+import polimi.reds.MessageID;
+
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -35,13 +39,14 @@ import static com.google.common.base.Strings.*;
 public class RequestDispatcherServlet extends HttpServlet {
 
 	private static final Logger LOG = Logger.getLogger(RequestDispatcherServlet.class);
-	private static final Logger REQSLOG = Logger.getLogger("reqsLogger");
 
 	private static final MessageBridge messageBridge = MessageBridge.getInstance();
 	private static final INodeStateManager nodeStateManager = NodeStateManager.getInstance();
 
 	private static final String RECEIVER = "receiver";
 	private static final String SERVICE = "service";
+	
+	public static Map<MessageID, Long> requestMap = new HashMap<MessageID, Long>();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String receiver = nullToEmpty(request.getParameter(RECEIVER));
@@ -64,7 +69,6 @@ public class RequestDispatcherServlet extends HttpServlet {
 				ISelfLetID receiverID = getReceiver(receiver, serviceName);
 				LOG.debug("Dispatching request for service " + serviceName + " to selflet " + receiverID);
 				sendToSelflet(receiverID, serviceName);
-				REQSLOG.info(System.currentTimeMillis() + ", " + receiverID + ", " + serviceName + ", " + "1");
 			} catch (NotFoundException e) {
 				LOG.error("Cannot find receiver for service " + serviceName);
 			}
@@ -83,8 +87,11 @@ public class RequestDispatcherServlet extends HttpServlet {
 	}
 
 	private void sendToSelflet(ISelfLetID receiver, String serviceName) {
+		long arrivalTime = System.currentTimeMillis();
 		RedsMessage message = prepareMessage(receiver, serviceName);
 		messageBridge.publish(message);
+		System.out.println("Request with ID " + message.getID());
+		requestMap.put(message.getID(), arrivalTime);
 	}
 
 	private void sendToAllSelflets(String serviceName) {

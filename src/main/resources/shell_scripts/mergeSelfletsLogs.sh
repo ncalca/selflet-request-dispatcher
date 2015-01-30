@@ -17,6 +17,7 @@ mv all_logs.log ../results/
 
 cd ../../../../logs
 sed -i '1,1s/^/timestamp,selflets \n/g' activeSelflets.log
-mv activeSelflets.log ../src/main/webapp/results/
-sed -i '1,1s/^/timestamp,selfletID,service,numberOfReqs \n/g' requests.log
-mv requests.log ../src/main/webapp/results/
+mv activeSelflets.log ../src/main/webapp/results/activeSelflets.csv
+
+sed -i '1,1s/^/timestamp,service,rt,selfletID,numberOfReqs \n/g' requests.log
+mv requests.log ../src/main/webapp/results/requests.csv

@@ -65,7 +65,7 @@ public class MessageBridge {
 	}
 
 	private static void subscribeToActiveMessages() {
-		Filter typeFilter = new RedsMessageTypeFilter(ImmutableSet.of(ALIVE_SELFLET, NODE_STATE, ISTANTIATE_NEW_SELFLET, REMOVE_SELFLET));
+		Filter typeFilter = new RedsMessageTypeFilter(ImmutableSet.of(ALIVE_SELFLET, NODE_STATE, ISTANTIATE_NEW_SELFLET, REMOVE_SELFLET, REDIRECT_REQUEST_REPLY));
 		dispatchingService.subscribe(typeFilter);
 	}
 
