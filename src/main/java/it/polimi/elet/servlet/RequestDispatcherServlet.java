@@ -90,7 +90,6 @@ public class RequestDispatcherServlet extends HttpServlet {
 		long arrivalTime = System.currentTimeMillis();
 		RedsMessage message = prepareMessage(receiver, serviceName);
 		messageBridge.publish(message);
-		System.out.println("Request with ID " + message.getID());
 		requestMap.put(message.getID(), arrivalTime);
 	}
 
