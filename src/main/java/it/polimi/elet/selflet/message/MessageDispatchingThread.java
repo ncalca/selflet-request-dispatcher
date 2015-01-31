@@ -101,7 +101,7 @@ public class MessageDispatchingThread extends Thread {
 		case REMOVE_SELFLET:
 			removeSelflet(selfletMessage);
 			break;
-			
+
 		case REDIRECT_REQUEST_REPLY:
 			long replyTime = System.currentTimeMillis();
 			computeResponseTime(replyTime, selfletMessage);
@@ -140,17 +140,27 @@ public class MessageDispatchingThread extends Thread {
 		ISelfLetID from = selfletMessage.getFrom();
 		selfletNeighbors.addNeighbor(from);
 	}
-	
-	private void computeResponseTime(long replyTime, SelfLetMsg selfletMessage){
-		ReplyRequestData replyData = (ReplyRequestData)selfletMessage.getContent();
-		MessageID msgID = replyData.getMessageId();
-		
-		ISelfLetID from = selfletMessage.getFrom();
-		String serviceName = replyData.getServiceName();
-		
-		long arrivalTime = RequestDispatcherServlet.requestMap.remove(msgID);
-		long responseTime = replyTime - arrivalTime;
-		REQSLOG.info(System.currentTimeMillis() + "," + serviceName + "," + responseTime + "," + from + ", 1");
+
+	private void computeResponseTime(long replyTime, SelfLetMsg selfletMessage) {
+		try {
+			ReplyRequestData replyData = (ReplyRequestData) selfletMessage
+					.getContent();
+			MessageID msgID = replyData.getMessageId();
+
+			ISelfLetID from = selfletMessage.getFrom();
+			String serviceName = replyData.getServiceName();
+
+			if (RequestDispatcherServlet.requestMap.get(msgID) != null) {
+				long arrivalTime = RequestDispatcherServlet.requestMap
+						.remove(msgID);
+				long responseTime = replyTime - arrivalTime;
+				REQSLOG.info(System.currentTimeMillis() + "," + serviceName
+						+ "," + responseTime + "," + from + ", 1");
+			}
+		} catch (Exception e) {
+			LOG.error("Problem in computing request response time: "
+					+ e.getMessage());
+		}
 	}
 
 }
