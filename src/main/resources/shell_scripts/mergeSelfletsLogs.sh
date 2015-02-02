@@ -26,6 +26,11 @@ rm life*.log
 sed -i '1,1s/^/timestamp,selflet,start,end,lifetime \n/g' all_life.csv
 mv all_life.csv ../results/
 
+cat cpu*.log > all_cpu.csv
+rm cpu*.log
+sed -i '1,1s/^/timestamp,selflet,utilization \n/g' all_cpu.csv
+mv all_cpu.csv ../results/
+
 cat selflet*.log > all_logs.log
 rm selflet*.log
 mv all_logs.log ../results/
