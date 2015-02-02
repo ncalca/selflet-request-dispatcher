@@ -23,7 +23,7 @@ mv all_end.csv ../results/
 
 cat life*.log > all_life.csv
 rm life*.log
-sed -i '1,1s/^/timestamp,selflet,start,end,lifetime \n/g' all_life.csv
+sed -i '1,1s/^/timestamp,selflet,started,ended,lifetime \n/g' all_life.csv
 mv all_life.csv ../results/
 
 cat cpu*.log > all_cpu.csv
